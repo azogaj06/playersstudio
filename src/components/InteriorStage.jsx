@@ -20,11 +20,12 @@ const REDUCED_QUERY = '(prefers-reduced-motion: reduce)'
  * Desktop: overflow hidden + subtle ±8px mouse parallax (config.parallax,
  * disabled under reduced motion).
  */
-export default function InteriorStage({ animateIn, onHotspot }) {
+export default function InteriorStage({ animateIn, settleDelay = 0, onHotspot }) {
   const viewportRef = useRef(null)
   const stageRef = useRef(null)
   const [photoState, setPhotoState] = useState('loading') // loading | ok | missing
   const [hintGone, setHintGone] = useState(false)
+  const [scrollable, setScrollable] = useState(false)
 
   const srcSet = `${site.assets.interiorSmall} 1600w, ${site.assets.interior} ${site.assets.interiorFullWidth}w`
   // On phones the stage is (100dvh * aspect) wide — derive the hint from
@@ -42,7 +43,7 @@ export default function InteriorStage({ animateIn, onHotspot }) {
       gsap.set(spots, { opacity: 1, y: 0 })
       return
     }
-    const tl = gsap.timeline()
+    const tl = gsap.timeline({ delay: settleDelay })
     tl.fromTo(
       stage,
       { scale: 1.04 },
@@ -55,13 +56,14 @@ export default function InteriorStage({ animateIn, onHotspot }) {
       0.15,
     )
     return () => tl.kill()
-  }, [animateIn])
+  }, [animateIn, settleDelay])
 
   // Phone panorama: centre the initial scroll so the visitor lands looking at
   // the barber chair; re-centre on orientation change / resize.
   useEffect(() => {
     const vp = viewportRef.current
     const center = () => {
+      setScrollable(vp.scrollWidth > vp.clientWidth)
       if (!window.matchMedia(PHONE_QUERY).matches) return
       vp.scrollLeft = (vp.scrollWidth - vp.clientWidth) / 2
     }
@@ -146,12 +148,15 @@ export default function InteriorStage({ animateIn, onHotspot }) {
           <Hotspot key={spot.id} spot={spot} onOpen={onHotspot} />
         ))}
       </div>
-      <div
-        className={`stage-hint${hintGone ? ' stage-hint--gone' : ''}`}
-        aria-hidden="true"
-      >
-        ‹ swipe to look around ›
-      </div>
+      {/* Only meaningful when there is actually something to swipe to */}
+      {scrollable && (
+        <div
+          className={`stage-hint${hintGone ? ' stage-hint--gone' : ''}`}
+          aria-hidden="true"
+        >
+          ‹ swipe to look around ›
+        </div>
+      )}
     </div>
   )
 }

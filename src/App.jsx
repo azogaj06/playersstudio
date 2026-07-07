@@ -38,8 +38,13 @@ function markIntroSeen() {
 }
 
 export default function App() {
-  // Returning visitors on phones skip the movie entirely — they're here to book.
-  const autoSkip = site.autoSkipIntroOnReturn && isPhone() && introSeen()
+  // Returning visitors on phones skip the movie entirely — they're here to
+  // book. Frozen at first render: recomputing per render could flip true
+  // mid-intro (e.g. desktop window resized under 820px with the seen-flag
+  // set) and kill the running choreography.
+  const [autoSkip] = useState(
+    () => site.autoSkipIntroOnReturn && isPhone() && introSeen(),
+  )
   const reduced = prefersReduced()
 
   // intro | interior — plus fine-grained flags for the choreography
@@ -51,6 +56,9 @@ export default function App() {
   const [animateIn, setAnimateIn] = useState(false)
   const [activePanel, setActivePanel] = useState(null)
   const [progress, setProgress] = useState(0.1)
+  // Brief input guard after SKIP INTRO: the bottom nav's Gallery button
+  // mounts under the same thumb position, so a double-tap must not open it.
+  const [navGuard, setNavGuard] = useState(false)
 
   const timeoutsRef = useRef([])
   const abortedRef = useRef(false)
@@ -78,6 +86,8 @@ export default function App() {
     setBlackout('off')
     setAnimateIn(false)
     setPhase('interior')
+    setNavGuard(true)
+    setTimeout(() => setNavGuard(false), 500)
     markIntroSeen()
   }, [killIntro])
 
@@ -213,7 +223,13 @@ export default function App() {
       {mapAlive && <SatelliteIntro onReady={onMapReady} onFail={onMapFail} />}
 
       {interiorShown && (
-        <InteriorStage animateIn={animateIn} onHotspot={openPanel} />
+        <InteriorStage
+          animateIn={animateIn}
+          // Settle begins when the blackout starts revealing (350ms hold),
+          // not while the screen is still pure black.
+          settleDelay={animateIn ? 0.35 : 0}
+          onHotspot={openPanel}
+        />
       )}
 
       <Blackout state={blackout} />
@@ -259,7 +275,7 @@ export default function App() {
               </button>
             </div>
           </header>
-          <BottomNav onOpen={openPanel} active={activePanel} />
+          <BottomNav onOpen={openPanel} active={activePanel} muted={navGuard} />
         </>
       )}
 

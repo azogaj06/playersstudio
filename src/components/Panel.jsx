@@ -23,7 +23,9 @@ export default function Panel({ title, onClose, children }) {
         onClose()
         return
       }
-      // Minimal focus trap: keep Tab inside the dialog.
+      // Minimal focus trap: keep Tab inside the dialog, and pull focus back
+      // in if it has escaped to the page behind (e.g. after a backdrop
+      // mousedown moved focus to body).
       if (e.key === 'Tab') {
         const focusables = cardRef.current?.querySelectorAll(
           'button, a[href], input, [tabindex]:not([tabindex="-1"])',
@@ -31,7 +33,10 @@ export default function Panel({ title, onClose, children }) {
         if (!focusables?.length) return
         const first = focusables[0]
         const last = focusables[focusables.length - 1]
-        if (e.shiftKey && document.activeElement === first) {
+        if (!cardRef.current.contains(document.activeElement)) {
+          e.preventDefault()
+          first.focus()
+        } else if (e.shiftKey && document.activeElement === first) {
           e.preventDefault()
           last.focus()
         } else if (!e.shiftKey && document.activeElement === last) {

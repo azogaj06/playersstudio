@@ -414,10 +414,18 @@
   transform: scale(1.05);
 }
 
-/* Label chip under each hotspot — touch discoverability, never hover-dependent */
+/* Label chip under each hotspot — touch discoverability, never hover-
+   dependent. Absolutely positioned below the artwork so it never shifts the
+   button off its configured anchor point. */
+.hotspot__anim {
+  position: relative;
+}
 .hotspot__chip {
   display: none;
-  margin-top: 8px;
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-50%);
   padding: 4px 10px;
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.6);
@@ -497,7 +505,10 @@
     display: flex;
     gap: 10px;
     align-items: stretch;
-    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    /* left/right insets matter on notched phones in landscape */
+    padding: 10px max(14px, env(safe-area-inset-right))
+      calc(10px + env(safe-area-inset-bottom))
+      max(14px, env(safe-area-inset-left));
     background: linear-gradient(
       180deg,
       rgba(6, 7, 8, 0) 0%,
@@ -534,6 +545,10 @@
 }
 .bnav__btn--active {
   border-color: #fff;
+}
+/* Brief input guard right after SKIP INTRO (same thumb position) */
+.bnav--muted {
+  pointer-events: none;
 }
 
 /* --- Buttons ------------------------------------------------------------------------------------------ */
@@ -818,7 +833,7 @@
   object-fit: cover;
 }
 .gallery-tile__ph {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.58); /* AA contrast on the tile surface */
   font-size: 15px;
   letter-spacing: 0.24em;
 }

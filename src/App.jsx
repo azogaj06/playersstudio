@@ -45,7 +45,9 @@ export default function App() {
   const [autoSkip] = useState(
     () => site.autoSkipIntroOnReturn && isPhone() && introSeen(),
   )
-  const reduced = prefersReduced()
+  // Also frozen: a live matchMedia read used as an effect dep would re-run
+  // the whole choreography if the OS motion setting flips mid-session.
+  const [reduced] = useState(() => prefersReduced())
 
   // intro | interior — plus fine-grained flags for the choreography
   const [phase, setPhase] = useState(autoSkip ? 'interior' : 'intro')
@@ -62,6 +64,7 @@ export default function App() {
 
   const timeoutsRef = useRef([])
   const abortedRef = useRef(false)
+  const doneRef = useRef(false) // latched: a finished intro never replays
   const readyRef = useRef({ map: false, interior: false, mapFailed: false })
 
   const sleep = useCallback((ms) => {
@@ -78,6 +81,7 @@ export default function App() {
   }, [])
 
   const jumpToInterior = useCallback(() => {
+    doneRef.current = true
     killIntro()
     destroyMap()
     setMapAlive(false)
@@ -140,6 +144,7 @@ export default function App() {
     }
 
     const run = async () => {
+      if (doneRef.current) return
       await waitForReady()
       if (abortedRef.current || cancelled) return
       setProgress(1)
@@ -154,6 +159,7 @@ export default function App() {
         setLoaderGone(true)
         setAnimateIn(false)
         setPhase('interior')
+        doneRef.current = true
         markIntroSeen()
         return
       }
@@ -200,6 +206,7 @@ export default function App() {
       await sleep(600)
       if (abortedRef.current || cancelled) return
       setBlackout('off')
+      doneRef.current = true
       markIntroSeen()
     }
 

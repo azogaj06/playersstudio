@@ -18,9 +18,15 @@ const GOOGLE_KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY
 const GOOGLE_MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID
 
 // Esri World Imagery serves reliable satellite tiles to z19 in urban Ontario.
-// The dive's final zoom is clamped here so tiles never overzoom into blur.
 const IMAGERY_MAX_ZOOM = 19
-const TARGET_ZOOM = Math.min(19.2, IMAGERY_MAX_ZOOM)
+// MapLibre's zoom scale is based on 512px tiles, so a 256px raster source
+// displays tile level Z+1 at map zoom Z: z19 imagery is NATIVE at map zoom
+// 18. Diving to map zoom 19 would render those tiles 2x overscaled (soft).
+// 18.2 keeps the final frame essentially crisp (~1.15x) and tight on the roof.
+const MAPLIBRE_TARGET_ZOOM = Math.min(19.2, IMAGERY_MAX_ZOOM - 1 + 0.2)
+// Google's satellite zoom scale is conventional (z19 ≈ rooftop) and its
+// imagery goes deeper, so the spec'd 19.2 applies directly there.
+const GOOGLE_TARGET_ZOOM = 19.2
 
 const isPhone = () => window.matchMedia('(max-width: 820px)').matches
 
@@ -119,7 +125,7 @@ function createMapLibreProvider() {
       map.once('moveend', () => onComplete?.())
       map.flyTo({
         center: [config.shopCoords.lng, config.shopCoords.lat],
-        zoom: TARGET_ZOOM,
+        zoom: MAPLIBRE_TARGET_ZOOM,
         pitch: 0, // bird's-eye the whole way down
         bearing: 0,
         duration,
@@ -144,19 +150,28 @@ function createMapLibreProvider() {
 // Google Maps JS API (activates automatically when VITE_GOOGLE_MAPS_KEY is set)
 // ---------------------------------------------------------------------------
 
+let gmapsLoadPromise = null
 function loadGoogleMapsApi(key) {
   if (window.google?.maps) return Promise.resolve(window.google.maps)
-  return new Promise((resolve, reject) => {
-    const cb = '__playersStudioGmapsReady'
-    window[cb] = () => resolve(window.google.maps)
-    const s = document.createElement('script')
-    s.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(
-      key,
-    )}&v=weekly&loading=async&callback=${cb}`
-    s.async = true
-    s.onerror = reject
-    document.head.appendChild(s)
-  })
+  // Single-flight: concurrent callers (e.g. StrictMode's dev double-mount)
+  // share one script injection and one callback.
+  if (!gmapsLoadPromise) {
+    gmapsLoadPromise = new Promise((resolve, reject) => {
+      const cb = '__playersStudioGmapsReady'
+      window[cb] = () => resolve(window.google.maps)
+      const s = document.createElement('script')
+      s.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(
+        key,
+      )}&v=weekly&loading=async&callback=${cb}`
+      s.async = true
+      s.onerror = (e) => {
+        gmapsLoadPromise = null // allow a retry after a network failure
+        reject(e)
+      }
+      document.head.appendChild(s)
+    })
+  }
+  return gmapsLoadPromise
 }
 
 const easeInOutCubic = (t) =>
@@ -166,30 +181,36 @@ function createGoogleProvider() {
   let map = null
   let rafId = null
   let container = null
+  // Same generation guard as the MapLibre provider: destroy() (or a newer
+  // create) during the async script load must not leave a zombie map.
+  let gen = 0
 
   return {
     async createIntroMap(el, config) {
+      const myGen = ++gen
       const gmaps = await loadGoogleMapsApi(GOOGLE_KEY)
+      if (myGen !== gen) return // destroyed/superseded while loading
       container = el
       map = new gmaps.Map(el, {
         center: config.introStartCenter,
         zoom: config.introStartZoom,
-        mapId: GOOGLE_MAP_ID || undefined, // vector map when a mapId is provided
+        mapId: GOOGLE_MAP_ID, // vector map — required for the smooth dive
         mapTypeId: 'satellite',
         disableDefaultUI: true,
         gestureHandling: 'none',
         keyboardShortcuts: false,
       })
-      // Branded marker via AdvancedMarkerElement when available (needs mapId).
+      // Branded marker via AdvancedMarkerElement (available on vector maps).
       try {
         const { AdvancedMarkerElement } = await gmaps.importLibrary('marker')
+        if (myGen !== gen) return
         new AdvancedMarkerElement({
           map,
           position: config.shopCoords,
           content: buildMarkerElement(config),
         })
       } catch {
-        /* marker library unavailable without a mapId — intro still works */
+        /* marker library unavailable — intro still works */
       }
       await new Promise((resolve) => {
         gmaps.event.addListenerOnce(map, 'tilesloaded', resolve)
@@ -204,7 +225,7 @@ function createGoogleProvider() {
         lng: map.getCenter().lng(),
         zoom: map.getZoom(),
       }
-      const to = { ...config.shopCoords, zoom: TARGET_ZOOM }
+      const to = { ...config.shopCoords, zoom: GOOGLE_TARGET_ZOOM }
       const start = performance.now()
       const step = (now) => {
         const t = Math.min(1, (now - start) / duration)
@@ -223,6 +244,7 @@ function createGoogleProvider() {
     },
 
     destroy() {
+      gen++
       if (rafId) cancelAnimationFrame(rafId)
       rafId = null
       map = null
@@ -236,7 +258,18 @@ function createGoogleProvider() {
 // Provider selection + public API
 // ---------------------------------------------------------------------------
 
-const provider = GOOGLE_KEY ? createGoogleProvider() : createMapLibreProvider()
+// The Google path needs BOTH a key and a vector mapId: raster Google maps
+// snap to integer zooms (the dive would stutter) and can't render the
+// AdvancedMarkerElement pin. A key without a mapId falls back to MapLibre so
+// the site never degrades silently.
+const useGoogle = Boolean(GOOGLE_KEY && GOOGLE_MAP_ID)
+if (GOOGLE_KEY && !GOOGLE_MAP_ID) {
+  console.warn(
+    'VITE_GOOGLE_MAPS_KEY is set but VITE_GOOGLE_MAPS_MAP_ID is missing — ' +
+      'using the MapLibre/Esri provider. Add a vector map ID to enable Google Maps.',
+  )
+}
+const provider = useGoogle ? createGoogleProvider() : createMapLibreProvider()
 
 let activeConfig = null
 

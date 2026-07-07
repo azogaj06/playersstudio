@@ -27,6 +27,9 @@ export default function InteriorStage({ animateIn, onHotspot }) {
   const [hintGone, setHintGone] = useState(false)
 
   const srcSet = `${site.assets.interiorSmall} 1600w, ${site.assets.interior} ${site.assets.interiorFullWidth}w`
+  // On phones the stage is (100dvh * aspect) wide — derive the hint from
+  // config so updating interiorAspect never requires touching this file.
+  const sizes = `(max-width: 820px) ${Math.round(site.interiorAspect * 100)}vh, 100vw`
 
   // Settle animation: scale 1.04 -> 1 over 900ms, hotspots rise in staggered
   // 120ms apart after the settle begins. Skipped entirely when animateIn is
@@ -119,7 +122,7 @@ export default function InteriorStage({ animateIn, onHotspot }) {
             className="stage__photo"
             src={site.assets.interior}
             srcSet={srcSet}
-            sizes="(max-width: 820px) 178vh, 100vw"
+            sizes={sizes}
             alt="Inside Players Studio barbershop"
             draggable="false"
             onLoad={() => setPhotoState('ok')}

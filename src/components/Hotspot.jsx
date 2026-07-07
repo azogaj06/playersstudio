@@ -40,9 +40,13 @@ export default function Hotspot({ spot, onOpen }) {
             <span className="hotspot__pill">{spot.label}</span>
           )}
         </span>
-        <span className="hotspot__chip" aria-hidden="true">
-          {spot.label}
-        </span>
+        {/* Touch-discoverability label. Only needed for the image button —
+            the text pill fallback already carries its own label. */}
+        {showImg && (
+          <span className="hotspot__chip" aria-hidden="true">
+            {spot.label}
+          </span>
+        )}
       </span>
     </button>
   )

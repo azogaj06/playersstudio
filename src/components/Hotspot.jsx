@@ -12,6 +12,7 @@ import { useState } from 'react'
  */
 export default function Hotspot({ spot, onOpen }) {
   const [imgMissing, setImgMissing] = useState(false)
+  const showImg = !imgMissing && Boolean(spot.img)
 
   return (
     <button
@@ -19,12 +20,15 @@ export default function Hotspot({ spot, onOpen }) {
       className="hotspot"
       data-hotspot={spot.id}
       style={{ left: `${spot.x}%`, top: `${spot.y}%`, width: `${spot.w}%` }}
-      aria-label={spot.label}
+      // Image button carries no text, so it needs the aria-label; the text
+      // pill names itself (an extra aria-label would trip axe's
+      // label-content-name-mismatch rule).
+      aria-label={showImg ? spot.label : undefined}
       onClick={() => onOpen(spot.id)}
     >
       <span className="hotspot__anim">
         <span className="hotspot__visual">
-          {!imgMissing && spot.img ? (
+          {showImg ? (
             <img
               src={spot.img}
               alt=""

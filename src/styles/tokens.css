@@ -5,17 +5,18 @@
    ========================================================================== */
 
 :root {
-  /* Colour */
-  --bg: #060708;
+  /* Colour — monochrome: black surfaces, white accents (matches the white
+     gothic wordmark). Retint --accent in one line if that ever changes. */
+  --bg: #050506;
   --black: #000;
-  --surface: #101218;
-  --surface-2: #171a22;
+  --surface: #101011;
+  --surface-2: #161617;
   --line: rgba(255, 255, 255, 0.12);
   --line-strong: rgba(255, 255, 255, 0.28);
-  --text: #f2f3f5;
-  --text-dim: rgba(242, 243, 245, 0.62);
-  --accent: #c8a24b; /* retint to match logo later — one line */
-  --accent-ink: #14100a;
+  --text: #f4f4f5;
+  --text-dim: rgba(244, 244, 245, 0.62);
+  --accent: #ffffff;
+  --accent-ink: #0a0a0a;
 
   /* Type */
   --font-body:

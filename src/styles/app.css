@@ -117,7 +117,7 @@
   inset: 0;
   border-radius: 50%;
   background: var(--accent);
-  border: 2px solid #fff;
+  border: 2px solid var(--accent-ink);
   overflow: hidden;
   display: grid;
   place-items: center;
@@ -296,12 +296,12 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background: linear-gradient(180deg, #15171c 0%, #1c1f26 55%, #101216 100%);
+  background: linear-gradient(180deg, #151516 0%, #1d1d1f 55%, #101011 100%);
 }
 .ph-room__wall {
   position: absolute;
   inset: 0 0 38% 0;
-  background: linear-gradient(180deg, #191c22 0%, #23262e 100%);
+  background: linear-gradient(180deg, #19191b 0%, #242426 100%);
 }
 .ph-room__floorline {
   position: absolute;
@@ -314,7 +314,7 @@
 .ph-room__floor {
   position: absolute;
   inset: 62% 0 0 0;
-  background: linear-gradient(180deg, #26241f 0%, #14130f 100%);
+  background: linear-gradient(180deg, #242425 0%, #121213 100%);
 }
 .ph-room__glow {
   position: absolute;
@@ -325,7 +325,7 @@
   transform: translateX(-50%);
   background: radial-gradient(
     ellipse at center,
-    rgba(255, 244, 214, 0.1) 0%,
+    rgba(255, 255, 255, 0.09) 0%,
     transparent 70%
   );
 }
@@ -485,7 +485,8 @@
   min-width: 108px;
 }
 @media (max-width: 820px) {
-  .chrome__book {
+  /* .btn.chrome__book beats the later .btn { display:inline-flex } rule */
+  .btn.chrome__book {
     display: none; /* bottom nav owns booking on phones */
   }
 }
@@ -570,6 +571,10 @@
 .btn:hover {
   transform: scale(1.03);
   filter: brightness(1.08);
+}
+/* On a white primary button, brightening is invisible — dim instead */
+.btn--primary:hover {
+  filter: brightness(0.88);
 }
 .btn:active {
   transform: scale(0.98);

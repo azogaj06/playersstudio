@@ -102,8 +102,10 @@ One line per barber in `config.barbers`, plus their photo in
 
 ### Retint the accent colour
 
-One line in `src/styles/tokens.css`: `--accent: #c8a24b;` — controls every
-accent surface (Book buttons, initials, marker dot).
+The site is monochrome — black surfaces with white accents, matching the
+white gothic wordmark. One line in `src/styles/tokens.css`
+(`--accent: #ffffff;`) controls every accent surface (Book buttons, stars,
+initials, marker dot); change it there if the palette ever shifts.
 
 ## Maps: keyless today, Google later
 

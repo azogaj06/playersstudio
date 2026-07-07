@@ -826,6 +826,176 @@
   font-size: 28px;
 }
 
+/* --- Stars + reviews ---------------------------------------------------------- */
+
+.stars {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.22);
+  white-space: nowrap;
+}
+.stars__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  overflow: hidden;
+  color: var(--accent);
+}
+
+.rating-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 14px;
+  min-height: var(--tap-min);
+  transition: border-color var(--dur-fast) ease, transform var(--dur-fast) ease;
+}
+.rating-strip:hover {
+  border-color: var(--line-strong);
+  transform: scale(1.01);
+}
+.rating-strip__text strong {
+  font-size: 15px;
+}
+.rating-strip__cta {
+  margin-left: auto;
+  color: var(--accent);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.chrome__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.chrome__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: var(--tap-min);
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 700;
+  transition: border-color var(--dur-fast) ease, transform var(--dur-fast) ease;
+}
+.chrome__rating:hover {
+  border-color: #fff;
+  transform: scale(1.04);
+}
+@media (max-width: 820px) {
+  .chrome__rating {
+    padding: 6px 11px;
+    font-size: 13px;
+  }
+}
+
+.rev-hero {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 6px 2px 2px;
+}
+.rev-hero__score {
+  font-size: 54px;
+  line-height: 1;
+  color: var(--text);
+}
+.rev-hero__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.rev-hero__count {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+.rev-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+.rev-card {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.rev-card__text {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.rev-card__author {
+  margin: auto 0 0;
+  color: var(--text-dim);
+  font-size: 12.5px;
+}
+
+.rev-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.rev-links .btn {
+  flex: 1;
+  min-width: 180px;
+}
+
+/* --- Services & hours fact lists ------------------------------------------------ */
+
+.facts {
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+.facts__title {
+  margin: 0 0 10px;
+  font-size: 15px;
+  letter-spacing: 0.09em;
+  color: var(--text-dim);
+}
+.facts__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.facts__row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 14.5px;
+}
+.facts__dots {
+  flex: 1;
+  border-bottom: 1px dotted var(--line-strong);
+  transform: translateY(-3px);
+}
+.facts__value {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 /* Lightbox */
 .lightbox {
   position: fixed;

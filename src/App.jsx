@@ -10,6 +10,8 @@ import Logo from './components/Logo.jsx'
 import BookingPanel from './panels/BookingPanel.jsx'
 import BarbersPanel from './panels/BarbersPanel.jsx'
 import GalleryPanel from './panels/GalleryPanel.jsx'
+import ReviewsPanel from './panels/ReviewsPanel.jsx'
+import Stars from './components/Stars.jsx'
 
 const SEEN_KEY = 'players-studio-intro-seen'
 const PHONE_QUERY = '(max-width: 820px)'
@@ -236,21 +238,37 @@ export default function App() {
         <>
           <header className="chrome">
             <Logo size="small" className="chrome__logo" />
-            <button
-              type="button"
-              className="btn btn--primary chrome__book"
-              onClick={() => openPanel('book')}
-            >
-              Book
-            </button>
+            <div className="chrome__right">
+              {site.reviews?.rating && (
+                <button
+                  type="button"
+                  className="chrome__rating"
+                  onClick={() => openPanel('reviews')}
+                  aria-label={`Rated ${site.reviews.rating} out of 5 — read reviews`}
+                >
+                  <Stars rating={site.reviews.rating} size={13} />
+                  <span>{site.reviews.rating}</span>
+                </button>
+              )}
+              <button
+                type="button"
+                className="btn btn--primary chrome__book"
+                onClick={() => openPanel('book')}
+              >
+                Book
+              </button>
+            </div>
           </header>
           <BottomNav onOpen={openPanel} active={activePanel} />
         </>
       )}
 
-      {activePanel === 'book' && <BookingPanel onClose={closePanel} />}
+      {activePanel === 'book' && (
+        <BookingPanel onClose={closePanel} onOpenPanel={openPanel} />
+      )}
       {activePanel === 'barbers' && <BarbersPanel onClose={closePanel} />}
       {activePanel === 'gallery' && <GalleryPanel onClose={closePanel} />}
+      {activePanel === 'reviews' && <ReviewsPanel onClose={closePanel} />}
     </div>
   )
 }

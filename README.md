@@ -45,19 +45,37 @@ All business data, asset paths and hotspot positions live in **one file**:
 > 404s for them — that's inherent to the onError-based auto-detection and
 > disappears as assets land.
 
-### Set the Booksy link
+### The Booksy link
 
-In `src/config/site.js` set:
+`bookingUrl` in `src/config/site.js` is set to the shop's live Booksy page
+(found via the public listing — name, address and phone all match):
+`https://booksy.com/en-ca/9047_players-fade-studio_barbershop_773207_oakville`.
+Every Book button across the site (booking panel, per-barber buttons, bottom
+nav → panel) reads it. If it's ever cleared, Book buttons stay enabled with a
+"Booksy link coming soon" note. Standard Booksy web links hand off to the
+Booksy app automatically when installed, so they open as plain links in a new
+tab.
 
-```js
-bookingUrl: 'https://booksy.com/…your-shop-page…',
-```
+### Reviews, services & hours (from the Booksy/Google listings)
 
-While it's empty, every Book button renders enabled with a "Booksy link coming
-soon" note. The moment the URL is pasted, **every** Book button across the site
-(booking panel, per-barber buttons, bottom nav → panel) points to it. Standard
-Booksy web links hand off to the Booksy app automatically when installed, so
-they open as plain links in a new tab.
+`config.reviews`, `config.services` and `config.hours` carry the listing
+facts, all sourced from the shop's public Booksy page (July 2026: **4.9★,
+600+ reviews**; services $24–$50; open 7 days):
+
+- The **Reviews panel** (rating hero + quote cards + "Read all on
+  Booksy/Google" links) opens from the ★4.9 chip in the header and from the
+  rating strip at the top of the Booking panel.
+- The **Booking panel** shows the rating strip, the services/prices list and
+  the weekly hours under the Book/Call buttons.
+- The quote cards are **lightly paraphrased** from review snippets on the
+  public listing — replace them with verbatim favourites from the Booksy
+  dashboard when convenient (each quote is one config entry).
+- Keep prices/hours in sync with Booksy by editing the arrays; an empty array
+  hides its section entirely.
+- A `schema.org/Barbershop` JSON-LD block (address, geo, phone, hours,
+  aggregate rating) is generated from config at boot for the site's own SEO.
+- Reviewers also praise a barber named **Aziz** — if he's on the roster, add
+  him to `config.barbers` (one line + photo).
 
 ### Adjust hotspot coordinates
 

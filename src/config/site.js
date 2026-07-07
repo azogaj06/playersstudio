@@ -13,11 +13,12 @@ const site = {
   phoneHref: 'tel:+19058444443',
   instagram: 'https://www.instagram.com/playersstudiooakville',
 
-  // Booksy booking link. Ships empty per the drop-in contract: while empty,
-  // every Book button renders enabled but links to "#" with a small
-  // "Booksy link coming soon" note. Paste the real URL here and every Book
-  // button across the site points to it — zero code changes.
-  bookingUrl: '',
+  // Booksy booking link — the shop's live Booksy page (Players Fade Studio,
+  // 295 Lakeshore Rd E — name/address/phone all match). If this is ever
+  // cleared, every Book button falls back to an enabled "#" link with a
+  // "Booksy link coming soon" note; no code changes either way.
+  bookingUrl:
+    'https://booksy.com/en-ca/9047_players-fade-studio_barbershop_773207_oakville',
 
   // --- Geography -------------------------------------------------------------
   // VERIFY: pin should sit on the correct building — north side of
@@ -72,6 +73,61 @@ const site = {
     { src: '/gallery/cut-04.jpg', alt: 'Haircut by Players Studio' },
     { src: '/gallery/cut-05.jpg', alt: 'Haircut by Players Studio' },
     { src: '/gallery/cut-06.jpg', alt: 'Haircut by Players Studio' },
+  ],
+
+  // --- Reviews (from the shop's Booksy/Google listings) -------------------------------
+  // Rating/count sourced from the public Booksy listing (4.9, 600+ reviews,
+  // July 2026). The quotes below are lightly paraphrased from review
+  // snippets on that listing — REPLACE with verbatim favourites from the
+  // Booksy dashboard when convenient. Everything renders from here; an empty
+  // quotes array simply hides the quotes section.
+  reviews: {
+    rating: 4.9,
+    countLabel: '600+',
+    sources: [
+      {
+        id: 'booksy',
+        label: 'Booksy',
+        url: 'https://booksy.com/en-ca/9047_players-fade-studio_barbershop_773207_oakville',
+      },
+      {
+        id: 'google',
+        label: 'Google',
+        url: 'https://www.google.com/maps/search/?api=1&query=Players+Studio+295+Lakeshore+Rd+E+Oakville+ON',
+      },
+    ],
+    quotes: [
+      {
+        text: 'Raf is a great all-around person and always provides a great cut. The only place I go now.',
+        author: 'Booksy review',
+      },
+      {
+        text: 'Edward is always on point — I leave looking fresh every time. Never disappoints.',
+        author: 'Booksy review',
+      },
+      {
+        text: 'He listens to what you want, takes his time and works professionally. Amazing.',
+        author: 'Booksy review',
+      },
+      {
+        text: 'Another great cut, and a nice hot towel to freshen up at the end.',
+        author: 'Booksy review',
+      },
+    ],
+  },
+
+  // --- Services & hours (from the Booksy listing — keep in sync with Booksy) ---------
+  services: [
+    { name: 'Haircut / Fade', price: '$40' },
+    { name: 'Haircut / Fade + Beard', price: '$50' },
+    { name: 'Beard Trim / Lineup', price: '$24' },
+    { name: 'Kids Haircut (10 & under)', price: '$30' },
+  ],
+  hours: [
+    { days: 'Mon – Thu', time: '9:00 AM – 9:00 PM' },
+    { days: 'Fri', time: '9:00 AM – 8:00 PM' },
+    { days: 'Sat', time: '9:00 AM – 7:00 PM' },
+    { days: 'Sun', time: '9:00 AM – 7:00 PM' },
   ],
 
   // --- Behaviour flags -------------------------------------------------------------

@@ -1,0 +1,124 @@
+/* ============================================================================
+   PLAYERS STUDIO — DESIGN TOKENS + GLOBAL BASE
+   One accent variable (--accent) controls all accent colour; retint it to
+   match the final logo in one line.
+   ========================================================================== */
+
+:root {
+  /* Colour */
+  --bg: #060708;
+  --black: #000;
+  --surface: #101218;
+  --surface-2: #171a22;
+  --line: rgba(255, 255, 255, 0.12);
+  --line-strong: rgba(255, 255, 255, 0.28);
+  --text: #f2f3f5;
+  --text-dim: rgba(242, 243, 245, 0.62);
+  --accent: #c8a24b; /* retint to match logo later — one line */
+  --accent-ink: #14100a;
+
+  /* Type */
+  --font-body:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
+  --font-display:
+    'Arial Narrow', Impact, 'Helvetica Neue Condensed', 'Franklin Gothic Medium',
+    var(--font-body);
+
+  /* Motion */
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.25s;
+
+  /* Layout */
+  --radius: 14px;
+  --radius-sheet: 20px;
+  --tap-min: 44px;
+
+  /* Glow (hard client spec — hover/focus white outline) */
+  --glow-full: drop-shadow(0 0 2px #fff) drop-shadow(0 0 10px rgba(255, 255, 255, 0.9))
+    drop-shadow(0 0 26px rgba(255, 255, 255, 0.45));
+  --glow-faint: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
+
+  color-scheme: dark;
+}
+
+/* --- Global base ---------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  height: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  overflow: hidden; /* single-scene site; panels/panorama scroll internally */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+#root {
+  height: 100dvh;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* iOS/Android engineering rules — applied globally */
+button,
+a,
+[role='button'] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+a {
+  color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Display face used by the text-fallback logo */
+.display {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-stretch: condensed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

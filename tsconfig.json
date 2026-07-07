@@ -1,0 +1,10 @@
+{
+  "//": "This is a plain-JSX project. This file only exists so Vite's dependency scanner stops here instead of walking up to the Expo app's tsconfig at the repo root.",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true
+  },
+  "include": ["src"]
+}

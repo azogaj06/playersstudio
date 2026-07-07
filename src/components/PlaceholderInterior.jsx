@@ -1,6 +1,6 @@
 import site from '../config/site.js'
 
-const ZONE_NAMES = { book: 'DESK', barbers: 'CHAIR', gallery: 'CANVAS' }
+const ZONE_NAMES = { book: 'DESK', barbers: 'CHAIR', gallery: 'WAITING AREA' }
 
 /**
  * Stand-in for the real interior photograph: a dark, moody CSS room

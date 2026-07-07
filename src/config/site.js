@@ -42,18 +42,18 @@ const site = {
     interiorFullWidth: 2400, // srcset width descriptor — update to the real photo's pixel width
   },
 
-  // Aspect ratio of the interior photo. UPDATE to the real photo's
-  // width/height when it arrives (e.g. 3000/2000 -> 1.5).
-  interiorAspect: 16 / 9,
+  // Aspect ratio of the interior photo (real photo is 3:2 landscape).
+  interiorAspect: 3 / 2,
 
   // --- Hotspots ----------------------------------------------------------------
   // x,y = center of the button as % of the interior image; w = button width
-  // as % of image width.
-  // ADJUST ALL COORDINATES WHEN THE REAL INTERIOR PHOTO ARRIVES
+  // as % of image width. Aimed at the real photo's layout: reception desk
+  // bottom-right, front-right barber chair centre, waiting chairs bottom-left.
+  // FINE-TUNE once the photo file is dropped in.
   hotspots: [
-    { id: 'book',    label: 'Book an Appointment', x: 78, y: 56, w: 13, img: '/assets/buttons/book.png' },    // reception desk, right side
-    { id: 'barbers', label: 'Meet the Barbers',    x: 46, y: 52, w: 12, img: '/assets/buttons/barbers.png' }, // barber chair, ahead
-    { id: 'gallery', label: 'The Gallery',         x: 20, y: 33, w: 13, img: '/assets/buttons/gallery.png' }, // canvas above waiting chairs, left
+    { id: 'book',    label: 'Book an Appointment', x: 84, y: 76, w: 18, img: '/assets/buttons/book.png' },    // reception desk, bottom right
+    { id: 'barbers', label: 'Meet the Barbers',    x: 61, y: 60, w: 13, img: '/assets/buttons/barbers.png' }, // front-right barber chair
+    { id: 'gallery', label: 'The Gallery',         x: 15, y: 76, w: 16, img: '/assets/buttons/gallery.png' }, // waiting chairs, bottom left
   ],
 
   // --- Barbers -----------------------------------------------------------------

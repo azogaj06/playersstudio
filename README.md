@@ -152,6 +152,21 @@ needed.
   booking.
 - `ghostLogoDuringBlackout` — logo at 15% opacity during the black hold.
 
+## Replaying the intro
+
+The satellite drop only plays in full on a **fresh visit**. Two things skip
+it by design, which can make it look "missing" when testing:
+
+1. **Returning phone visitors** — after one completed or skipped intro, a
+   localStorage flag sends phones straight to the interior (a repeat
+   customer should land one tap from booking). Clear site data to reset it.
+2. **Reduce Motion** — if the device has reduced motion enabled
+   (iPhone: Settings → Accessibility → Motion), the flight is skipped for
+   accessibility.
+
+To force the full movie any time, open the site with **`?intro`** on the
+URL (e.g. `http://localhost:5173/?intro`) — it overrides both.
+
 ## Escape hatches
 
 - **SKIP INTRO** (bottom-right, from the very first frame) kills all

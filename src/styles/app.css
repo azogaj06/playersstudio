@@ -6,7 +6,8 @@
 .app {
   position: fixed;
   inset: 0;
-  overflow: hidden;
+  /* clip (not hidden): forbids even programmatic/focus scrolling */
+  overflow: clip;
   background: var(--bg);
 }
 
@@ -223,7 +224,9 @@
   position: fixed;
   inset: 0;
   z-index: 1;
-  overflow: hidden;
+  /* clip so focusing a hotspot that overhangs the stage edge (the desk
+     cutout is clipped by the photo frame) can never force-scroll the scene */
+  overflow: clip;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -252,7 +255,7 @@
   .stage-viewport {
     justify-content: flex-start;
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: clip;
     touch-action: pan-x pinch-zoom; /* buttery swipe without hijacking pinch */
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;

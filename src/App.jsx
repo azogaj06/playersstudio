@@ -38,16 +38,23 @@ function markIntroSeen() {
 }
 
 export default function App() {
+  // ?intro (or #intro) forces the full satellite drop to replay — overrides
+  // the returning-visitor auto-skip AND the reduced-motion bypass so the
+  // owner can always preview the movie on demand.
+  const [forceIntro] = useState(() =>
+    /[?&#]intro/.test(window.location.search + window.location.hash),
+  )
   // Returning visitors on phones skip the movie entirely — they're here to
   // book. Frozen at first render: recomputing per render could flip true
   // mid-intro (e.g. desktop window resized under 820px with the seen-flag
   // set) and kill the running choreography.
   const [autoSkip] = useState(
-    () => site.autoSkipIntroOnReturn && isPhone() && introSeen(),
+    () =>
+      !forceIntro && site.autoSkipIntroOnReturn && isPhone() && introSeen(),
   )
   // Also frozen: a live matchMedia read used as an effect dep would re-run
   // the whole choreography if the OS motion setting flips mid-session.
-  const [reduced] = useState(() => prefersReduced())
+  const [reduced] = useState(() => !forceIntro && prefersReduced())
 
   // intro | interior — plus fine-grained flags for the choreography
   const [phase, setPhase] = useState(autoSkip ? 'interior' : 'intro')

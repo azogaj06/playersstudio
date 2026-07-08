@@ -50,10 +50,13 @@ const site = {
   // as % of image width. Aimed at the real photo's layout: reception desk
   // bottom-right, front-right barber chair centre, waiting chairs bottom-left.
   // FINE-TUNE once the photo file is dropped in.
+  // Aligned so each cutout overlaps its original object in the photo at the
+  // same size (template-matched + landmark-tuned). If the photo or cutouts
+  // are ever re-shot, re-tune these here.
   hotspots: [
-    { id: 'book',    label: 'Book an Appointment', x: 85, y: 72, w: 16, img: '/assets/buttons/book.png' },    // reception desk, bottom right
-    { id: 'barbers', label: 'Meet the Barbers',    x: 58, y: 57, w: 13, img: '/assets/buttons/barbers.png' }, // front-right barber chair
-    { id: 'gallery', label: 'The Gallery',         x: 13, y: 77, w: 18, img: '/assets/buttons/gallery.png' }, // waiting chairs, bottom left
+    { id: 'book',    label: 'Book an Appointment', x: 85.3, y: 85,   w: 27, img: '/assets/buttons/book.png' },    // reception desk, bottom right
+    { id: 'barbers', label: 'Meet the Barbers',    x: 39.3, y: 62.9, w: 16, img: '/assets/buttons/barbers.png' }, // front-left barber chair
+    { id: 'gallery', label: 'The Gallery',         x: 13.9, y: 76.7, w: 28, img: '/assets/buttons/gallery.png' }, // waiting chairs, bottom left
   ],
 
   // --- Barbers -----------------------------------------------------------------

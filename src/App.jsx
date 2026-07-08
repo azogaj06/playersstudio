@@ -68,6 +68,9 @@ export default function App() {
   // Brief input guard after SKIP INTRO: the bottom nav's Gallery button
   // mounts under the same thumb position, so a double-tap must not open it.
   const [navGuard, setNavGuard] = useState(false)
+  // Shown (only under ?intro) when the flight had to be skipped, so testing
+  // "where is the map?" gives an actionable answer instead of silence.
+  const [skipNote, setSkipNote] = useState(null)
 
   const timeoutsRef = useRef([])
   const abortedRef = useRef(false)
@@ -124,11 +127,15 @@ export default function App() {
     // Map initialized but no imagery tile ever rendered (offline/blocked
     // network): flying over a black void is worse than no flight — take the
     // graceful straight-to-interior path instead.
-    if (result && result.tilesVisible === false) readyRef.current.mapFailed = true
+    if (result && result.tilesVisible === false) {
+      readyRef.current.mapFailed = true
+      readyRef.current.failReason = 'satellite imagery could not be downloaded on this network'
+    }
     setProgress((p) => Math.min(1, p + 0.5))
   }, [])
   const onMapFail = useCallback(() => {
     readyRef.current.mapFailed = true
+    readyRef.current.failReason = 'the map engine failed to start in this browser'
     readyRef.current.map = true
     setProgress((p) => Math.min(1, p + 0.5))
   }, [])
@@ -160,8 +167,17 @@ export default function App() {
       if (abortedRef.current || cancelled) return
       setProgress(1)
 
-      // Reduced motion: loader -> simple 400ms fade -> settled interior.
-      if (reduced || readyRef.current.mapFailed) {
+      // Reduced motion, map failure, or map simply not ready in time (the
+      // failsafe advanced) -> loader -> simple 400ms fade -> settled
+      // interior. Never fly the camera without imagery on screen.
+      if (reduced || readyRef.current.mapFailed || !readyRef.current.map) {
+        const reason = reduced
+          ? 'this device has the "Reduce Motion" accessibility setting on'
+          : readyRef.current.mapFailed
+            ? readyRef.current.failReason || 'the map was unavailable'
+            : 'the map was still loading when the wait limit was reached'
+        console.info(`Intro flight skipped: ${reason}`)
+        if (forceIntro) setSkipNote(reason)
         setLoaderFading(true)
         await sleep(400)
         if (abortedRef.current || cancelled) return
@@ -225,7 +241,14 @@ export default function App() {
     return () => {
       cancelled = true
     }
-  }, [autoSkip, reduced, sleep])
+  }, [autoSkip, reduced, forceIntro, sleep])
+
+  // Auto-hide the diagnostic note
+  useEffect(() => {
+    if (!skipNote) return
+    const t = setTimeout(() => setSkipNote(null), 10000)
+    return () => clearTimeout(t)
+  }, [skipNote])
 
   // Destroy the map if the app unmounts mid-intro.
   useEffect(() => () => destroyMap(), [])
@@ -295,6 +318,12 @@ export default function App() {
           </header>
           <BottomNav onOpen={openPanel} active={activePanel} muted={navGuard} />
         </>
+      )}
+
+      {skipNote && interiorShown && (
+        <div className="intro-note" role="status">
+          Satellite intro skipped: {skipNote}.
+        </div>
       )}
 
       {activePanel === 'book' && (

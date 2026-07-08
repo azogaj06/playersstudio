@@ -18,6 +18,10 @@ const GOOGLE_KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY
 const GOOGLE_MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID
 
 // Esri World Imagery serves reliable satellite tiles to z19 in urban Ontario.
+// VITE_TILE_URL overrides the tile endpoint for offline/dev testing only.
+const TILE_URL =
+  import.meta.env.VITE_TILE_URL ||
+  'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
 const IMAGERY_MAX_ZOOM = 19
 // MapLibre's zoom scale is based on 512px tiles, so a 256px raster source
 // displays tile level Z+1 at map zoom Z: z19 imagery is NATIVE at map zoom
@@ -75,9 +79,7 @@ function createMapLibreProvider() {
           sources: {
             esri: {
               type: 'raster',
-              tiles: [
-                'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-              ],
+              tiles: [TILE_URL],
               tileSize: 256,
               maxzoom: IMAGERY_MAX_ZOOM,
               attribution:
@@ -117,10 +119,27 @@ function createMapLibreProvider() {
         .setLngLat([config.shopCoords.lng, config.shopCoords.lat])
         .addTo(map)
 
-      // Resolve when the starting view's tiles are actually on screen.
+      // Resolve when the starting view's imagery is actually on screen — or
+      // as soon as it's clear it never will be. 'idle' alone is not enough:
+      // failing tiles are retried for many seconds, which would stall the
+      // loader and then fly the camera over a black void.
       await new Promise((resolve) => {
-        if (map.loaded() && map.areTilesLoaded()) return resolve()
-        map.once('idle', resolve)
+        let errCount = 0
+        let settled = false
+        const finish = () => {
+          if (!settled) {
+            settled = true
+            resolve()
+          }
+        }
+        map.on('error', () => {
+          errCount++
+          // several tile failures and not a single success: give up early
+          if (!tileOk && errCount >= 4) finish()
+        })
+        map.once('idle', finish)
+        setTimeout(finish, 8000) // absolute ceiling — never hang the loader
+        if (map.loaded() && map.areTilesLoaded()) finish()
       })
       return { tilesVisible: tileOk }
     },

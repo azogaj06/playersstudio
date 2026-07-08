@@ -95,9 +95,14 @@ function createMapLibreProvider() {
       })
 
       // Tile fetch failures (offline, blocked network) must never break the
-      // sequence — the flight still runs and the failsafe/idle logic advances
-      // the intro. Swallow the noisy per-tile errors, warn once.
+      // sequence. Swallow the noisy per-tile errors, warn once — and track
+      // whether ANY tile actually rendered: if none did, the caller skips
+      // the flight entirely instead of flying over a black void.
       let warned = false
+      let tileOk = false
+      map.on('data', (e) => {
+        if (e.tile) tileOk = true
+      })
       map.on('error', (e) => {
         if (!warned) {
           warned = true
@@ -117,6 +122,7 @@ function createMapLibreProvider() {
         if (map.loaded() && map.areTilesLoaded()) return resolve()
         map.once('idle', resolve)
       })
+      return { tilesVisible: tileOk }
     },
 
     flyToShop(onComplete, config) {
@@ -215,6 +221,7 @@ function createGoogleProvider() {
       await new Promise((resolve) => {
         gmaps.event.addListenerOnce(map, 'tilesloaded', resolve)
       })
+      return { tilesVisible: true } // tilesloaded fired — imagery is on screen
     },
 
     flyToShop(onComplete, config) {

@@ -13,7 +13,7 @@ export default function SatelliteIntro({ onReady, onFail }) {
   useEffect(() => {
     let cancelled = false
     createIntroMap(containerRef.current, site)
-      .then(() => !cancelled && onReady?.())
+      .then((result) => !cancelled && onReady?.(result))
       .catch((err) => {
         console.warn('Intro map failed to initialize:', err)
         if (!cancelled) onFail?.()

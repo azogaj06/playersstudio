@@ -32,15 +32,14 @@ export default function InteriorStage({ animateIn, settleDelay = 0, onHotspot })
   // config so updating interiorAspect never requires touching this file.
   const sizes = `(max-width: 820px) ${Math.round(site.interiorAspect * 100)}vh, 100vw`
 
-  // Settle animation: scale 1.04 -> 1 over 900ms, hotspots rise in staggered
-  // 120ms apart after the settle begins. Skipped entirely when animateIn is
-  // false (SKIP INTRO, reduced motion, returning phone visitor).
+  // Settle animation: scale 1.04 -> 1 over 900ms as the blackout reveals.
+  // (Hotspots are invisible regions now — nothing of theirs animates in.)
+  // Skipped entirely when animateIn is false (SKIP INTRO, reduced motion,
+  // returning phone visitor).
   useLayoutEffect(() => {
     const stage = stageRef.current
-    const spots = stage.querySelectorAll('.hotspot__anim')
     if (!animateIn || window.matchMedia(REDUCED_QUERY).matches) {
       gsap.set(stage, { scale: 1 })
-      gsap.set(spots, { opacity: 1, y: 0 })
       return
     }
     const tl = gsap.timeline({ delay: settleDelay })
@@ -49,11 +48,6 @@ export default function InteriorStage({ animateIn, settleDelay = 0, onHotspot })
       { scale: 1.04 },
       { scale: 1, duration: 0.9, ease: 'power2.out' },
       0,
-    ).fromTo(
-      spots,
-      { opacity: 0, y: 16 },
-      { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out', stagger: 0.12 },
-      0.15,
     )
     return () => tl.kill()
   }, [animateIn, settleDelay])

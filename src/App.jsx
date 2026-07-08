@@ -119,8 +119,12 @@ export default function App() {
   }, [autoSkip])
 
   // ---- Map readiness callbacks (from SatelliteIntro) ------------------------
-  const onMapReady = useCallback(() => {
+  const onMapReady = useCallback((result) => {
     readyRef.current.map = true
+    // Map initialized but no imagery tile ever rendered (offline/blocked
+    // network): flying over a black void is worse than no flight — take the
+    // graceful straight-to-interior path instead.
+    if (result && result.tilesVisible === false) readyRef.current.mapFailed = true
     setProgress((p) => Math.min(1, p + 0.5))
   }, [])
   const onMapFail = useCallback(() => {

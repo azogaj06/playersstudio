@@ -23,7 +23,8 @@ export default function PlaceholderInterior() {
           style={{
             left: `${spot.x}%`,
             top: `${spot.y}%`,
-            width: `${spot.w + 6}%`,
+            width: `${spot.w}%`,
+            height: `${spot.h}%`,
           }}
         >
           <span className="ph-room__zonelabel">

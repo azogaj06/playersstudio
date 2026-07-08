@@ -40,9 +40,6 @@ All business data, asset paths and hotspot positions live in **one file**:
 | `public/assets/logo.png` | Loading screen, header, blackout ghost, map marker | ~600px wide, transparent PNG | Styled "PLAYERS STUDIO" text fallback (auto-swaps the moment the file exists) |
 | `public/assets/interior.jpg` | The full-screen interior scene | ≥2400px wide, landscape | Dark placeholder room with dashed DESK / CHAIR / CANVAS zones |
 | `public/assets/interior-1600.jpg` | *Optional* phone-optimized copy served via srcset | ~1600px wide, same crop | Falls back silently to `interior.jpg` |
-| `public/assets/buttons/book.png` | Hotspot on the reception desk | transparent background, ~800px wide | Dark pill with white border + label |
-| `public/assets/buttons/barbers.png` | Hotspot on the barber chair | transparent background, ~800px wide | Dark pill fallback |
-| `public/assets/buttons/gallery.png` | Hotspot on the canvas | transparent background, ~800px wide | Dark pill fallback |
 | `public/assets/barbers/rafael.jpg`, `edward.jpg` | Barber cards | square-ish portraits | Dark avatar circle with initial |
 | `public/gallery/cut-01.jpg` … `cut-06.jpg` | Gallery grid + lightbox | any size, they lazy-load | Six "PHOTO" tiles |
 
@@ -82,18 +79,21 @@ facts, all sourced from the shop's public Booksy page (July 2026: **4.9★,
 - Reviewers also praise a barber named **Aziz** — if he's on the roster, add
   him to `config.barbers` (one line + photo).
 
-### Adjust hotspot coordinates
+### Adjust hotspot regions
 
-When the real interior photo arrives, update `interiorAspect` to the photo's
-real width/height ratio, then nudge the `hotspots` array:
+The three clickable areas are **invisible regions** laid over the photo's own
+objects (reception desk, barber chair, waiting seats) — no overlay artwork.
+Hovering with a mouse, touching on a phone, or keyboard-focusing reveals the
+label pill with the white glow; clicking opens the panel. Each region is four
+numbers in `config.hotspots`:
 
 ```js
-// x,y = center of the button as % of the interior image; w = width as % of image width
-{ id: 'book', label: 'Book an Appointment', x: 78, y: 56, w: 13, img: '/assets/buttons/book.png' },
+// x,y = region center as % of the interior image; w,h = region size as % of the image
+{ id: 'book', label: 'Book an Appointment', x: 80.5, y: 72, w: 38, h: 54 },
 ```
 
-Because hotspots are positioned in percentages **of the image stage** (not the
-viewport), a button placed on the desk stays glued to the desk at every screen
+Because regions are positioned in percentages **of the image stage** (not the
+viewport), a region placed on the desk stays glued to the desk at every screen
 size, crop and swipe position.
 
 ### Add a barber

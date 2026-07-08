@@ -46,17 +46,14 @@ const site = {
   interiorAspect: 3 / 2,
 
   // --- Hotspots ----------------------------------------------------------------
-  // x,y = center of the button as % of the interior image; w = button width
-  // as % of image width. Aimed at the real photo's layout: reception desk
-  // bottom-right, front-right barber chair centre, waiting chairs bottom-left.
-  // FINE-TUNE once the photo file is dropped in.
-  // Aligned so each cutout overlaps its original object in the photo at the
-  // same size (template-matched + landmark-tuned). If the photo or cutouts
-  // are ever re-shot, re-tune these here.
+  // Invisible click/tap regions over the photo's own objects — no overlay
+  // artwork. x,y = region center as % of the interior image; w,h = region
+  // size as % of the image. Hovering (mouse), touching (finger) or keyboard-
+  // focusing reveals the label + white glow; clicking opens the panel.
   hotspots: [
-    { id: 'book',    label: 'Book an Appointment', x: 85.3, y: 85,   w: 27, img: '/assets/buttons/book.png' },    // reception desk, bottom right
-    { id: 'barbers', label: 'Meet the Barbers',    x: 39.3, y: 62.9, w: 16, img: '/assets/buttons/barbers.png' }, // front-left barber chair
-    { id: 'gallery', label: 'The Gallery',         x: 13.9, y: 76.7, w: 28, img: '/assets/buttons/gallery.png' }, // waiting chairs, bottom left
+    { id: 'book',    label: 'Book an Appointment', x: 80.5, y: 72, w: 38, h: 54 }, // reception desk, right
+    { id: 'barbers', label: 'Meet the Barbers',    x: 36,   y: 56, w: 19, h: 43 }, // barber chair, ahead left
+    { id: 'gallery', label: 'The Gallery',         x: 13,   y: 76, w: 26, h: 45 }, // waiting chairs, left
   ],
 
   // --- Barbers -----------------------------------------------------------------

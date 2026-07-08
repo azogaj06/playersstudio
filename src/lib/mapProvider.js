@@ -6,12 +6,15 @@
 //   createIntroMap(container, config) -> Promise (resolves when the starting
 //                                        view's tiles have loaded)
 //   flyToShop(onComplete)             -> runs the single continuous dive
-//   destroy()                         -> tears the map down, frees WebGL
+//   destroy()                         -> tears the map down
 //
-// Today the active provider is MapLibre GL rendering Esri World Imagery
-// (keyless). When VITE_GOOGLE_MAPS_KEY is present in the environment, the
-// Google Maps JS API provider activates automatically instead. The rest of
-// the app never knows which one is running.
+// Today the active provider is Leaflet rendering Esri World Imagery
+// (keyless). Leaflet loads tiles as plain <img> elements, which need neither
+// CORS permission nor WebGL — it works anywhere a browser can show an image
+// (chosen after a WebGL/fetch-based engine failed on real-world networks).
+// When VITE_GOOGLE_MAPS_KEY + VITE_GOOGLE_MAPS_MAP_ID are present in the
+// environment, the Google Maps JS API provider activates automatically
+// instead. The rest of the app never knows which one is running.
 // ============================================================================
 
 const GOOGLE_KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY
@@ -22,14 +25,11 @@ const GOOGLE_MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID
 const TILE_URL =
   import.meta.env.VITE_TILE_URL ||
   'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-const IMAGERY_MAX_ZOOM = 19
-// MapLibre's zoom scale is based on 512px tiles, so a 256px raster source
-// displays tile level Z+1 at map zoom Z: z19 imagery is NATIVE at map zoom
-// 18. Diving to map zoom 19 would render those tiles 2x overscaled (soft).
-// 18.2 keeps the final frame essentially crisp (~1.15x) and tight on the roof.
-const MAPLIBRE_TARGET_ZOOM = Math.min(19.2, IMAGERY_MAX_ZOOM - 1 + 0.2)
-// Google's satellite zoom scale is conventional (z19 ≈ rooftop) and its
-// imagery goes deeper, so the spec'd 19.2 applies directly there.
+const ESRI_ATTRIBUTION =
+  'Esri, Maxar, Earthstar Geographics, and the GIS User Community'
+// Leaflet zoom == tile zoom, so z19 imagery is native at map zoom 19.
+const LEAFLET_TARGET_ZOOM = 19
+// Google's satellite imagery goes deeper, so the spec'd 19.2 applies there.
 const GOOGLE_TARGET_ZOOM = 19.2
 
 const isPhone = () => window.matchMedia('(max-width: 820px)').matches
@@ -54,12 +54,11 @@ function buildMarkerElement(config) {
 }
 
 // ---------------------------------------------------------------------------
-// MapLibre + Esri World Imagery (active, keyless)
+// Leaflet + Esri World Imagery (active, keyless, <img>-based tiles)
 // ---------------------------------------------------------------------------
 
-function createMapLibreProvider() {
+function createLeafletProvider() {
   let map = null
-  let marker = null
   // Generation counter so a createIntroMap superseded by destroy() (or by a
   // newer create, e.g. React StrictMode's dev double-mount) aborts cleanly
   // instead of leaking a second map.
@@ -68,63 +67,63 @@ function createMapLibreProvider() {
   return {
     async createIntroMap(container, config) {
       const myGen = ++gen
-      const maplibregl = (await import('maplibre-gl')).default
-      await import('maplibre-gl/dist/maplibre-gl.css')
+      const L = (await import('leaflet')).default
+      await import('leaflet/dist/leaflet.css')
       if (myGen !== gen) return
 
-      map = new maplibregl.Map({
-        container,
-        style: {
-          version: 8,
-          sources: {
-            esri: {
-              type: 'raster',
-              tiles: [TILE_URL],
-              tileSize: 256,
-              maxzoom: IMAGERY_MAX_ZOOM,
-              attribution:
-                'Esri, Maxar, Earthstar Geographics, and the GIS User Community',
-            },
-          },
-          layers: [{ id: 'esri', type: 'raster', source: 'esri' }],
-        },
-        center: [config.introStartCenter.lng, config.introStartCenter.lat],
+      map = L.map(container, {
+        center: [config.introStartCenter.lat, config.introStartCenter.lng],
         zoom: config.introStartZoom,
-        pitch: 0,
-        bearing: 0,
-        interactive: false, // this is a movie, not a map
-        attributionControl: { compact: true },
+        zoomSnap: 0, // allow fractional zooms (9.5 start, smooth dive)
+        zoomControl: false,
+        attributionControl: true,
+        // this is a movie, not a map — all interaction off
+        dragging: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+        keyboard: false,
+        touchZoom: false,
+        inertia: false,
       })
 
-      // Tile fetch failures (offline, blocked network) must never break the
-      // sequence. Swallow the noisy per-tile errors, warn once — and track
-      // whether ANY tile actually rendered: if none did, the caller skips
-      // the flight entirely instead of flying over a black void.
-      let warned = false
+      // Track whether ANY tile actually rendered: if none did, the caller
+      // skips the flight instead of flying over a black void.
       let tileOk = false
-      map.on('data', (e) => {
-        if (e.tile) tileOk = true
+      let errCount = 0
+      let warned = false
+      const layer = L.tileLayer(TILE_URL, {
+        maxZoom: LEAFLET_TARGET_ZOOM,
+        maxNativeZoom: 19,
+        attribution: ESRI_ATTRIBUTION,
+        // NOTE: no crossOrigin option — tiles load as plain <img> elements,
+        // which do not require CORS headers from the tile server.
       })
-      map.on('error', (e) => {
+      layer.on('tileload', () => {
+        tileOk = true
+      })
+      layer.on('tileerror', (e) => {
+        errCount++
         if (!warned) {
           warned = true
-          console.warn('Map tile error (continuing without imagery):', e?.error?.message || e)
+          console.warn('Map tile error (continuing):', e?.error || e)
         }
       })
+      layer.addTo(map)
 
-      marker = new maplibregl.Marker({
-        element: buildMarkerElement(config),
-        anchor: 'center',
-      })
-        .setLngLat([config.shopCoords.lng, config.shopCoords.lat])
-        .addTo(map)
+      L.marker([config.shopCoords.lat, config.shopCoords.lng], {
+        icon: L.divIcon({
+          html: buildMarkerElement(config),
+          className: 'shop-marker-anchor', // no default Leaflet icon styles
+          iconSize: [22, 22],
+        }),
+        interactive: false,
+        keyboard: false,
+      }).addTo(map)
 
       // Resolve when the starting view's imagery is actually on screen — or
-      // as soon as it's clear it never will be. 'idle' alone is not enough:
-      // failing tiles are retried for many seconds, which would stall the
-      // loader and then fly the camera over a black void.
+      // as soon as it's clear it never will be. Never hang the loader.
       await new Promise((resolve) => {
-        let errCount = 0
         let settled = false
         const finish = () => {
           if (!settled) {
@@ -132,39 +131,35 @@ function createMapLibreProvider() {
             resolve()
           }
         }
-        map.on('error', () => {
-          errCount++
+        layer.once('load', finish) // all visible tiles loaded
+        const failPoll = setInterval(() => {
           // several tile failures and not a single success: give up early
-          if (!tileOk && errCount >= 4) finish()
-        })
-        map.once('idle', finish)
-        setTimeout(finish, 8000) // absolute ceiling — never hang the loader
-        if (map.loaded() && map.areTilesLoaded()) finish()
+          if (!tileOk && errCount >= 4) {
+            clearInterval(failPoll)
+            finish()
+          }
+          if (settled) clearInterval(failPoll)
+        }, 150)
+        setTimeout(finish, 8000) // absolute ceiling
       })
       return { tilesVisible: tileOk }
     },
 
     flyToShop(onComplete, config) {
       if (!map) return onComplete?.()
-      const duration = isPhone() ? 3200 : 4200
+      const duration = isPhone() ? 3.2 : 4.2 // Leaflet durations are seconds
       map.once('moveend', () => onComplete?.())
-      map.flyTo({
-        center: [config.shopCoords.lng, config.shopCoords.lat],
-        zoom: MAPLIBRE_TARGET_ZOOM,
-        pitch: 0, // bird's-eye the whole way down
-        bearing: 0,
-        duration,
-        curve: 1.6,
-        essential: true,
-      })
+      map.flyTo(
+        [config.shopCoords.lat, config.shopCoords.lng],
+        LEAFLET_TARGET_ZOOM,
+        { duration, animate: true },
+      )
     },
 
     destroy() {
       gen++
-      marker?.remove()
-      marker = null
       if (map) {
-        map.remove() // frees the WebGL context and tile memory
+        map.remove()
         map = null
       }
     },
@@ -295,7 +290,7 @@ if (GOOGLE_KEY && !GOOGLE_MAP_ID) {
       'using the MapLibre/Esri provider. Add a vector map ID to enable Google Maps.',
   )
 }
-const provider = useGoogle ? createGoogleProvider() : createMapLibreProvider()
+const provider = useGoogle ? createGoogleProvider() : createLeafletProvider()
 
 let activeConfig = null
 

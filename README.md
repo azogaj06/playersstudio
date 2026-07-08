@@ -118,10 +118,14 @@ All map logic goes through [`src/lib/mapProvider.js`](src/lib/mapProvider.js),
 which exposes exactly three functions: `createIntroMap(container, config)`,
 `flyToShop(onComplete)`, `destroy()`.
 
-- **Active provider (no key needed):** MapLibre GL rendering Esri World
-  Imagery raster tiles, with Esri attribution in the corner. The dive is one
-  `map.flyTo({ zoom: 19.2 → clamped to imagery max 19, duration: 4200 (3200 on
-  ≤820px), curve: 1.6 })`.
+- **Active provider (no key needed):** Leaflet rendering Esri World Imagery
+  tiles as plain `<img>` elements — no WebGL, no CORS requirements, works
+  anywhere a browser can show an image (chosen after a WebGL/fetch-based
+  engine failed to load imagery on real-world networks). The dive is one
+  `map.flyTo([shop], 19, { duration: 4.2 (3.2 on ≤820px) })` with Esri
+  attribution in the corner. If imagery genuinely can't load, the intro
+  skips the flight and fades straight into the shop; with `?intro` on the
+  URL an on-screen note states the exact reason.
 - **Google upgrade path:** set env vars and the Google provider activates
   automatically — no code changes:
 

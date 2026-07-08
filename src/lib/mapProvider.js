@@ -34,18 +34,19 @@ const GOOGLE_TARGET_ZOOM = 19.2
 
 const isPhone = () => window.matchMedia('(max-width: 820px)').matches
 
-/** Branded DOM marker: logo dot if the file exists, white-ringed gold dot otherwise. */
+/** Branded marker: small pulsing dot on the shop + the Players Studio
+ *  wordmark floating above it, riding along as the camera dives. */
 function buildMarkerElement(config) {
   const el = document.createElement('div')
   el.className = 'shop-marker'
+  const wordmark = document.createElement('img')
+  wordmark.src = config.assets.logo
+  wordmark.alt = ''
+  wordmark.className = 'shop-marker__wordmark'
+  wordmark.onerror = () => wordmark.remove() // dot-only until the logo exists
+  el.appendChild(wordmark)
   const dot = document.createElement('div')
   dot.className = 'shop-marker__dot'
-  const img = document.createElement('img')
-  img.src = config.assets.logo
-  img.alt = ''
-  img.className = 'shop-marker__logo'
-  img.onerror = () => img.remove() // fall back to the plain branded dot
-  dot.appendChild(img)
   el.appendChild(dot)
   const pulse = document.createElement('div')
   pulse.className = 'shop-marker__pulse'

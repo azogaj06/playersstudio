@@ -21,10 +21,11 @@ const site = {
     'https://booksy.com/en-ca/9047_players-fade-studio_barbershop_773207_oakville',
 
   // --- Geography -------------------------------------------------------------
-  // VERIFY: pin should sit on the correct building — north side of
-  // Lakeshore Rd E in downtown Oakville. Check against Google Maps
-  // satellite view and nudge lat/lng if it lands on the road or a neighbour.
-  shopCoords: { lat: 43.4444, lng: -79.6649 },
+  // 295 Lakeshore Rd E — derived from the verified RBC pin two doors west
+  // (279 Lakeshore @ 43.44730,-79.66679, Lakeshore & Trafalgar corner),
+  // extrapolated along the street's bearing. North side of Lakeshore Rd E.
+  // Nudge here if the final frame is a door off.
+  shopCoords: { lat: 43.4476, lng: -79.6665 },
 
   // Intro flight starting camera: slightly northwest of the shop so the
   // Lake Ontario shoreline and Sixteen Mile Creek read in the opening frame.

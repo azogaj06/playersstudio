@@ -21,9 +21,14 @@ npm run build          # production build to dist/
 npm run preview        # serve the production build
 ```
 
-This is a **rough-draft build**: several final assets don't exist yet. The site
-is fully functional today using defined fallbacks, and every pending asset is a
-pure drop-in — replacing files and editing one config object, zero code changes.
+The core assets are now REAL: the interior photo, the wordmark logo (extracted
+from the client's logo sheet) and the three object-cutout button images
+(processed from the client's composite — white backgrounds keyed to
+transparency). Still pending as drop-ins: barber portraits and gallery photos.
+Every slot keeps its defined fallback, so replacing or upgrading any file is
+still a pure drop-in — zero code changes. The raw client uploads live on the
+`main` branch root ("Mid point.png", "Players Studio logo.png", "desk chairs
+barber chair.png").
 
 ## The drop-in asset contract
 
@@ -41,9 +46,9 @@ All business data, asset paths and hotspot positions live in **one file**:
 | `public/assets/barbers/rafael.jpg`, `edward.jpg` | Barber cards | square-ish portraits | Dark avatar circle with initial |
 | `public/gallery/cut-01.jpg` … `cut-06.jpg` | Gallery grid + lightbox | any size, they lazy-load | Six "PHOTO" tiles |
 
-> Note: until the pending files are dropped in, the browser console will show
-> 404s for them — that's inherent to the onError-based auto-detection and
-> disappears as assets land.
+> Note: until the remaining pending files (barber portraits, gallery photos)
+> are dropped in, the browser console will show 404s for them — that's
+> inherent to the onError-based auto-detection and disappears as assets land.
 
 ### The Booksy link
 

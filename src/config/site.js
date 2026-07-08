@@ -39,7 +39,7 @@ const site = {
     // via srcset. If the file is absent the site silently falls back to the
     // full-resolution interior.jpg — nothing breaks.
     interiorSmall: '/assets/interior-1600.jpg',
-    interiorFullWidth: 2400, // srcset width descriptor — update to the real photo's pixel width
+    interiorFullWidth: 1535, // current photo's real pixel width — bump if a higher-res original arrives
   },
 
   // Aspect ratio of the interior photo (real photo is 3:2 landscape).
@@ -51,9 +51,9 @@ const site = {
   // bottom-right, front-right barber chair centre, waiting chairs bottom-left.
   // FINE-TUNE once the photo file is dropped in.
   hotspots: [
-    { id: 'book',    label: 'Book an Appointment', x: 84, y: 76, w: 18, img: '/assets/buttons/book.png' },    // reception desk, bottom right
-    { id: 'barbers', label: 'Meet the Barbers',    x: 61, y: 60, w: 13, img: '/assets/buttons/barbers.png' }, // front-right barber chair
-    { id: 'gallery', label: 'The Gallery',         x: 15, y: 76, w: 16, img: '/assets/buttons/gallery.png' }, // waiting chairs, bottom left
+    { id: 'book',    label: 'Book an Appointment', x: 85, y: 72, w: 16, img: '/assets/buttons/book.png' },    // reception desk, bottom right
+    { id: 'barbers', label: 'Meet the Barbers',    x: 58, y: 57, w: 13, img: '/assets/buttons/barbers.png' }, // front-right barber chair
+    { id: 'gallery', label: 'The Gallery',         x: 13, y: 77, w: 18, img: '/assets/buttons/gallery.png' }, // waiting chairs, bottom left
   ],
 
   // --- Barbers -----------------------------------------------------------------

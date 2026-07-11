@@ -72,16 +72,41 @@ const site = {
   ],
 
   // --- Gallery -------------------------------------------------------------------
-  // Real photos are drop-in files in /public/gallery/ plus entries here.
-  // pending: true shows the placeholder tile and requests nothing. When a
-  // photo is dropped into /public/gallery/, delete its pending flag.
+  // Real shop photos (owner's originals live in raw-assets/gallery/; these are
+  // the web-optimized versions). thumb feeds the square grid tile, src feeds
+  // the lightbox. To add a photo: drop cut-07.jpg + cut-07-thumb.jpg into
+  // /public/gallery/ and add a line here.
   gallery: [
-    { src: '/gallery/cut-01.jpg', alt: 'Skin fade haircut at Players Studio Oakville', pending: true },
-    { src: '/gallery/cut-02.jpg', alt: 'Taper fade with beard lineup at Players Studio', pending: true },
-    { src: '/gallery/cut-03.jpg', alt: 'Classic scissor cut at Players Studio Oakville', pending: true },
-    { src: '/gallery/cut-04.jpg', alt: 'Beard trim and hot towel at Players Studio', pending: true },
-    { src: '/gallery/cut-05.jpg', alt: 'Kids haircut at Players Studio Oakville', pending: true },
-    { src: '/gallery/cut-06.jpg', alt: 'Fresh fade by a Players Studio barber', pending: true },
+    {
+      src: '/gallery/cut-01.jpg',
+      thumb: '/gallery/cut-01-thumb.jpg',
+      alt: 'Low taper fade being detailed with a trimmer at Players Studio Oakville',
+    },
+    {
+      src: '/gallery/cut-02.jpg',
+      thumb: '/gallery/cut-02-thumb.jpg',
+      alt: 'Beard trim and lineup blended into a fade at Players Studio',
+    },
+    {
+      src: '/gallery/cut-03.jpg',
+      thumb: '/gallery/cut-03-thumb.jpg',
+      alt: 'Kids haircut with a clean fade at Players Studio Oakville',
+    },
+    {
+      src: '/gallery/cut-04.jpg',
+      thumb: '/gallery/cut-04-thumb.jpg',
+      alt: 'Custom freestyle design shaved into a taper at Players Studio',
+    },
+    {
+      src: '/gallery/cut-05.jpg',
+      thumb: '/gallery/cut-05-thumb.jpg',
+      alt: 'Players Studio barber finishing up a haircut in the Oakville shop',
+    },
+    {
+      src: '/gallery/cut-06.jpg',
+      thumb: '/gallery/cut-06-thumb.jpg',
+      alt: 'Barber shaping a curly top haircut at Players Studio Oakville',
+    },
   ],
 
   // --- Reviews (from the shop's Booksy/Google listings) -------------------------------

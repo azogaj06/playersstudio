@@ -93,10 +93,10 @@ function Tile({ photo, index, onOpen }) {
       >
         {showImg ? (
           <img
-            src={photo.src}
+            src={photo.thumb || photo.src}
             alt={photo.alt}
-            width="600"
-            height="600"
+            width="640"
+            height="640"
             loading="lazy"
             decoding="async"
             onError={() => setMissing(true)}

@@ -1,18 +1,15 @@
-# Gallery photos go here
+# Gallery photos
 
-Upload haircut/shop photos into THIS folder (`public/gallery/`).
+The live gallery. Each photo is two web-optimized files (originals are kept
+in `raw-assets/gallery/`):
 
-How to upload on github.com:
+- `cut-0N.jpg` — full size (~1600px tall), shown in the lightbox
+- `cut-0N-thumb.jpg` — 640×640 square crop, shown in the grid
 
-1. Open this folder on GitHub
-2. Click **Add file → Upload files**
-3. Drag the photos in
-4. Click the green **Commit changes** button at the bottom — nothing is saved
-   until you click it
+## Adding a photo
 
-Notes:
-
-- Every file needs a **unique name** — if two photos share a name, rename one
-  before uploading (e.g. `skin-fade-2.jpg`)
-- JPG or PNG, straight off the phone is fine — they get optimized before going
-  live on the site
+1. Upload the new photo here (**Add file → Upload files**, then the green
+   **Commit changes** button — nothing is saved until you click it)
+2. Every file needs a unique name — rename before uploading if two match
+3. Tell Claude — it gets optimized into the two files above and added to
+   the gallery list in `src/config/site.js`

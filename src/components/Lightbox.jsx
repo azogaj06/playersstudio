@@ -71,6 +71,8 @@ export default function Lightbox({ index, onClose, onMove }) {
           <img
             src={photo.src}
             alt={photo.alt}
+            width="1069"
+            height="1600"
             decoding="async"
             onError={() => setMissing(true)}
           />

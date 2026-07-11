@@ -28,12 +28,13 @@ npm run build          # production build to dist/
 npm run preview        # serve the production build
 ```
 
-The core assets are REAL: the interior photo and the wordmark logo (extracted
-from the client's logo sheet). Still pending as drop-ins: barber portraits and
-gallery photos. Every slot keeps its defined fallback, so replacing or
-upgrading any file is still a pure drop-in — zero code changes. The client's
-untouched originals are kept in [`raw-assets/`](raw-assets/), and gallery
-photos are uploaded straight into [`public/gallery/`](public/gallery/).
+The core assets are REAL: the interior photo, the wordmark logo (extracted
+from the client's logo sheet) and six professional gallery photos. Still
+pending as drop-ins: barber portraits. Every slot keeps its defined fallback,
+so replacing or upgrading any file is still a pure drop-in — zero code
+changes. The client's untouched originals are kept in
+[`raw-assets/`](raw-assets/), and new gallery photos are uploaded straight
+into [`public/gallery/`](public/gallery/).
 
 ## The drop-in asset contract
 
@@ -46,12 +47,11 @@ All business data and asset paths live in **one file**:
 | `public/assets/interior.jpg` | The full-screen hero photo | ≥2400px wide, landscape | Plain dark fallback |
 | `public/assets/interior-1600.jpg` | *Optional* phone-optimized copy served via srcset | ~1600px wide, same crop | Falls back silently to `interior.jpg` |
 | `public/assets/barbers/rafael.jpg`, `edward.jpg` | Barber cards | square-ish portraits | Dark avatar circle with initial |
-| `public/gallery/cut-01.jpg` … `cut-06.jpg` | Gallery grid + lightbox | any size, they lazy-load | Six "PHOTO" tiles |
+| `public/gallery/cut-0N.jpg` + `cut-0N-thumb.jpg` | Gallery grid + lightbox | LIVE — six real shots; thumb feeds the tile, full feeds the lightbox | A missing file falls back to a "PHOTO" tile |
 
-> Barber photos and gallery photos are marked pending in config (barber
-> `img: null`, gallery `pending: true`) so nothing is requested and the
-> console stays clean. When a file is uploaded, set the barber's `img` path /
-> delete the gallery entry's `pending` flag — still config-only changes.
+> Barber photos are still marked pending in config (`img: null`) so nothing
+> is requested and the console stays clean. When a portrait is uploaded, set
+> the barber's `img` path — still a config-only change.
 
 ### The Booksy link
 

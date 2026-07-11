@@ -10,7 +10,11 @@ import './styles/app.css'
 // ============================================================================
 
 const origin = window.location.origin
+// Site paths already carry import.meta.env.BASE_URL (see config/site.js), so
+// absolutizing is just prepending the origin. pageUrl is the canonical home —
+// e.g. https://azogaj06.github.io/playersstudio/ on GitHub Pages.
 const abs = (path) => origin + path
+const pageUrl = origin + import.meta.env.BASE_URL
 const [street, city, region] = site.address.split(',').map((s) => s.trim())
 
 function setMeta(attr, key, content) {
@@ -34,13 +38,13 @@ function setLink(rel, href) {
 
 document.title = site.seo.title
 setMeta('name', 'description', site.seo.description)
-setLink('canonical', origin + '/')
+setLink('canonical', pageUrl)
 
 // Open Graph + Twitter cards (link previews in Messages/Instagram/etc. too)
 setMeta('property', 'og:type', 'business.business')
 setMeta('property', 'og:title', site.seo.title)
 setMeta('property', 'og:description', site.seo.description)
-setMeta('property', 'og:url', origin + '/')
+setMeta('property', 'og:url', pageUrl)
 setMeta('property', 'og:image', abs(site.assets.interior))
 setMeta('property', 'og:site_name', site.name)
 setMeta('name', 'twitter:card', 'summary_large_image')
@@ -53,10 +57,10 @@ setMeta('name', 'twitter:image', abs(site.assets.interior))
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Barbershop',
-  '@id': origin + '/#business',
+  '@id': pageUrl + '#business',
   name: site.name,
   description: site.seo.description,
-  url: origin + '/',
+  url: pageUrl,
   image: abs(site.assets.interior),
   logo: abs(site.assets.logo),
   telephone: site.phoneHref.replace('tel:', ''),

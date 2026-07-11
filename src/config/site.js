@@ -5,6 +5,11 @@
 // any other file.
 // ============================================================================
 
+// Prefix for every local file path below. import.meta.env.BASE_URL is '/'
+// in dev/Netlify and '/playersstudio/' on GitHub Pages, so the same config
+// works wherever the site is mounted.
+const asset = (path) => import.meta.env.BASE_URL + path
+
 const site = {
   // --- Business facts -------------------------------------------------------
   name: 'Players Studio',
@@ -34,12 +39,12 @@ const site = {
 
   // --- Assets (drop-in slots) ------------------------------------------------
   assets: {
-    logo: '/assets/logo.png', // ~600px wide transparent PNG
-    interior: '/assets/interior.jpg', // >=2400px wide landscape photo
+    logo: asset('assets/logo.png'), // ~600px wide transparent PNG
+    interior: asset('assets/interior.jpg'), // >=2400px wide landscape photo
     // OPTIONAL phone-optimized copy (~1600px wide) served to small screens
     // via srcset. If the file is absent the site silently falls back to the
     // full-resolution interior.jpg — nothing breaks.
-    interiorSmall: '/assets/interior-1600.jpg',
+    interiorSmall: asset('assets/interior-1600.jpg'),
     interiorSmallWidth: 1100, // real pixel width of the phone copy
     interiorFullWidth: 1535, // current photo's real pixel width
     interiorHeight: 1024, // full photo's pixel height (for layout stability)
@@ -78,33 +83,33 @@ const site = {
   // /public/gallery/ and add a line here.
   gallery: [
     {
-      src: '/gallery/cut-01.jpg',
-      thumb: '/gallery/cut-01-thumb.jpg',
+      src: asset('gallery/cut-01.jpg'),
+      thumb: asset('gallery/cut-01-thumb.jpg'),
       alt: 'Low taper fade being detailed with a trimmer at Players Studio Oakville',
     },
     {
-      src: '/gallery/cut-02.jpg',
-      thumb: '/gallery/cut-02-thumb.jpg',
+      src: asset('gallery/cut-02.jpg'),
+      thumb: asset('gallery/cut-02-thumb.jpg'),
       alt: 'Beard trim and lineup blended into a fade at Players Studio',
     },
     {
-      src: '/gallery/cut-03.jpg',
-      thumb: '/gallery/cut-03-thumb.jpg',
+      src: asset('gallery/cut-03.jpg'),
+      thumb: asset('gallery/cut-03-thumb.jpg'),
       alt: 'Kids haircut with a clean fade at Players Studio Oakville',
     },
     {
-      src: '/gallery/cut-04.jpg',
-      thumb: '/gallery/cut-04-thumb.jpg',
+      src: asset('gallery/cut-04.jpg'),
+      thumb: asset('gallery/cut-04-thumb.jpg'),
       alt: 'Custom freestyle design shaved into a taper at Players Studio',
     },
     {
-      src: '/gallery/cut-05.jpg',
-      thumb: '/gallery/cut-05-thumb.jpg',
+      src: asset('gallery/cut-05.jpg'),
+      thumb: asset('gallery/cut-05-thumb.jpg'),
       alt: 'Players Studio barber finishing up a haircut in the Oakville shop',
     },
     {
-      src: '/gallery/cut-06.jpg',
-      thumb: '/gallery/cut-06-thumb.jpg',
+      src: asset('gallery/cut-06.jpg'),
+      thumb: asset('gallery/cut-06-thumb.jpg'),
       alt: 'Barber shaping a curly top haircut at Players Studio Oakville',
     },
   ],

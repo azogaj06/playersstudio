@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://azogaj06.github.io/playersstudio/sitemap.xml

@@ -375,6 +375,14 @@
   text-transform: uppercase;
   color: var(--text-dim);
 }
+.hero__wordmark {
+  display: block;
+  width: min(430px, 80vw);
+  height: auto;
+  margin: 2px 0 4px;
+  filter: drop-shadow(0 3px 16px rgba(0, 0, 0, 0.75))
+    drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+}
 .hero__title {
   display: block;
   margin: 0;

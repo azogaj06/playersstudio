@@ -14,6 +14,7 @@ export default function Hero({ animateIn, settleDelay = 0 }) {
   const photoRef = useRef(null)
   const contentRef = useRef(null)
   const [photoMissing, setPhotoMissing] = useState(false)
+  const [logoMissing, setLogoMissing] = useState(false)
   const hasUrl = Boolean(site.bookingUrl)
 
   useLayoutEffect(() => {
@@ -69,9 +70,28 @@ export default function Hero({ animateIn, settleDelay = 0 }) {
       </div>
 
       <div className="hero__content" ref={contentRef}>
+        {/* The wordmark image is the visible brand; the visually-hidden text
+            keeps a real keyword h1 for search engines. If the logo file is
+            missing, the styled text steps back in. */}
         <h1 className="hero__heading">
           <span className="hero__kicker">{site.tagline}</span>
-          <span className="hero__title display">{site.name}</span>
+          <span className="visually-hidden">{site.name}</span>
+          {!logoMissing ? (
+            <img
+              className="hero__wordmark"
+              src={site.assets.logo}
+              alt=""
+              width="800"
+              height="340"
+              fetchpriority="high"
+              draggable="false"
+              onError={() => setLogoMissing(true)}
+            />
+          ) : (
+            <span className="hero__title display" aria-hidden="true">
+              {site.name}
+            </span>
+          )}
         </h1>
         <p className="hero__line">{site.heroLine}</p>
 

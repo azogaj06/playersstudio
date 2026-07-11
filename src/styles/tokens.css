@@ -120,6 +120,19 @@ a {
   border-radius: 4px;
 }
 
+/* Screen-reader-only text (keeps real text in headings behind imagery) */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Display face used by the text-fallback logo */
 .display {
   font-family: var(--font-display);

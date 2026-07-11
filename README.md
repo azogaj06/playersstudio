@@ -21,7 +21,6 @@ Best Practices 0.96 · SEO 1.0.
 ## Run it
 
 ```bash
-cd players-studio
 npm install
 npm run dev            # local dev server
 npm run dev -- --host  # expose on LAN for real-phone testing
@@ -29,24 +28,22 @@ npm run build          # production build to dist/
 npm run preview        # serve the production build
 ```
 
-The core assets are now REAL: the interior photo, the wordmark logo (extracted
-from the client's logo sheet) and the three object-cutout button images
-(processed from the client's composite — white backgrounds keyed to
-transparency). Still pending as drop-ins: barber portraits and gallery photos.
-Every slot keeps its defined fallback, so replacing or upgrading any file is
-still a pure drop-in — zero code changes. The raw client uploads live on the
-`main` branch root ("Mid point.png", "Players Studio logo.png", "desk chairs
-barber chair.png").
+The core assets are REAL: the interior photo and the wordmark logo (extracted
+from the client's logo sheet). Still pending as drop-ins: barber portraits and
+gallery photos. Every slot keeps its defined fallback, so replacing or
+upgrading any file is still a pure drop-in — zero code changes. The client's
+untouched originals are kept in [`raw-assets/`](raw-assets/), and gallery
+photos are uploaded straight into [`public/gallery/`](public/gallery/).
 
 ## The drop-in asset contract
 
-All business data, asset paths and hotspot positions live in **one file**:
+All business data and asset paths live in **one file**:
 [`src/config/site.js`](src/config/site.js). Nothing else needs touching.
 
 | Drop-in | Where it goes | Guidance | Until it arrives |
 | --- | --- | --- | --- |
 | `public/assets/logo.png` | Loading screen, header, blackout ghost, map marker | ~600px wide, transparent PNG | Styled "PLAYERS STUDIO" text fallback (auto-swaps the moment the file exists) |
-| `public/assets/interior.jpg` | The full-screen interior scene | ≥2400px wide, landscape | Dark placeholder room with dashed DESK / CHAIR / CANVAS zones |
+| `public/assets/interior.jpg` | The full-screen hero photo | ≥2400px wide, landscape | Plain dark fallback |
 | `public/assets/interior-1600.jpg` | *Optional* phone-optimized copy served via srcset | ~1600px wide, same crop | Falls back silently to `interior.jpg` |
 | `public/assets/barbers/rafael.jpg`, `edward.jpg` | Barber cards | square-ish portraits | Dark avatar circle with initial |
 | `public/gallery/cut-01.jpg` … `cut-06.jpg` | Gallery grid + lightbox | any size, they lazy-load | Six "PHOTO" tiles |
@@ -73,11 +70,10 @@ tab.
 facts, all sourced from the shop's public Booksy page (July 2026: **4.9★,
 600+ reviews**; services $24–$50; open 7 days):
 
-- The **Reviews panel** (rating hero + quote cards + "Read all on
-  Booksy/Google" links) opens from the ★4.9 chip in the header and from the
-  rating strip at the top of the Booking panel.
-- The **Booking panel** shows the rating strip, the services/prices list and
-  the weekly hours under the Book/Call buttons.
+- The **Reviews section** (rating hero + quote cards + "Read all on
+  Booksy/Google" links) is linked from the ★4.9 chip in the hero.
+- The **Services section** carries the services/prices list; the **Visit
+  section** carries the weekly hours alongside address/directions/call.
 - The quote cards are **lightly paraphrased** from review snippets on the
   public listing — replace them with verbatim favourites from the Booksy
   dashboard when convenient (each quote is one config entry).
@@ -134,15 +130,13 @@ which exposes exactly three functions: `createIntroMap(container, config)`,
   AdvancedMarkerElement pin; without one the flight still works on the raster
   satellite map. The site never breaks when the key is absent.
 
-**Verify the pin**: `shopCoords` in `site.js` is a best guess
-(43.4444, -79.6649). Check on Google Maps satellite view that the marker sits
-on the shop's building on the **north side of Lakeshore Rd E** and nudge if
-needed.
+**The pin is verified**: `shopCoords` in `site.js` (43.4476, -79.6665) was
+anchored against a known neighbouring address and confirmed by the owner —
+the dive lands on the shop's building on the north side of Lakeshore Rd E.
+Nudge only if the shop ever moves.
 
 ## Behaviour flags (in `site.js`)
 
-- `parallax` — subtle desktop mouse parallax on the interior (off under
-  reduced motion).
 - `autoSkipIntroOnReturn` — after one completed/skipped intro, returning
   visitors on phones (≤820px) land directly on the interior, one tap from
   booking.
@@ -175,15 +169,12 @@ URL (e.g. `http://localhost:5173/?intro`) — it overrides both.
 
 ## Draft decisions (made during the build, revisit freely)
 
-- The repo is an Expo app; this site lives self-contained in
-  `players-studio/` with its own `package.json`.
-- A local `tsconfig.json` exists only to stop Vite's dependency scanner from
-  walking up into the Expo tsconfig; the project is plain JSX.
-- Mobile bottom sheets are full-screen per spec, so on phones they close via
-  ✕ / Escape; backdrop-click close applies to the desktop card (where a
-  backdrop is actually visible).
+- The site started inside the owner's other repo and was split out here with
+  its history intact (`git subtree split`); it is fully self-contained.
+- The local `tsconfig.json` only pins Vite's dependency scanner to this
+  project; the code is plain JSX.
 - The interior `srcset` cascade: phones try `interior-1600.jpg`; if only
   `interior.jpg` exists the onError handler retries with it, and if neither
-  exists the placeholder room renders. Dropping only `interior.jpg` works.
+  exists a plain dark fallback renders. Dropping only `interior.jpg` works.
 - The desktop tile failsafe (10s) was added beyond the spec's 4s phone
   failsafe so the loader can never hang anyone, on any device.

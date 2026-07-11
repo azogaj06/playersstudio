@@ -7,6 +7,14 @@
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <meta name="theme-color" content="#050506" />
+    <link rel="preconnect" href="https://server.arcgisonline.com" crossorigin />
+    <link rel="dns-prefetch" href="https://server.arcgisonline.com" />
+    <link
+      rel="preload"
+      as="image"
+      imagesrcset="/assets/interior-1600.jpg 1100w, /assets/interior.jpg 1535w"
+      imagesizes="100vw"
+    />
     <!-- Static shell only — the real title/description are stamped from
          src/config/site.js at boot so business facts live in one place. -->
     <meta name="description" content="Players Studio barbershop — book your chair." />
@@ -18,6 +26,14 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <div style="padding: 24px; font-family: sans-serif; color: #f4f4f5; background: #050506">
+        <h1>Players Studio — Barbershop in Downtown Oakville</h1>
+        <p>295 Lakeshore Rd E, Oakville, ON L6J 1J3 · <a href="tel:+19058444443" style="color: #fff">905-844-4443</a></p>
+        <p>Haircuts, fades, beard trims and kids cuts. Walk-ins welcome.</p>
+        <p><a href="https://booksy.com/en-ca/9047_players-fade-studio_barbershop_773207_oakville" style="color: #fff">Book an appointment on Booksy</a></p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

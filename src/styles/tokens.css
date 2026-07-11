@@ -63,13 +63,29 @@ body {
 
 body {
   min-height: 100dvh;
-  overflow: hidden; /* single-scene site; panels/panorama scroll internally */
+  /* locked during the intro movie; html.site-ready unlocks normal scrolling */
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
+html.site-ready,
+html.site-ready body {
+  overflow: visible;
+  overflow-x: clip; /* never any sideways scroll */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 #root {
-  height: 100dvh;
+  min-height: 100dvh;
 }
 
 img {

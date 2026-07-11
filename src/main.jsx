@@ -5,24 +5,62 @@ import site from './config/site.js'
 import './styles/tokens.css'
 import './styles/app.css'
 
-// Business facts live only in src/config/site.js — stamp the document
-// title/description from there instead of hardcoding them in index.html.
-document.title = `${site.name} — ${site.address.split(',').slice(1, 2).join('').trim()} Barbershop`
-document
-  .querySelector('meta[name="description"]')
-  ?.setAttribute(
-    'content',
-    `${site.name} — barbershop at ${site.address}. Book your chair.`,
-  )
+// ============================================================================
+// SEO head — every business fact comes from src/config/site.js.
+// ============================================================================
 
-// LocalBusiness structured data so the site's own SEO carries the same
-// facts as the Google/Booksy listings. Built entirely from config.
+const origin = window.location.origin
+const abs = (path) => origin + path
 const [street, city, region] = site.address.split(',').map((s) => s.trim())
+
+function setMeta(attr, key, content) {
+  let el = document.querySelector(`meta[${attr}="${key}"]`)
+  if (!el) {
+    el = document.createElement('meta')
+    el.setAttribute(attr, key)
+    document.head.appendChild(el)
+  }
+  el.setAttribute('content', content)
+}
+function setLink(rel, href) {
+  let el = document.querySelector(`link[rel="${rel}"]`)
+  if (!el) {
+    el = document.createElement('link')
+    el.setAttribute('rel', rel)
+    document.head.appendChild(el)
+  }
+  el.setAttribute('href', href)
+}
+
+document.title = site.seo.title
+setMeta('name', 'description', site.seo.description)
+setLink('canonical', origin + '/')
+
+// Open Graph + Twitter cards (link previews in Messages/Instagram/etc. too)
+setMeta('property', 'og:type', 'business.business')
+setMeta('property', 'og:title', site.seo.title)
+setMeta('property', 'og:description', site.seo.description)
+setMeta('property', 'og:url', origin + '/')
+setMeta('property', 'og:image', abs(site.assets.interior))
+setMeta('property', 'og:site_name', site.name)
+setMeta('name', 'twitter:card', 'summary_large_image')
+setMeta('name', 'twitter:title', site.seo.title)
+setMeta('name', 'twitter:description', site.seo.description)
+setMeta('name', 'twitter:image', abs(site.assets.interior))
+
+// LocalBusiness structured data: the machine-readable version of everything
+// on the page — name, address, geo, phone, hours, rating, services, booking.
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Barbershop',
+  '@id': origin + '/#business',
   name: site.name,
-  telephone: site.phone,
+  description: site.seo.description,
+  url: origin + '/',
+  image: abs(site.assets.interior),
+  logo: abs(site.assets.logo),
+  telephone: site.phoneHref.replace('tel:', ''),
+  priceRange: site.seo.priceRange,
   address: {
     '@type': 'PostalAddress',
     streetAddress: street,
@@ -36,9 +74,20 @@ const jsonLd = {
     latitude: site.shopCoords.lat,
     longitude: site.shopCoords.lng,
   },
-  url: window.location.origin,
+  hasMap: site.directionsUrl,
   sameAs: [site.instagram, site.bookingUrl].filter(Boolean),
-  openingHours: (site.hours || []).map((h) => `${h.days} ${h.time}`),
+  openingHoursSpecification: (site.hours || []).map((h) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: h.dayOfWeek,
+    opens: h.opens,
+    closes: h.closes,
+  })),
+  makesOffer: (site.services || []).map((s) => ({
+    '@type': 'Offer',
+    itemOffered: { '@type': 'Service', name: s.name },
+    price: s.priceNumber,
+    priceCurrency: 'CAD',
+  })),
 }
 if (site.reviews?.rating) {
   jsonLd.aggregateRating = {
@@ -46,6 +95,20 @@ if (site.reviews?.rating) {
     ratingValue: site.reviews.rating,
     bestRating: 5,
     ratingCount: parseInt(site.reviews.countLabel, 10) || undefined,
+  }
+}
+if (site.bookingUrl) {
+  jsonLd.potentialAction = {
+    '@type': 'ReserveAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: site.bookingUrl,
+      actionPlatform: [
+        'https://schema.org/DesktopWebPlatform',
+        'https://schema.org/MobileWebPlatform',
+      ],
+    },
+    result: { '@type': 'Reservation', name: 'Barber appointment' },
   }
 }
 const ldScript = document.createElement('script')

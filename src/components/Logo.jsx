@@ -20,6 +20,8 @@ export default function Logo({ size = 'large', className = '' }) {
     <img
       className={`logo logo--img logo--${size} ${className}`}
       src={site.assets.logo}
+      width="800"
+      height="340"
       alt="Players Studio"
       onError={() => setMissing(true)}
       decoding="async"

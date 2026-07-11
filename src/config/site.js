@@ -1,8 +1,8 @@
 // ============================================================================
 // PLAYERS STUDIO — SITE CONFIG
-// This is the ONLY place business data, asset paths, and hotspot positions
-// live. Swapping a drop-in asset or changing a business fact should never
-// require touching any other file.
+// This is the ONLY place business data, asset paths and copy live. Swapping
+// a drop-in asset or changing a business fact should never require touching
+// any other file.
 // ============================================================================
 
 const site = {
@@ -40,40 +40,48 @@ const site = {
     // via srcset. If the file is absent the site silently falls back to the
     // full-resolution interior.jpg — nothing breaks.
     interiorSmall: '/assets/interior-1600.jpg',
-    interiorFullWidth: 1535, // current photo's real pixel width — bump if a higher-res original arrives
+    interiorSmallWidth: 1100, // real pixel width of the phone copy
+    interiorFullWidth: 1535, // current photo's real pixel width
+    interiorHeight: 1024, // full photo's pixel height (for layout stability)
   },
 
-  // Aspect ratio of the interior photo (real photo is 3:2 landscape).
-  interiorAspect: 3 / 2,
+  // --- SEO -------------------------------------------------------------------------
+  seo: {
+    // <title>: keep under ~60 characters, keyword + place up front
+    title: 'Players Studio | Barbershop in Downtown Oakville',
+    // meta description: ~155 characters, services + proof + call to action
+    description:
+      'Barbershop at 295 Lakeshore Rd E in downtown Oakville. Haircuts, fades, beard trims & kids cuts. Rated 4.9 from 600+ reviews. Book online or walk in.',
+    priceRange: '$24–$50',
+  },
 
-  // --- Hotspots ----------------------------------------------------------------
-  // Invisible click/tap regions over the photo's own objects — no overlay
-  // artwork. x,y = region center as % of the interior image; w,h = region
-  // size as % of the image. Hovering (mouse), touching (finger) or keyboard-
-  // focusing reveals the label + white glow; clicking opens the panel.
-  hotspots: [
-    { id: 'book',    label: 'Book an Appointment', x: 80.5, y: 72, w: 38, h: 54 }, // reception desk, right
-    { id: 'barbers', label: 'Meet the Barbers',    x: 36,   y: 56, w: 19, h: 43 }, // barber chair, ahead left
-    { id: 'gallery', label: 'The Gallery',         x: 13,   y: 76, w: 26, h: 45 }, // waiting chairs, left
-  ],
+  // --- Copy ----------------------------------------------------------------------
+  tagline: 'Barbershop in Downtown Oakville',
+  heroLine: 'Cuts, fades and beard work on Lakeshore — walk-ins welcome.',
+  directionsUrl:
+    'https://www.google.com/maps/dir/?api=1&destination=Players+Studio+295+Lakeshore+Rd+E+Oakville+ON',
 
   // --- Barbers -----------------------------------------------------------------
   // Adding a barber later = one line here + dropping their photo into
   // /public/assets/barbers/.
+  // img: null renders the initial-avatar and requests nothing. When a photo
+  // is dropped into /public/assets/barbers/, set img to its path.
   barbers: [
-    { id: 'rafael', name: 'Rafael', specialty: 'Specialty coming soon', img: '/assets/barbers/rafael.jpg' },
-    { id: 'edward', name: 'Edward', specialty: 'Specialty coming soon', img: '/assets/barbers/edward.jpg' },
+    { id: 'rafael', name: 'Rafael', specialty: 'Specialty coming soon', img: null },
+    { id: 'edward', name: 'Edward', specialty: 'Specialty coming soon', img: null },
   ],
 
   // --- Gallery -------------------------------------------------------------------
   // Real photos are drop-in files in /public/gallery/ plus entries here.
+  // pending: true shows the placeholder tile and requests nothing. When a
+  // photo is dropped into /public/gallery/, delete its pending flag.
   gallery: [
-    { src: '/gallery/cut-01.jpg', alt: 'Haircut by Players Studio' },
-    { src: '/gallery/cut-02.jpg', alt: 'Haircut by Players Studio' },
-    { src: '/gallery/cut-03.jpg', alt: 'Haircut by Players Studio' },
-    { src: '/gallery/cut-04.jpg', alt: 'Haircut by Players Studio' },
-    { src: '/gallery/cut-05.jpg', alt: 'Haircut by Players Studio' },
-    { src: '/gallery/cut-06.jpg', alt: 'Haircut by Players Studio' },
+    { src: '/gallery/cut-01.jpg', alt: 'Skin fade haircut at Players Studio Oakville', pending: true },
+    { src: '/gallery/cut-02.jpg', alt: 'Taper fade with beard lineup at Players Studio', pending: true },
+    { src: '/gallery/cut-03.jpg', alt: 'Classic scissor cut at Players Studio Oakville', pending: true },
+    { src: '/gallery/cut-04.jpg', alt: 'Beard trim and hot towel at Players Studio', pending: true },
+    { src: '/gallery/cut-05.jpg', alt: 'Kids haircut at Players Studio Oakville', pending: true },
+    { src: '/gallery/cut-06.jpg', alt: 'Fresh fade by a Players Studio barber', pending: true },
   ],
 
   // --- Reviews (from the shop's Booksy/Google listings) -------------------------------
@@ -119,20 +127,21 @@ const site = {
 
   // --- Services & hours (from the Booksy listing — keep in sync with Booksy) ---------
   services: [
-    { name: 'Haircut / Fade', price: '$40' },
-    { name: 'Haircut / Fade + Beard', price: '$50' },
-    { name: 'Beard Trim / Lineup', price: '$24' },
-    { name: 'Kids Haircut (10 & under)', price: '$30' },
+    { name: 'Haircut / Fade', price: '$40', priceNumber: 40 },
+    { name: 'Haircut / Fade + Beard', price: '$50', priceNumber: 50 },
+    { name: 'Beard Trim / Lineup', price: '$24', priceNumber: 24 },
+    { name: 'Kids Haircut (10 & under)', price: '$30', priceNumber: 30 },
   ],
+  // days/time are display strings; dayOfWeek/opens/closes feed the
+  // schema.org openingHoursSpecification search engines read.
   hours: [
-    { days: 'Mon – Thu', time: '9:00 AM – 9:00 PM' },
-    { days: 'Fri', time: '9:00 AM – 8:00 PM' },
-    { days: 'Sat', time: '9:00 AM – 7:00 PM' },
-    { days: 'Sun', time: '9:00 AM – 7:00 PM' },
+    { days: 'Mon – Thu', time: '9:00 AM – 9:00 PM', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'], opens: '09:00', closes: '21:00' },
+    { days: 'Fri', time: '9:00 AM – 8:00 PM', dayOfWeek: ['Friday'], opens: '09:00', closes: '20:00' },
+    { days: 'Sat', time: '9:00 AM – 7:00 PM', dayOfWeek: ['Saturday'], opens: '09:00', closes: '19:00' },
+    { days: 'Sun', time: '9:00 AM – 7:00 PM', dayOfWeek: ['Sunday'], opens: '09:00', closes: '19:00' },
   ],
 
   // --- Behaviour flags -------------------------------------------------------------
-  parallax: true, // subtle desktop mouse parallax on the interior stage
   autoSkipIntroOnReturn: true, // returning phone visitors skip the movie
   ghostLogoDuringBlackout: true, // logo at 15% opacity during the black hold
 }

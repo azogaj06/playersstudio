@@ -5,10 +5,18 @@ L6J 1J3 · 905-844-4443 · [@playersstudiooakville](https://www.instagram.com/pl
 
 The experience: logo loading screen → real satellite bird's-eye over Oakville →
 one continuous dive down to the shop's roof on Lakeshore Rd E → cut to black →
-fade up inside the shop → three glowing buttons on the reception desk, the
-barber chair and the canvas → Booking / Barbers / Gallery panels. Mobile is the
-primary platform: from the settled interior, the Booksy button is two taps away
-and calling the shop is one.
+fade up on the shop-photo hero with clear labelled buttons → a normal
+scrollable one-page site: Services & Prices, Meet the Barbers, Gallery,
+Reviews, Hours & Location, footer. Mobile is the primary platform: a sticky
+bottom bar keeps Call / BOOK / Hours one thumb-tap away at all times.
+
+**SEO:** the full page content is in the DOM from first paint (the intro
+plays as an overlay above it), with a keyword h1, per-section h2s, canonical
++ Open Graph/Twitter tags, robots.txt, llms.txt, and schema.org Barbershop
+JSON-LD carrying address, geo, structured opening hours, price range, the
+service catalog, the 4.9/600+ aggregate rating and a ReserveAction pointing
+at Booksy. Lighthouse (mobile): Performance 0.98 · Accessibility 1.0 ·
+Best Practices 0.96 · SEO 1.0.
 
 ## Run it
 
@@ -43,9 +51,10 @@ All business data, asset paths and hotspot positions live in **one file**:
 | `public/assets/barbers/rafael.jpg`, `edward.jpg` | Barber cards | square-ish portraits | Dark avatar circle with initial |
 | `public/gallery/cut-01.jpg` … `cut-06.jpg` | Gallery grid + lightbox | any size, they lazy-load | Six "PHOTO" tiles |
 
-> Note: until the remaining pending files (barber portraits, gallery photos)
-> are dropped in, the browser console will show 404s for them — that's
-> inherent to the onError-based auto-detection and disappears as assets land.
+> Barber photos and gallery photos are marked pending in config (barber
+> `img: null`, gallery `pending: true`) so nothing is requested and the
+> console stays clean. When a file is uploaded, set the barber's `img` path /
+> delete the gallery entry's `pending` flag — still config-only changes.
 
 ### The Booksy link
 
@@ -78,23 +87,6 @@ facts, all sourced from the shop's public Booksy page (July 2026: **4.9★,
   aggregate rating) is generated from config at boot for the site's own SEO.
 - Reviewers also praise a barber named **Aziz** — if he's on the roster, add
   him to `config.barbers` (one line + photo).
-
-### Adjust hotspot regions
-
-The three clickable areas are **invisible regions** laid over the photo's own
-objects (reception desk, barber chair, waiting seats) — no overlay artwork.
-Hovering with a mouse, touching on a phone, or keyboard-focusing reveals the
-label pill with the white glow; clicking opens the panel. Each region is four
-numbers in `config.hotspots`:
-
-```js
-// x,y = region center as % of the interior image; w,h = region size as % of the image
-{ id: 'book', label: 'Book an Appointment', x: 80.5, y: 72, w: 38, h: 54 },
-```
-
-Because regions are positioned in percentages **of the image stage** (not the
-viewport), a region placed on the desk stays glued to the desk at every screen
-size, crop and swipe position.
 
 ### Add a barber
 

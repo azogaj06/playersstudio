@@ -4,14 +4,17 @@ import { destroy as destroyMap, flyToShop } from './lib/mapProvider.js'
 import LoadingScreen from './components/LoadingScreen.jsx'
 import SatelliteIntro from './components/SatelliteIntro.jsx'
 import Blackout from './components/Blackout.jsx'
-import InteriorStage from './components/InteriorStage.jsx'
-import BottomNav from './components/BottomNav.jsx'
-import Logo from './components/Logo.jsx'
-import BookingPanel from './panels/BookingPanel.jsx'
-import BarbersPanel from './panels/BarbersPanel.jsx'
-import GalleryPanel from './panels/GalleryPanel.jsx'
-import ReviewsPanel from './panels/ReviewsPanel.jsx'
-import Stars from './components/Stars.jsx'
+import Hero from './components/Hero.jsx'
+import TopNav from './components/TopNav.jsx'
+import MobileBar from './components/MobileBar.jsx'
+import {
+  ServicesSection,
+  BarbersSection,
+  GallerySection,
+  ReviewsSection,
+  VisitSection,
+  Footer,
+} from './sections/Sections.jsx'
 
 const SEEN_KEY = 'players-studio-intro-seen'
 const PHONE_QUERY = '(max-width: 820px)'
@@ -63,11 +66,7 @@ export default function App() {
   const [blackout, setBlackout] = useState('off') // off | in | hold | out
   const [mapAlive, setMapAlive] = useState(!autoSkip && !reduced)
   const [animateIn, setAnimateIn] = useState(false)
-  const [activePanel, setActivePanel] = useState(null)
   const [progress, setProgress] = useState(0.1)
-  // Brief input guard after SKIP INTRO: the bottom nav's Gallery button
-  // mounts under the same thumb position, so a double-tap must not open it.
-  const [navGuard, setNavGuard] = useState(false)
   // Shown (only under ?intro) when the flight had to be skipped, so testing
   // "where is the map?" gives an actionable answer instead of silence.
   const [skipNote, setSkipNote] = useState(null)
@@ -100,8 +99,6 @@ export default function App() {
     setBlackout('off')
     setAnimateIn(false)
     setPhase('interior')
-    setNavGuard(true)
-    setTimeout(() => setNavGuard(false), 500)
     markIntroSeen()
   }, [killIntro])
 
@@ -253,25 +250,39 @@ export default function App() {
   // Destroy the map if the app unmounts mid-intro.
   useEffect(() => () => destroyMap(), [])
 
-  const openPanel = useCallback((id) => setActivePanel(id), [])
-  const closePanel = useCallback(() => setActivePanel(null), [])
-
   const interiorShown = phase === 'interior'
+
+  // The page scrolls only once the site is shown; the intro is a fixed scene.
+  useEffect(() => {
+    document.documentElement.classList.toggle('site-ready', interiorShown)
+  }, [interiorShown])
 
   return (
     <div className="app">
       {/* Satellite map sits under the loader; destroyed during the blackout */}
       {mapAlive && <SatelliteIntro onReady={onMapReady} onFail={onMapFail} />}
 
-      {interiorShown && (
-        <InteriorStage
+      {/* The site itself: hero photo with clear buttons, then normal
+          scrollable sections — services, barbers, gallery, reviews, hours.
+          ALWAYS in the DOM (search engines index the full page immediately);
+          during the intro it sits occluded under the fixed map/loader
+          overlays with scrolling locked. Only the nav bars wait. */}
+      {interiorShown && <TopNav />}
+      <main className="site">
+        <Hero
           animateIn={animateIn}
-          // Settle begins when the blackout starts revealing (350ms hold),
-          // not while the screen is still pure black.
+          // Settle begins when the blackout starts revealing (350ms
+          // hold), not while the screen is still pure black.
           settleDelay={animateIn ? 0.35 : 0}
-          onHotspot={openPanel}
         />
-      )}
+        <ServicesSection />
+        <BarbersSection />
+        <GallerySection />
+        <ReviewsSection />
+        <VisitSection />
+        <Footer />
+      </main>
+      {interiorShown && <MobileBar />}
 
       <Blackout state={blackout} />
 
@@ -279,45 +290,11 @@ export default function App() {
         <LoadingScreen progress={progress} fading={loaderFading} />
       )}
 
-      {/* SKIP INTRO: visible from the very first frame until the interior shows */}
+      {/* SKIP INTRO: visible from the very first frame until the site shows */}
       {!interiorShown && (
-        <button
-          type="button"
-          className="skip-intro"
-          onClick={jumpToInterior}
-        >
+        <button type="button" className="skip-intro" onClick={jumpToInterior}>
           Skip intro
         </button>
-      )}
-
-      {/* Chrome appears once we're inside the shop */}
-      {interiorShown && (
-        <>
-          <header className="chrome">
-            <Logo size="small" className="chrome__logo" />
-            <div className="chrome__right">
-              {site.reviews?.rating && (
-                <button
-                  type="button"
-                  className="chrome__rating"
-                  onClick={() => openPanel('reviews')}
-                  aria-label={`Rated ${site.reviews.rating} out of 5 — read reviews`}
-                >
-                  <Stars rating={site.reviews.rating} size={13} />
-                  <span>{site.reviews.rating}</span>
-                </button>
-              )}
-              <button
-                type="button"
-                className="btn btn--primary chrome__book"
-                onClick={() => openPanel('book')}
-              >
-                Book
-              </button>
-            </div>
-          </header>
-          <BottomNav onOpen={openPanel} active={activePanel} muted={navGuard} />
-        </>
       )}
 
       {skipNote && interiorShown && (
@@ -325,13 +302,6 @@ export default function App() {
           Satellite intro skipped: {skipNote}.
         </div>
       )}
-
-      {activePanel === 'book' && (
-        <BookingPanel onClose={closePanel} onOpenPanel={openPanel} />
-      )}
-      {activePanel === 'barbers' && <BarbersPanel onClose={closePanel} />}
-      {activePanel === 'gallery' && <GalleryPanel onClose={closePanel} />}
-      {activePanel === 'reviews' && <ReviewsPanel onClose={closePanel} />}
     </div>
   )
 }

@@ -298,7 +298,9 @@
   text-decoration: underline;
   text-underline-offset: 4px;
 }
-.topnav__book {
+/* .btn.topnav__book beats the later generic .btn display rule */
+.btn.topnav__book {
+  display: none; /* mobile: hero + scroll-in bottom bar own booking */
   margin-left: auto;
   min-width: 96px;
   min-height: var(--tap-min);
@@ -307,7 +309,8 @@
   .topnav__links {
     display: flex;
   }
-  .topnav__book {
+  .btn.topnav__book {
+    display: inline-flex;
     margin-left: 0;
   }
 }
@@ -428,6 +431,16 @@
   flex: 1 1 200px;
   max-width: 320px;
   background: rgba(0, 0, 0, 0.4);
+}
+@media (max-width: 820px) {
+  /* one booking button on the first screen; Call lives in the scroll-in
+     bottom bar, the Hours & Location section and the footer */
+  .hero__actions .btn--secondary {
+    display: none;
+  }
+  .hero__book {
+    max-width: none;
+  }
 }
 .hero__meta {
   margin: 2px 0 0;
@@ -872,6 +885,14 @@
       rgba(5, 5, 6, 0.85) 30%,
       rgba(5, 5, 6, 0.97) 100%
     );
+    /* hidden on the first screen — the hero owns the single booking CTA */
+    transform: translateY(110%);
+    transition: transform 0.3s ease;
+    pointer-events: none;
+  }
+  .mbar--shown {
+    transform: translateY(0);
+    pointer-events: auto;
   }
 }
 .mbar__btn {

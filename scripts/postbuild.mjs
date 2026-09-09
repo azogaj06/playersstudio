@@ -7,7 +7,14 @@ import { join } from 'node:path'
 import { routes } from '../src/routes.js'
 
 const dist = new URL('../dist/', import.meta.url).pathname
-const html = readFileSync(join(dist, 'index.html'), 'utf8')
+let html = readFileSync(join(dist, 'index.html'), 'utf8')
+
+// A preview build (DEPLOY_BASE containing /preview/) must never be indexed
+// as a duplicate of the real site.
+if ((process.env.DEPLOY_BASE || '').includes('/preview/')) {
+  html = html.replace('<head>', '<head>\n    <meta name="robots" content="noindex, nofollow" />')
+  writeFileSync(join(dist, 'index.html'), html)
+}
 
 for (const r of routes) {
   if (!r.path) continue

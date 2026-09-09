@@ -1,0 +1,65 @@
+import site from '../config/site.js'
+import { routes } from '../routes.js'
+import { Link } from '../lib/router.jsx'
+import Logo from './Logo.jsx'
+
+export default function Footer() {
+  const hasUrl = Boolean(site.bookingUrl)
+  return (
+    <footer className="footer">
+      <div className="footer__top">
+        <div className="footer__brand">
+          <Logo size="medium" />
+          <p className="footer__tag">{site.tagline}</p>
+        </div>
+        <div className="footer__cols">
+          <div className="footer__col">
+            <h3>Pages</h3>
+            <ul>
+              {routes.map((r) => (
+                <li key={r.path}>
+                  <Link to={r.path}>{r.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="footer__col footer__col--hours">
+            <h3>Hours</h3>
+            <ul>
+              {site.hours.map((h) => (
+                <li key={h.days}>
+                  <span>{h.days}</span> {h.time}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="footer__col">
+            <h3>Find us</h3>
+            <ul>
+              <li>{site.address.replace(', Canada', '')}</li>
+              <li>
+                <a href={site.phoneHref}>{site.phone}</a>
+              </li>
+              <li>
+                <a href={site.instagram} target="_blank" rel="noopener noreferrer">
+                  Instagram
+                </a>
+              </li>
+              {hasUrl && (
+                <li>
+                  <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
+                    Book on Booksy
+                  </a>
+                </li>
+              )}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div className="footer__bottom">
+        <p>© {new Date().getFullYear()} {site.name}. Barbershop, downtown Oakville.</p>
+        <p>Walk-ins welcome · Open 7 days</p>
+      </div>
+    </footer>
+  )
+}

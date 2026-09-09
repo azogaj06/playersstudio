@@ -4,7 +4,7 @@ The live gallery. Each photo is two web-optimized files (originals are kept
 in `raw-assets/gallery/`):
 
 - `cut-0N.jpg` — full size (~1600px tall), shown in the lightbox
-- `cut-0N-thumb.jpg` — 640×640 square crop, shown in the grid
+- `cut-0N-thumb.jpg` — 640×640 square crop (kept for link previews; the site itself now shows the full photo)
 
 ## Adding a photo
 

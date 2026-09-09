@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import site from '../config/site.js'
+import { Link } from '../lib/router.jsx'
 
 /**
  * Mobile-only (≤820px) sticky bottom bar. Hidden on the first screen so the
@@ -45,9 +46,9 @@ export default function MobileBar() {
       >
         Book
       </a>
-      <a className="mbar__btn" href="#visit" tabIndex={shown ? 0 : -1}>
+      <Link to="contact" className="mbar__btn" tabIndex={shown ? 0 : -1}>
         Hours
-      </a>
+      </Link>
     </nav>
   )
 }

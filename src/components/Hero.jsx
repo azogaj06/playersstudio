@@ -123,8 +123,8 @@ export default function Hero({ animateIn, settleDelay = 0 }) {
         </p>
       </div>
 
-      <a className="hero__scrollcue" href="#services" aria-label="Scroll to services">
-        <span>Services · Hours · Gallery</span>
+      <a className="hero__scrollcue" href="#services" aria-label="Scroll down">
+        <span>Scroll</span>
         <span className="hero__chevron" aria-hidden="true">
           ⌄
         </span>

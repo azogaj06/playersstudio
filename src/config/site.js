@@ -58,6 +58,19 @@ const site = {
     description:
       'Barbershop at 295 Lakeshore Rd E in downtown Oakville. Haircuts, fades, beard trims & kids cuts. Rated 4.9 from 600+ reviews. Book online or walk in.',
     priceRange: '$24–$50',
+    // meta descriptions for the inner pages
+    pages: {
+      about:
+        'Players Studio is a barbershop on Lakeshore Rd E in downtown Oakville. Fades, tapers, beards and kids cuts, walk-ins welcome, booking on Booksy.',
+      services:
+        'Haircuts and fades from $40, beard trims $24, kids cuts $30 at Players Studio, 295 Lakeshore Rd E, Oakville. Book on Booksy or walk in.',
+      barbers:
+        'Meet the barbers at Players Studio in downtown Oakville and book directly with the one you want.',
+      gallery:
+        'Recent fades, tapers, beard work and designs from the chairs at Players Studio, Oakville.',
+      contact:
+        'Players Studio hours, address and directions. 295 Lakeshore Rd E, Oakville, ON. Open 7 days. Call 905-844-4443.',
+    },
   },
 
   // --- Copy ----------------------------------------------------------------------
@@ -156,11 +169,37 @@ const site = {
   },
 
   // --- Services & hours (from the Booksy listing — keep in sync with Booksy) ---------
+  // `blurb` is the one-line description on the Services page. Prices are
+  // the ones on Booksy — change them here and there together.
   services: [
-    { name: 'Haircut / Fade', price: '$40', priceNumber: 40 },
-    { name: 'Haircut / Fade + Beard', price: '$50', priceNumber: 50 },
-    { name: 'Beard Trim / Lineup', price: '$24', priceNumber: 24 },
-    { name: 'Kids Haircut (10 & under)', price: '$30', priceNumber: 30 },
+    {
+      name: 'Haircut / Fade',
+      price: '$40',
+      priceNumber: 40,
+      blurb:
+        'Skin fade, taper, scissor cut, crop — whatever you\'re after. Consult first, then cut, lineup and styled to finish.',
+    },
+    {
+      name: 'Haircut / Fade + Beard',
+      price: '$50',
+      priceNumber: 50,
+      blurb:
+        'The full reset. Your cut plus beard shaping, lineup and a hot towel to close it out.',
+    },
+    {
+      name: 'Beard Trim / Lineup',
+      price: '$24',
+      priceNumber: 24,
+      blurb:
+        'Length, shape and clean edges. Straight razor on the neck and cheeks, hot towel finish.',
+    },
+    {
+      name: 'Kids Haircut (10 & under)',
+      price: '$30',
+      priceNumber: 30,
+      blurb:
+        'Same chair, same care, a bit more patience. Fades and scissor cuts for the little ones.',
+    },
   ],
   // days/time are display strings; dayOfWeek/opens/closes feed the
   // schema.org openingHoursSpecification search engines read.
@@ -170,6 +209,40 @@ const site = {
     { days: 'Sat', time: '9:00 AM – 7:00 PM', dayOfWeek: ['Saturday'], opens: '09:00', closes: '19:00' },
     { days: 'Sun', time: '9:00 AM – 7:00 PM', dayOfWeek: ['Sunday'], opens: '09:00', closes: '19:00' },
   ],
+
+  // --- Page copy ----------------------------------------------------------------
+  // Everything a visitor reads on the About / Services / Contact pages. Edit
+  // freely — it's plain text. Keep the facts true to the shop.
+  copy: {
+    // Home
+    homeStatement:
+      'A barbershop on Lakeshore. Fades, tapers, scissor work, beards and kids cuts — book a chair on Booksy or walk in and take a seat.',
+    // About page
+    aboutLead:
+      'Players Studio is a barbershop on the north side of Lakeshore Road East, a few doors from Trafalgar, in the middle of downtown Oakville.',
+    aboutBody: [
+      'It\'s a simple setup: a bright room, a row of chairs, and barbers who care about the details. You tell us what you want — bring a photo if it helps — and you leave with exactly that.',
+      'Most of the work here is fades and tapers, but the chairs see everything: scissor cuts, crops, beard work, kids who are nervous about their first haircut. The standard is the same for all of it. Take the time the cut needs, and get it right.',
+      'You don\'t have to book. Walk-ins are welcome any day we\'re open, and if a chair is free it\'s yours. If you want a specific barber at a specific time, Booksy is the quickest way to lock it in.',
+    ],
+    visitSteps: [
+      { title: 'Book, or just come in', text: 'Booksy takes appointments for every barber. Walk-ins are welcome seven days a week — first free chair.' },
+      { title: 'Sit down and talk it through', text: 'Fade height, length on top, beard shape. A photo of what you\'re going for is always useful.' },
+      { title: 'The cut', text: 'Clippers, shears, razor for the edges. No rushing a fade — it takes the time it takes.' },
+      { title: 'Hot towel and out the door', text: 'Cleaned up, styled, and a hot towel to finish. Then the next guy.' },
+    ],
+    // Services page
+    servicesLead:
+      'Straightforward menu, straightforward prices. Everything in Canadian dollars, and what\'s listed on Booksy is what you pay in the chair.',
+    servicesNotes: [
+      'Walk-ins are welcome. Booking on Booksy guarantees your barber and your time.',
+      'Running late? Give us a call and we\'ll do our best to hold the chair.',
+      'Kids pricing is for 10 and under. Same barbers, same chairs.',
+    ],
+    // Contact page
+    contactLead:
+      'Downtown Oakville, north side of Lakeshore Road East. Street and lot parking nearby; the lake is a two-minute walk.',
+  },
 
   // --- Behaviour flags -------------------------------------------------------------
   autoSkipIntroOnReturn: true, // returning phone visitors skip the movie

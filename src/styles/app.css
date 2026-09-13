@@ -611,6 +611,23 @@
    SITE CHROME + PAGES
    ========================================================================== */
 
+/* --- Stars: one row of five, the fill row clipped to the rating ------------- */
+
+.stars {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.22);
+  white-space: nowrap;
+}
+.stars__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  overflow: hidden;
+  color: var(--accent);
+}
+
 /* --- Shared type ---------------------------------------------------------- */
 
 .kicker {

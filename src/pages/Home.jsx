@@ -88,7 +88,7 @@ export default function Home({ animateIn, settleDelay }) {
       <Reveal as="section" className="band band--reviews" id="reviews">
         <div className="reviews">
           <div className="reviews__score">
-            <span className="reviews__num display">{r.rating}</span>
+            <span className="reviews__num display">{r.ratingLabel}</span>
             <Stars rating={r.rating} size={22} />
             <p className="reviews__count">
               {r.countLabel} reviews on {r.sources.map((s) => s.label).join(' and ')}

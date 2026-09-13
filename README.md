@@ -30,7 +30,7 @@ column width, not thumbnails.
 
 **SEO:** every page has its own title, description and canonical URL, the
 sitemap lists all six, and the home page carries schema.org Barbershop
-JSON-LD (address, geo, hours, price range, services, the 4.9/600+ rating
+JSON-LD (address, geo, hours, price range, services, the 5.0/600+ rating
 and a ReserveAction pointing at Booksy).
 
 ## Run it
@@ -89,11 +89,11 @@ tab.
 ### Reviews, services & hours (from the Booksy/Google listings)
 
 `config.reviews`, `config.services` and `config.hours` carry the listing
-facts, all sourced from the shop's public Booksy page (July 2026: **4.9★,
+facts, all sourced from the shop's public Booksy page (Sept 2026: **5.0★,
 600+ reviews**; services $24–$50; open 7 days):
 
 - The **Reviews section** (rating hero + quote cards + "Read all on
-  Booksy/Google" links) is linked from the ★4.9 chip in the hero.
+  Booksy/Google" links) is linked from the ★5.0 chip in the hero.
 - The **Services section** carries the services/prices list; the **Visit
   section** carries the weekly hours alongside address/directions/call.
 - The quote cards are **lightly paraphrased** from review snippets on the

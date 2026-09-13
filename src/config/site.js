@@ -58,7 +58,7 @@ const site = {
     title: 'Players Studio | Barbershop in Downtown Oakville',
     // meta description: ~155 characters, services + proof + call to action
     description:
-      'Barbershop at 295 Lakeshore Rd E in downtown Oakville. Haircuts, fades, beard trims & kids cuts. Rated 4.9 from 600+ reviews. Book online or walk in.',
+      'Barbershop at 295 Lakeshore Rd E in downtown Oakville. Haircuts, fades, beard trims & kids cuts. Rated 5.0 from 600+ reviews. Book online or walk in.',
     priceRange: '$24–$50',
     // meta descriptions for the inner pages
     pages: {
@@ -130,13 +130,14 @@ const site = {
   ],
 
   // --- Reviews (from the shop's Booksy/Google listings) -------------------------------
-  // Rating/count sourced from the public Booksy listing (4.9, 600+ reviews,
-  // July 2026). The quotes below are lightly paraphrased from review
+  // Rating/count per the owner (5.0, 600+ reviews, Sept 2026). `rating` is
+  // the number search engines read; `ratingLabel` is what's printed. The quotes below are lightly paraphrased from review
   // snippets on that listing — REPLACE with verbatim favourites from the
   // Booksy dashboard when convenient. Everything renders from here; an empty
   // quotes array simply hides the quotes section.
   reviews: {
-    rating: 4.9,
+    rating: 5,
+    ratingLabel: '5.0',
     countLabel: '600+',
     sources: [
       {

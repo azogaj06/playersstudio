@@ -49,7 +49,7 @@ export default function About() {
             <div>
               <dt>Rated</dt>
               <dd>
-                {site.reviews.rating} · {site.reviews.countLabel} reviews
+                {site.reviews.ratingLabel} · {site.reviews.countLabel} reviews
               </dd>
             </div>
             <div>

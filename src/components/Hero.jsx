@@ -98,7 +98,7 @@ export default function Hero({ animateIn, settleDelay = 0 }) {
         <a className="hero__rating" href="#reviews">
           <Stars rating={site.reviews.rating} size={16} />
           <span>
-            <strong>{site.reviews.rating}</strong> · {site.reviews.countLabel}{' '}
+            <strong>{site.reviews.ratingLabel}</strong> · {site.reviews.countLabel}{' '}
             reviews
           </span>
         </a>

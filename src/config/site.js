@@ -26,11 +26,13 @@ const site = {
     'https://booksy.com/en-ca/9047_players-fade-studio_barbershop_773207_oakville',
 
   // --- Geography -------------------------------------------------------------
-  // 295 Lakeshore Rd E — derived from the verified RBC pin two doors west
-  // (279 Lakeshore @ 43.44730,-79.66679, Lakeshore & Trafalgar corner),
-  // extrapolated along the street's bearing. North side of Lakeshore Rd E.
-  // Nudge here if the final frame is a door off.
-  shopCoords: { lat: 43.4476, lng: -79.6665 },
+  // 295 Lakeshore Rd E, north side, a few doors east of Trafalgar. The
+  // intro dive AND the Contact page map both land on this one point, so a
+  // correction here fixes both. Owner's check (Sept 2026): the previous
+  // pin (43.4476, -79.6665) sat one building too far west; moved ~30 m
+  // east along the street. To fine-tune: right-click the shop's roof in
+  // Google Maps, copy the numbers, paste them here.
+  shopCoords: { lat: 43.4477, lng: -79.6661 },
 
   // Intro flight starting camera: slightly northwest of the shop so the
   // Lake Ontario shoreline and Sixteen Mile Creek read in the opening frame.

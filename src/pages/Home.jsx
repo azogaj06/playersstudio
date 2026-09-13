@@ -29,24 +29,6 @@ export default function Home({ animateIn, settleDelay }) {
         </div>
       </Reveal>
 
-      {/* Marquee */}
-      <div className="marquee" aria-hidden="true">
-        <div className="marquee__track display">
-          {Array.from({ length: 2 }).map((_, k) => (
-            <span key={k}>
-              {site.services.map((s) => (
-                <span key={s.name} className="marquee__item">
-                  {s.name} <em>{s.price}</em>
-                </span>
-              ))}
-              <span className="marquee__item">
-                Walk-ins welcome <em>7 days</em>
-              </span>
-            </span>
-          ))}
-        </div>
-      </div>
-
       {/* Services */}
       <Reveal as="section" className="band band--services">
         <div className="band__head">

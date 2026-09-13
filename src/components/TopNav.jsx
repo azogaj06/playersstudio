@@ -3,6 +3,7 @@ import site from '../config/site.js'
 import { routes } from '../routes.js'
 import { Link, useRoute } from '../lib/router.jsx'
 import Logo from './Logo.jsx'
+import Ticker from './Ticker.jsx'
 
 const PAGES = routes.filter((r) => r.path !== '')
 
@@ -36,6 +37,7 @@ export default function TopNav() {
   return (
     <>
       <nav className={`topnav${scrolled ? ' topnav--solid' : ''}`} aria-label="Main">
+        <div className="topnav__row">
         <Link to="" className="topnav__brand" aria-label={`${site.name} — home`}>
           <Logo size="small" />
         </Link>
@@ -66,6 +68,9 @@ export default function TopNav() {
           <span />
           <span />
         </button>
+        </div>
+        {/* Slim price ticker: tucked under the bar, slides in on scroll */}
+        <Ticker className="topnav__ticker" />
       </nav>
 
       <div id="site-menu" className={`menu${open ? ' menu--open' : ''}`} aria-hidden={!open}>

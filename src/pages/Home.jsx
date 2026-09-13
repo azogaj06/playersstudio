@@ -6,7 +6,6 @@ import Reveal from '../components/Reveal.jsx'
 import BookLink from '../components/BookLink.jsx'
 import Stars from '../components/Stars.jsx'
 import GalleryWall from '../components/GalleryWall.jsx'
-import BarberCard from '../components/BarberCard.jsx'
 
 export default function Home({ animateIn, settleDelay }) {
   usePageMeta('', site.seo.description)
@@ -17,16 +16,29 @@ export default function Home({ animateIn, settleDelay }) {
 
       {/* Statement */}
       <Reveal as="section" className="band band--statement" id="services">
-        <p className="kicker">{site.address.replace(', Canada', '')}</p>
-        <h2 className="statement display">{site.copy.homeStatement}</h2>
-        <div className="statement__links">
-          <Link to="about" className="textlink">
-            About the shop
-          </Link>
-          <Link to="contact" className="textlink">
-            Hours &amp; directions
-          </Link>
+        <div className="statement__text">
+          <p className="kicker">{site.address.replace(', Canada', '')}</p>
+          <h2 className="statement display">{site.copy.homeStatement}</h2>
+          <div className="statement__links">
+            <Link to="about" className="textlink">
+              About the shop
+            </Link>
+            <Link to="contact" className="textlink">
+              Hours &amp; directions
+            </Link>
+          </div>
         </div>
+        {/* One shot from the chair beside the statement; links to the gallery */}
+        <Link to="gallery" className="statement__photo" aria-label="See the gallery">
+          <img
+            src={site.gallery[3].src}
+            alt={site.gallery[3].alt}
+            width="1069"
+            height="1600"
+            loading="lazy"
+            decoding="async"
+          />
+        </Link>
       </Reveal>
 
       {/* Services */}
@@ -66,22 +78,17 @@ export default function Home({ animateIn, settleDelay }) {
         <GalleryWall limit={3} className="wall--preview" />
       </section>
 
-      {/* Barbers */}
-      <Reveal as="section" className="band band--barbers" id="barbers">
-        <div className="band__head band__head--row">
+      {/* Barbers: one row pointing at the Barbers page (cards live there) */}
+      <Reveal as="section" className="band band--teamrow" id="barbers">
+        <div className="teamrow">
           <div>
             <p className="kicker">The barbers</p>
-            <h2 className="h2 display">Pick your chair</h2>
+            <h2 className="h2 display">Pick your barber</h2>
           </div>
-          <Link to="barbers" className="textlink">
+          <Link to="barbers" className="btn btn--secondary btn--big">
             Meet the team
           </Link>
         </div>
-        <ul className="barber-grid">
-          {site.barbers.map((b, i) => (
-            <BarberCard key={b.id} barber={b} index={i} />
-          ))}
-        </ul>
       </Reveal>
 
       {/* Reviews */}

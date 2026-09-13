@@ -77,7 +77,7 @@ const site = {
 
   // --- Copy ----------------------------------------------------------------------
   tagline: 'Barbershop in Downtown Oakville',
-  heroLine: 'Cuts, fades and beard work on Lakeshore — walk-ins welcome.',
+  heroLine: 'Cuts, fades and beard work on Lakeshore.',
   directionsUrl:
     'https://www.google.com/maps/dir/?api=1&destination=Players+Studio+295+Lakeshore+Rd+E+Oakville+ON',
 

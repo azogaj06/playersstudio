@@ -89,6 +89,8 @@ const site = {
   barbers: [
     { id: 'rafael', name: 'Rafael', specialty: 'Specialty coming soon', img: null },
     { id: 'edward', name: 'Edward', specialty: 'Specialty coming soon', img: null },
+    { id: 'hamza', name: 'Hamza', specialty: 'Specialty coming soon', img: null },
+    { id: 'ahmed', name: 'Ahmed', specialty: 'Specialty coming soon', img: null },
   ],
 
   // --- Gallery -------------------------------------------------------------------

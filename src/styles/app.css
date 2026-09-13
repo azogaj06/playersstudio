@@ -1163,7 +1163,7 @@
 }
 @media (min-width: 1100px) {
   .barber-grid--page {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 .barber {

@@ -12,7 +12,7 @@ export default function Barbers() {
       <PageHead
         kicker="The barbers"
         title="Pick your chair"
-        lead="Every barber here takes their own bookings on Booksy. Pick who you want, pick a time, and the chair is yours. No preference? Walk in and take the first one free."
+        lead="Every barber here takes their own bookings on Booksy. Pick who you want, pick a time, and the chair is yours."
       />
       <Reveal as="section" className="band band--team">
         <ul className="barber-grid barber-grid--page">

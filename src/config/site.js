@@ -233,7 +233,7 @@ const site = {
     ],
     // Services page
     servicesLead:
-      'Straightforward menu, straightforward prices. Everything in Canadian dollars, and what\'s listed on Booksy is what you pay in the chair.',
+      'Straightforward services, straightforward prices. Everything in Canadian dollars, and what\'s listed on Booksy is what you pay in the chair.',
     servicesNotes: [
       'Walk-ins are welcome. Booking on Booksy guarantees your barber and your time.',
       'Running late? Give us a call and we\'ll do our best to hold the chair.',

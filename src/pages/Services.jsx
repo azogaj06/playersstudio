@@ -8,7 +8,7 @@ export default function Services() {
   usePageMeta('services', site.seo.pages.services)
   return (
     <>
-      <PageHead kicker="Services" title="The menu" lead={site.copy.servicesLead} />
+      <PageHead kicker="Services" title="Cuts & prices" lead={site.copy.servicesLead} />
 
       <Reveal as="section" className="band band--menu">
         <ol className="svc">

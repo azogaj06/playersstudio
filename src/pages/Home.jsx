@@ -51,7 +51,7 @@ export default function Home({ animateIn, settleDelay }) {
       <Reveal as="section" className="band band--services">
         <div className="band__head">
           <p className="kicker">Services</p>
-          <h2 className="h2 display">The menu</h2>
+          <h2 className="h2 display">Cuts &amp; prices</h2>
         </div>
         <ol className="menu-list">
           {site.services.map((s, i) => (
@@ -65,7 +65,7 @@ export default function Home({ animateIn, settleDelay }) {
         <div className="band__actions">
           <BookLink className="btn btn--primary btn--big" />
           <Link to="services" className="btn btn--secondary btn--big">
-            Full service list
+            All services
           </Link>
         </div>
       </Reveal>

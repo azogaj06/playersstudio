@@ -64,22 +64,6 @@ export default function About() {
         </aside>
       </Reveal>
 
-      <Reveal as="section" className="band band--steps">
-        <div className="band__head">
-          <p className="kicker">How a visit goes</p>
-          <h2 className="h2 display">Four steps, no fuss</h2>
-        </div>
-        <ol className="steps">
-          {c.visitSteps.map((s, i) => (
-            <li key={s.title} className="step">
-              <span className="step__num display">0{i + 1}</span>
-              <h3 className="step__title display">{s.title}</h3>
-              <p>{s.text}</p>
-            </li>
-          ))}
-        </ol>
-      </Reveal>
-
       <Reveal as="section" className="band band--cta">
         <h2 className="cta__title display">Take a seat.</h2>
         <div className="band__actions band__actions--center">

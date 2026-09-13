@@ -1421,48 +1421,6 @@
   color: var(--text);
 }
 
-.steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-  border-top: 1px solid var(--line);
-}
-@media (min-width: 640px) {
-  .steps {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (min-width: 1000px) {
-  .steps {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-.step {
-  padding: 24px 20px 28px 0;
-  border-bottom: 1px solid var(--line);
-}
-.step__num {
-  display: block;
-  font-size: 15px;
-  color: var(--text-dim);
-  letter-spacing: 0.12em;
-  margin-bottom: 18px;
-}
-.step__title {
-  margin: 0 0 10px;
-  font-size: clamp(28px, 3vw, 36px);
-  line-height: 1;
-}
-.step p {
-  margin: 0;
-  color: var(--text-dim);
-  font-size: 15px;
-  line-height: 1.55;
-}
-
 .band--cta {
   text-align: center;
   padding-bottom: clamp(24px, 4vw, 48px);

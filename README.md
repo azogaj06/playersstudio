@@ -11,7 +11,7 @@ it's a normal site with six pages:
 | Page | URL | What's on it |
 | --- | --- | --- |
 | Home | `/` | Hero, statement, price list, three-photo preview, barbers, reviews, hours |
-| About | `/about/` | The shop, full-width interior photo, "how a visit goes" |
+| About | `/about/` | The shop, full-width interior photo, three short paragraphs + facts |
 | Services | `/services/` | Every service with a one-line description and price |
 | Barbers | `/barbers/` | Tall portrait cards, one Book button per barber |
 | Gallery | `/gallery/` | Full-bleed photo wall (2 columns on desktop, 1 on phones) + lightbox |
@@ -59,8 +59,7 @@ into [`public/gallery/`](public/gallery/).
 
 All business data, asset paths **and page copy** live in **one file**:
 [`src/config/site.js`](src/config/site.js). Nothing else needs touching.
-The About text, service descriptions, the "how a visit goes" steps and the
-contact blurb are all under `copy:` in that file — plain strings, edit
+The About text, service descriptions and the contact blurb are all under `copy:` in that file — plain strings, edit
 freely.
 
 | Drop-in | Where it goes | Guidance | Until it arrives |

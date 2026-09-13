@@ -230,15 +230,9 @@ const site = {
       'Most of the work here is fades and tapers, but the chairs see everything: scissor cuts, crops, beard work, kids who are nervous about their first haircut. The standard is the same for all of it. Take the time the cut needs, and get it right.',
       'You don\'t have to book. Walk-ins are welcome any day we\'re open, and if a chair is free it\'s yours. If you want a specific barber at a specific time, Booksy is the quickest way to lock it in.',
     ],
-    visitSteps: [
-      { title: 'Book, or just come in', text: 'Booksy takes appointments for every barber. Walk-ins are welcome seven days a week — first free chair.' },
-      { title: 'Sit down and talk it through', text: 'Fade height, length on top, beard shape. A photo of what you\'re going for is always useful.' },
-      { title: 'The cut', text: 'Clippers, shears, razor for the edges. No rushing a fade — it takes the time it takes.' },
-      { title: 'Hot towel and out the door', text: 'Cleaned up, styled, and a hot towel to finish. Then the next guy.' },
-    ],
     // Services page
     servicesLead:
-      'Straightforward services, straightforward prices. Everything in Canadian dollars, and what\'s listed on Booksy is what you pay in the chair.',
+      'Straightforward services, straightforward prices. What\'s listed on Booksy is what you pay in the chair.',
     servicesNotes: [
       'Walk-ins are welcome. Booking on Booksy guarantees your barber and your time.',
       'Running late? Give us a call and we\'ll do our best to hold the chair.',

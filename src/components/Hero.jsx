@@ -74,8 +74,11 @@ export default function Hero({ animateIn, settleDelay = 0 }) {
             keeps a real keyword h1 for search engines. If the logo file is
             missing, the styled text steps back in. */}
         <h1 className="hero__heading">
-          <span className="hero__kicker">{site.tagline}</span>
-          <span className="visually-hidden">{site.name}</span>
+          {/* No visible kicker: it was too faint over the photo. The
+              keyword line stays in the h1 for search engines only. */}
+          <span className="visually-hidden">
+            {site.name} — {site.tagline}
+          </span>
           {!logoMissing ? (
             <img
               className="hero__wordmark"

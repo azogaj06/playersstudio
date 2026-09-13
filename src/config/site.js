@@ -205,6 +205,14 @@ const site = {
       blurb:
         'Same chair, same care, a bit more patience. Fades and scissor cuts for the little ones.',
     },
+    // `tag` prints as a small label next to the name (price list, ticker).
+    {
+      name: 'First Cut',
+      tag: 'New clients',
+      price: '$35',
+      priceNumber: 35,
+      blurb: 'First time in the shop? Your first haircut or fade is $35.',
+    },
   ],
   // days/time are display strings; dayOfWeek/opens/closes feed the
   // schema.org openingHoursSpecification search engines read.

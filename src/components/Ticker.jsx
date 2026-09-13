@@ -6,7 +6,10 @@ import site from '../config/site.js'
  */
 export default function Ticker({ className = '' }) {
   const items = [
-    ...site.services.map((s) => ({ label: s.name, value: s.price })),
+    ...site.services.map((s) => ({
+      label: s.tag ? `${s.name} · ${s.tag}` : s.name,
+      value: s.price,
+    })),
     { label: 'Walk-ins welcome', value: '7 days' },
   ]
   return (

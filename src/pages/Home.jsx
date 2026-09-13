@@ -51,7 +51,10 @@ export default function Home({ animateIn, settleDelay }) {
           {site.services.map((s, i) => (
             <li key={s.name} className="menu-list__row">
               <span className="menu-list__num display">0{i + 1}</span>
-              <span className="menu-list__name display">{s.name}</span>
+              <span className="menu-list__name display">
+                {s.name}
+                {s.tag && <span className="tag">{s.tag}</span>}
+              </span>
               <span className="menu-list__price display">{s.price}</span>
             </li>
           ))}

@@ -16,7 +16,10 @@ export default function Services() {
             <li key={s.name} className="svc__row">
               <span className="svc__num display">0{i + 1}</span>
               <div className="svc__main">
-                <h2 className="svc__name display">{s.name}</h2>
+                <h2 className="svc__name display">
+                  {s.name}
+                  {s.tag && <span className="tag">{s.tag}</span>}
+                </h2>
                 <p className="svc__blurb">{s.blurb}</p>
               </div>
               <span className="svc__price display">{s.price}</span>

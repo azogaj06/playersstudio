@@ -11,7 +11,7 @@ it's a normal site with six pages:
 | Page | URL | What's on it |
 | --- | --- | --- |
 | Home | `/` | Hero, statement, price list, three-photo preview, barbers, reviews, hours |
-| About | `/about/` | The shop, full-width interior photo, three short paragraphs + facts |
+| About | `/about/` | The shop, four-photo collage (storefront + interiors), three short paragraphs + facts |
 | Services | `/services/` | Every service with a one-line description and price |
 | Barbers | `/barbers/` | Tall portrait cards, one Book button per barber |
 | Gallery | `/gallery/` | Full-bleed photo wall (2 columns on desktop, 1 on phones) + lightbox |
@@ -66,6 +66,7 @@ freely.
 | --- | --- | --- | --- |
 | `public/assets/logo.png` | Loading screen, header, blackout ghost, map marker | ~600px wide, transparent PNG | Styled "PLAYERS STUDIO" text fallback (auto-swaps the moment the file exists) |
 | `public/assets/interior.jpg` | The full-screen hero photo | ≥2400px wide, landscape | Plain dark fallback |
+| `public/assets/shop/*.jpg` | About-page collage | ~2000px wide landscape; list them in `shopPhotos` in site.js | n/a |
 | `public/assets/interior-1600.jpg` | *Optional* phone-optimized copy served via srcset | ~1600px wide, same crop | Falls back silently to `interior.jpg` |
 | `public/assets/barbers/rafael.jpg`, `edward.jpg`, `hamza.jpg`, `ahmed.jpg` | Barber cards | square-ish portraits | Dark avatar circle with initial |
 | `public/gallery/cut-0N.jpg` | Gallery wall + lightbox | LIVE — six real shots, ~1600px tall portrait; the same file feeds the big tile and the lightbox | A missing file falls back to a "PHOTO" tile |

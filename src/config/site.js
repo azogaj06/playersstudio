@@ -132,13 +132,14 @@ const site = {
   ],
 
   // --- Shop photos (About page collage) -------------------------------------
-  // First photo is the big one on the left, the rest stack on the right.
-  // To add outside shots: drop them in /public/assets/shop/ (e.g.
-  // front.jpg) and add a line here — the collage grows to fit.
+  // First photo runs full width across the top; the rest sit in a row
+  // beneath it. Originals live in raw-assets/shop/, web copies (2000px,
+  // ~300 KB) in public/assets/shop/. Add a line here to add a photo.
   shopPhotos: [
-    { src: asset('assets/interior.jpg'), alt: 'Inside Players Studio on Lakeshore Road East, Oakville', wide: true },
-    { src: asset('gallery/cut-05.jpg'), alt: 'A barber at work in the Players Studio chairs' },
-    { src: asset('gallery/cut-06.jpg'), alt: 'Cutting a curly top at Players Studio Oakville' },
+    { src: asset('assets/shop/exterior.jpg'), alt: 'Players Studio storefront on Lakeshore Road East, downtown Oakville' },
+    { src: asset('assets/interior.jpg'), alt: 'The chairs inside Players Studio, Oakville' },
+    { src: asset('assets/shop/waiting-area.jpg'), alt: 'Front desk and waiting chairs at Players Studio' },
+    { src: asset('assets/shop/paintings.jpg'), alt: 'Pop-art paintings and the clothing rack by the door at Players Studio' },
   ],
 
   // --- Reviews (from the shop's Booksy/Google listings) -------------------------------

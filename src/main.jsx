@@ -13,7 +13,7 @@ import './styles/app.css'
 const origin = window.location.origin
 // Site paths already carry import.meta.env.BASE_URL (see config/site.js), so
 // absolutizing is just prepending the origin. pageUrl is the canonical home —
-// e.g. https://azogaj06.github.io/playersstudio/ on GitHub Pages.
+// e.g. https://playersstudio.ca/ in production.
 const abs = (path) => origin + path
 const pageUrl = origin + import.meta.env.BASE_URL
 const [street, city, region] = site.address.split(',').map((s) => s.trim())

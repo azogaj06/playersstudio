@@ -42,6 +42,10 @@ export default function About() {
               </dd>
             </div>
             <div>
+              <dt>Since</dt>
+              <dd>2023</dd>
+            </div>
+            <div>
               <dt>Open</dt>
               <dd>7 days a week</dd>
             </div>

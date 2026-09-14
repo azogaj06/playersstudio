@@ -13,6 +13,7 @@ const asset = (path) => import.meta.env.BASE_URL + path
 const site = {
   // --- Business facts -------------------------------------------------------
   name: 'Players Studio',
+  established: 2023,
   address: '295 Lakeshore Rd E, Oakville, ON L6J 1J3, Canada',
   phone: '905-844-4443',
   phoneHref: 'tel:+19058444443',

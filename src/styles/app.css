@@ -320,6 +320,13 @@
   line-height: 0.95;
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.7);
 }
+.hero__est {
+  margin: 0 0 -4px 2px;
+  font-size: 18px;
+  letter-spacing: 0.3em;
+  color: var(--text);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+}
 .hero__line {
   margin: 0;
   font-size: clamp(15px, 2.2vw, 18px);

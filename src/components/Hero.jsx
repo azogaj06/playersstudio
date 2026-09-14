@@ -73,6 +73,7 @@ export default function Hero({ animateIn, settleDelay = 0 }) {
         {/* The wordmark image is the visible brand; the visually-hidden text
             keeps a real keyword h1 for search engines. If the logo file is
             missing, the styled text steps back in. */}
+        <p className="hero__est display">Est. {site.established}</p>
         <h1 className="hero__heading">
           {/* No visible kicker: it was too faint over the photo. The
               keyword line stays in the h1 for search engines only. */}

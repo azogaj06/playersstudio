@@ -1821,6 +1821,15 @@
 .footer__bottom p {
   margin: 0;
 }
+.footer__credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.footer__credit img {
+  height: 44px;
+  width: auto;
+}
 .footer__credit sup {
   font-size: 0.7em;
   line-height: 0;

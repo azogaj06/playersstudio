@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import site from '../config/site.js'
 import { routes } from '../routes.js'
 import { Link } from '../lib/router.jsx'
@@ -5,6 +6,7 @@ import Logo from './Logo.jsx'
 
 export default function Footer() {
   const hasUrl = Boolean(site.bookingUrl)
+  const [logoMissing, setLogoMissing] = useState(false)
   return (
     <footer className="footer">
       <div className="footer__top">
@@ -59,7 +61,25 @@ export default function Footer() {
       <div className="footer__bottom">
         <p>© {new Date().getFullYear()} {site.name}. Barbershop, downtown Oakville.</p>
         <p className="footer__credit">
-          Made by A<sup>2</sup> Digital ©
+          {!logoMissing ? (
+            <>
+              <span>Made by</span>
+              <img
+                src={site.assets.creditLogo}
+                alt="A² Digital"
+                width="400"
+                height="400"
+                loading="lazy"
+                decoding="async"
+                onError={() => setLogoMissing(true)}
+              />
+              <span>©</span>
+            </>
+          ) : (
+            <>
+              Made by A<sup>2</sup> Digital ©
+            </>
+          )}
         </p>
       </div>
     </footer>

@@ -1,5 +1,5 @@
 # Build the site and publish it to GitHub Pages on every push to main.
-# Live at: https://azogaj06.github.io/playersstudio/
+# Live at: https://playersstudio.ca/
 #
 # Publishes by force-pushing dist/ to the gh-pages branch, which GitHub
 # Pages serves automatically. (The artifact-based deploy-pages flow needs
@@ -31,8 +31,8 @@ jobs:
       - run: npm ci
       - run: npm run build
         env:
-          # Pages serves the site under /playersstudio/, not the domain root.
-          DEPLOY_BASE: /playersstudio/
+          # Domain root, so no DEPLOY_BASE. SITE_URL feeds sitemap.xml/robots.txt
+          SITE_URL: https://playersstudio.ca
       - name: Publish dist/ to the gh-pages branch
         run: |
           cd dist

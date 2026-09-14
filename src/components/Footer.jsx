@@ -67,8 +67,8 @@ export default function Footer() {
               <img
                 src={site.assets.creditLogo}
                 alt="A² Digital"
-                width="400"
-                height="400"
+                width="218"
+                height="160"
                 loading="lazy"
                 decoding="async"
                 onError={() => setLogoMissing(true)}

@@ -73,9 +73,13 @@ export default function Hero({ animateIn, settleDelay = 0 }) {
         {/* The wordmark image is the visible brand; the visually-hidden text
             keeps a real keyword h1 for search engines. If the logo file is
             missing, the styled text steps back in. */}
+        <p className="hero__est display">Est. {site.established}</p>
         <h1 className="hero__heading">
-          <span className="hero__kicker">{site.tagline}</span>
-          <span className="visually-hidden">{site.name}</span>
+          {/* No visible kicker: it was too faint over the photo. The
+              keyword line stays in the h1 for search engines only. */}
+          <span className="visually-hidden">
+            {site.name} — {site.tagline}
+          </span>
           {!logoMissing ? (
             <img
               className="hero__wordmark"
@@ -98,7 +102,7 @@ export default function Hero({ animateIn, settleDelay = 0 }) {
         <a className="hero__rating" href="#reviews">
           <Stars rating={site.reviews.rating} size={16} />
           <span>
-            <strong>{site.reviews.rating}</strong> · {site.reviews.countLabel}{' '}
+            <strong>{site.reviews.ratingLabel}</strong> · {site.reviews.countLabel}{' '}
             reviews
           </span>
         </a>
@@ -123,8 +127,8 @@ export default function Hero({ animateIn, settleDelay = 0 }) {
         </p>
       </div>
 
-      <a className="hero__scrollcue" href="#services" aria-label="Scroll to services">
-        <span>Services · Hours · Gallery</span>
+      <a className="hero__scrollcue" href="#services" aria-label="Scroll down">
+        <span>Scroll</span>
         <span className="hero__chevron" aria-hidden="true">
           ⌄
         </span>

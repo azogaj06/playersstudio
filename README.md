@@ -1,22 +1,37 @@
-# Players Studio — cinematic single-page site
+# Players Studio — barbershop website
 
-A one-scene website for **Players Studio**, 295 Lakeshore Rd E, Oakville, ON
+A multi-page site for **Players Studio**, 295 Lakeshore Rd E, Oakville, ON
 L6J 1J3 · 905-844-4443 · [@playersstudiooakville](https://www.instagram.com/playersstudiooakville).
 
-The experience: logo loading screen → real satellite bird's-eye over Oakville →
-one continuous dive down to the shop's roof on Lakeshore Rd E → cut to black →
-fade up on the shop-photo hero with clear labelled buttons → a normal
-scrollable one-page site: Services & Prices, Meet the Barbers, Gallery,
-Reviews, Hours & Location, footer. Mobile is the primary platform: a sticky
-bottom bar keeps Call / BOOK / Hours one thumb-tap away at all times.
+The front door is still the movie: logo loading screen → real satellite
+bird's-eye over Oakville → one continuous dive down to the shop's roof on
+Lakeshore Rd E → cut to black → fade up on the shop-photo hero. From there
+it's a normal site with six pages:
 
-**SEO:** the full page content is in the DOM from first paint (the intro
-plays as an overlay above it), with a keyword h1, per-section h2s, canonical
-+ Open Graph/Twitter tags, robots.txt, llms.txt, and schema.org Barbershop
-JSON-LD carrying address, geo, structured opening hours, price range, the
-service catalog, the 4.9/600+ aggregate rating and a ReserveAction pointing
-at Booksy. Lighthouse (mobile): Performance 0.98 · Accessibility 1.0 ·
-Best Practices 0.96 · SEO 1.0.
+| Page | URL | What's on it |
+| --- | --- | --- |
+| Home | `/` | Hero, statement, price list, three-photo preview, barbers, reviews, hours |
+| About | `/about/` | The shop, four-photo collage (storefront + interiors), three short paragraphs + facts |
+| Services | `/services/` | Every service with a one-line description and price |
+| Barbers | `/barbers/` | Tall portrait cards, one Book button per barber |
+| Gallery | `/gallery/` | Full-bleed photo wall (2 columns on desktop, 1 on phones) + lightbox |
+| Contact | `/contact/` | Address, directions, hours, satellite map of the block |
+
+The intro plays only when a visit starts on the home page; deep links open
+their page immediately. Page changes are instant (client-side routing) and
+every page is also a real folder in the build, so a hard refresh on
+`/about/` works on GitHub Pages. Mobile keeps the sticky bottom bar
+(Call / BOOK / Hours) and gets a full-screen page menu behind the ☰ button.
+
+**Look:** black and white to match the gothic wordmark. Headlines are
+[Bebas Neue](https://fonts.google.com/specimen/Bebas+Neue) (self-hosted in
+`public/fonts/`), body text is Inter. Gallery photos are shown at full
+column width, not thumbnails.
+
+**SEO:** every page has its own title, description and canonical URL, the
+sitemap lists all six, and the home page carries schema.org Barbershop
+JSON-LD (address, geo, hours, price range, services, the 5.0/600+ rating
+and a ReserveAction pointing at Booksy).
 
 ## Run it
 
@@ -28,6 +43,10 @@ npm run build          # production build to dist/
 npm run preview        # serve the production build
 ```
 
+`npm run build` also writes one `index.html` per page into `dist/` plus a
+`404.html` (see `scripts/postbuild.mjs`). Pages are listed once, in
+`src/routes.js`; add a route there and a component in `src/pages/`.
+
 The core assets are REAL: the interior photo, the wordmark logo (extracted
 from the client's logo sheet) and six professional gallery photos. Still
 pending as drop-ins: barber portraits. Every slot keeps its defined fallback,
@@ -38,16 +57,19 @@ into [`public/gallery/`](public/gallery/).
 
 ## The drop-in asset contract
 
-All business data and asset paths live in **one file**:
+All business data, asset paths **and page copy** live in **one file**:
 [`src/config/site.js`](src/config/site.js). Nothing else needs touching.
+The About text, service descriptions and the contact blurb are all under `copy:` in that file — plain strings, edit
+freely.
 
 | Drop-in | Where it goes | Guidance | Until it arrives |
 | --- | --- | --- | --- |
 | `public/assets/logo.png` | Loading screen, header, blackout ghost, map marker | ~600px wide, transparent PNG | Styled "PLAYERS STUDIO" text fallback (auto-swaps the moment the file exists) |
 | `public/assets/interior.jpg` | The full-screen hero photo | ≥2400px wide, landscape | Plain dark fallback |
+| `public/assets/shop/*.jpg` | About-page collage | ~2000px wide landscape; list them in `shopPhotos` in site.js | n/a |
 | `public/assets/interior-1600.jpg` | *Optional* phone-optimized copy served via srcset | ~1600px wide, same crop | Falls back silently to `interior.jpg` |
-| `public/assets/barbers/rafael.jpg`, `edward.jpg` | Barber cards | square-ish portraits | Dark avatar circle with initial |
-| `public/gallery/cut-0N.jpg` + `cut-0N-thumb.jpg` | Gallery grid + lightbox | LIVE — six real shots; thumb feeds the tile, full feeds the lightbox | A missing file falls back to a "PHOTO" tile |
+| `public/assets/barbers/rafael.jpg`, `edward.jpg`, `hamza.jpg`, `ahmed.jpg` | Barber cards | square-ish portraits | Dark avatar circle with initial |
+| `public/gallery/cut-0N.jpg` | Gallery wall + lightbox | LIVE — six real shots, ~1600px tall portrait; the same file feeds the big tile and the lightbox | A missing file falls back to a "PHOTO" tile |
 
 > Barber photos are still marked pending in config (`img: null`) so nothing
 > is requested and the console stays clean. When a portrait is uploaded, set
@@ -67,11 +89,11 @@ tab.
 ### Reviews, services & hours (from the Booksy/Google listings)
 
 `config.reviews`, `config.services` and `config.hours` carry the listing
-facts, all sourced from the shop's public Booksy page (July 2026: **4.9★,
+facts, all sourced from the shop's public Booksy page (Sept 2026: **5.0★,
 600+ reviews**; services $24–$50; open 7 days):
 
 - The **Reviews section** (rating hero + quote cards + "Read all on
-  Booksy/Google" links) is linked from the ★4.9 chip in the hero.
+  Booksy/Google" links) is linked from the ★5.0 chip in the hero.
 - The **Services section** carries the services/prices list; the **Visit
   section** carries the weekly hours alongside address/directions/call.
 - The quote cards are **lightly paraphrased** from review snippets on the
@@ -90,7 +112,7 @@ One line per barber in `config.barbers`, plus their photo in
 `public/assets/barbers/`:
 
 ```js
-{ id: 'newguy', name: 'New Guy', specialty: 'Specialty coming soon', img: '/assets/barbers/newguy.jpg' },
+{ id: 'newguy', name: 'New Guy', img: asset('assets/barbers/newguy.jpg') },
 ```
 
 ### Retint the accent colour

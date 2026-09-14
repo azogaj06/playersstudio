@@ -4,17 +4,18 @@ import { destroy as destroyMap, flyToShop } from './lib/mapProvider.js'
 import LoadingScreen from './components/LoadingScreen.jsx'
 import SatelliteIntro from './components/SatelliteIntro.jsx'
 import Blackout from './components/Blackout.jsx'
-import Hero from './components/Hero.jsx'
 import TopNav from './components/TopNav.jsx'
 import MobileBar from './components/MobileBar.jsx'
-import {
-  ServicesSection,
-  BarbersSection,
-  GallerySection,
-  ReviewsSection,
-  VisitSection,
-  Footer,
-} from './sections/Sections.jsx'
+import Footer from './components/Footer.jsx'
+import { useRoute } from './lib/router.jsx'
+import Home from './pages/Home.jsx'
+import About from './pages/About.jsx'
+import Services from './pages/Services.jsx'
+import Barbers from './pages/Barbers.jsx'
+import Gallery from './pages/Gallery.jsx'
+import Contact from './pages/Contact.jsx'
+
+const PAGES = { '': Home, about: About, services: Services, barbers: Barbers, gallery: Gallery, contact: Contact }
 
 const SEEN_KEY = 'players-studio-intro-seen'
 const PHONE_QUERY = '(max-width: 820px)'
@@ -41,6 +42,12 @@ function markIntroSeen() {
 }
 
 export default function App() {
+  const { route } = useRoute()
+  // The satellite drop is the front door: it only plays when the visit
+  // starts on the home page. Deep links straight to /about/ etc. open the
+  // page immediately (frozen at first render — App never remounts).
+  const [landedOnHome] = useState(() => route === '')
+
   // ?intro (or #intro) forces the full satellite drop to replay — overrides
   // the returning-visitor auto-skip AND the reduced-motion bypass so the
   // owner can always preview the movie on demand.
@@ -53,7 +60,8 @@ export default function App() {
   // set) and kill the running choreography.
   const [autoSkip] = useState(
     () =>
-      !forceIntro && site.autoSkipIntroOnReturn && isPhone() && introSeen(),
+      !landedOnHome ||
+      (!forceIntro && site.autoSkipIntroOnReturn && isPhone() && introSeen()),
   )
   // Also frozen: a live matchMedia read used as an effect dep would re-run
   // the whole choreography if the OS motion setting flips mid-session.
@@ -232,6 +240,10 @@ export default function App() {
       setBlackout('off')
       doneRef.current = true
       markIntroSeen()
+      // Let the hero's settle finish, then drop the flag so a later return
+      // to the home page (the app never remounts) doesn't replay it.
+      await sleep(700)
+      setAnimateIn(false)
     }
 
     run()
@@ -251,6 +263,7 @@ export default function App() {
   useEffect(() => () => destroyMap(), [])
 
   const interiorShown = phase === 'interior'
+  const Page = PAGES[route] || Home
 
   // The page scrolls only once the site is shown; the intro is a fixed scene.
   useEffect(() => {
@@ -268,18 +281,13 @@ export default function App() {
           during the intro it sits occluded under the fixed map/loader
           overlays with scrolling locked. Only the nav bars wait. */}
       {interiorShown && <TopNav />}
-      <main className="site">
-        <Hero
+      <main className="site" key={route}>
+        <Page
           animateIn={animateIn}
           // Settle begins when the blackout starts revealing (350ms
           // hold), not while the screen is still pure black.
           settleDelay={animateIn ? 0.35 : 0}
         />
-        <ServicesSection />
-        <BarbersSection />
-        <GallerySection />
-        <ReviewsSection />
-        <VisitSection />
         <Footer />
       </main>
       {interiorShown && <MobileBar />}

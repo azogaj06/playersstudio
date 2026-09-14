@@ -1,0 +1,44 @@
+# Build the site and upload it to WHC (cPanel) over FTPS on every push to
+# main. Needs three repository secrets (Settings → Secrets → Actions):
+#   WHC_FTP_HOST      e.g. ftp.yourdomain.ca  (from cPanel → FTP Accounts)
+#   WHC_FTP_USER      the FTP account username
+#   WHC_FTP_PASSWORD  its password
+# and one repository variable (Settings → Variables → Actions):
+#   SITE_URL          e.g. https://yourdomain.ca   (no trailing slash)
+# The job skips itself quietly until WHC_FTP_HOST is set.
+name: Deploy to WHC
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: whc
+  cancel-in-progress: true
+
+jobs:
+  build-upload:
+    runs-on: ubuntu-latest
+    if: ${{ vars.WHC_ENABLED == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+          # served from the domain root on WHC — no DEPLOY_BASE
+      - name: Upload dist/ to public_html
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.WHC_FTP_HOST }}
+          username: ${{ secrets.WHC_FTP_USER }}
+          password: ${{ secrets.WHC_FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./dist/
+          server-dir: ./public_html/
+          dangerous-clean-slate: false

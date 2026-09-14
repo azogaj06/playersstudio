@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import { RouterProvider } from './lib/router.jsx'
 import site from './config/site.js'
 import './styles/tokens.css'
 import './styles/app.css'
@@ -12,7 +13,7 @@ import './styles/app.css'
 const origin = window.location.origin
 // Site paths already carry import.meta.env.BASE_URL (see config/site.js), so
 // absolutizing is just prepending the origin. pageUrl is the canonical home —
-// e.g. https://azogaj06.github.io/playersstudio/ on GitHub Pages.
+// e.g. https://playersstudio.ca/ in production.
 const abs = (path) => origin + path
 const pageUrl = origin + import.meta.env.BASE_URL
 const [street, city, region] = site.address.split(',').map((s) => s.trim())
@@ -122,6 +123,8 @@ document.head.appendChild(ldScript)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <RouterProvider>
+      <App />
+    </RouterProvider>
   </React.StrictMode>,
 )

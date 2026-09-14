@@ -1,0 +1,33 @@
+# Players Studio — Apache config for cPanel hosting (WHC).
+# Every page is a real folder with its own index.html, so no rewrites are
+# needed for /about/ etc. This file only handles HTTPS, the 404 page and
+# sensible caching.
+
+# Always HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Unknown paths boot the app (it falls back to the home page)
+ErrorDocument 404 /404.html
+
+# Cache: hashed build assets for a year, images for a month, HTML never
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+
+# Compress text
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>

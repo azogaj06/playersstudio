@@ -23,4 +23,23 @@ for (const r of routes) {
   writeFileSync(join(dir, 'index.html'), html)
 }
 cpSync(join(dist, 'index.html'), join(dist, '404.html'))
-console.log(`postbuild: wrote ${routes.length - 1} route folders + 404.html`)
+
+// sitemap.xml + robots.txt for wherever this build is going to live.
+// SITE_URL is the public origin (no trailing slash); DEPLOY_BASE the path.
+const base = process.env.DEPLOY_BASE || '/'
+const origin = (process.env.SITE_URL || 'https://azogaj06.github.io').replace(/\/$/, '')
+const siteUrl = origin + base
+const urls = routes
+  .map((r) => {
+    const loc = siteUrl + (r.path ? r.path + '/' : '')
+    const pri = r.path === '' ? '1.0' : r.path === 'gallery' ? '0.7' : r.path === 'about' || r.path === 'barbers' ? '0.8' : '0.9'
+    const freq = r.path === 'gallery' ? 'weekly' : 'monthly'
+    return `  <url><loc>${loc}</loc><changefreq>${freq}</changefreq><priority>${pri}</priority></url>`
+  })
+  .join('\n')
+writeFileSync(
+  join(dist, 'sitemap.xml'),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
+)
+writeFileSync(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}sitemap.xml\n`)
+console.log(`postbuild: wrote ${routes.length - 1} route folders + 404.html; sitemap for ${siteUrl}`)

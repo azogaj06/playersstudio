@@ -26,7 +26,7 @@ export default function ShopMap() {
           center: [site.shopCoords.lat, site.shopCoords.lng],
           zoom: 17,
           zoomControl: false,
-          attributionControl: true,
+          attributionControl: false,
           dragging: false,
           scrollWheelZoom: false,
           doubleClickZoom: false,
@@ -34,10 +34,7 @@ export default function ShopMap() {
           keyboard: false,
           touchZoom: false,
         })
-        L.tileLayer(TILE_URL, {
-          maxZoom: 19,
-          attribution: 'Esri, Maxar, Earthstar Geographics',
-        }).addTo(map)
+        L.tileLayer(TILE_URL, { maxZoom: 19 }).addTo(map)
         const el = document.createElement('div')
         el.className = 'shop-marker'
         el.innerHTML = '<div class="shop-marker__dot"></div><div class="shop-marker__pulse"></div>'

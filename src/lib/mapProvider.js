@@ -25,8 +25,10 @@ const GOOGLE_MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID
 const TILE_URL =
   import.meta.env.VITE_TILE_URL ||
   'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-const ESRI_ATTRIBUTION =
-  'Esri, Maxar, Earthstar Geographics, and the GIS User Community'
+// Owner's decision (Sept 2026): no credit line on the map. Note Esri's
+// World Imagery terms ask for attribution; to restore it, add a
+// L.control.attribution({ prefix: false }) after the tile layer.
+const ESRI_ATTRIBUTION = ''
 // Leaflet zoom == tile zoom, so z19 imagery is native at map zoom 19.
 const LEAFLET_TARGET_ZOOM = 19
 // Google's satellite imagery goes deeper, so the spec'd 19.2 applies there.
@@ -77,7 +79,7 @@ function createLeafletProvider() {
         zoom: config.introStartZoom,
         zoomSnap: 0, // allow fractional zooms (9.5 start, smooth dive)
         zoomControl: false,
-        attributionControl: true,
+        attributionControl: false,
         // this is a movie, not a map — all interaction off
         dragging: false,
         scrollWheelZoom: false,

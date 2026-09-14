@@ -88,16 +88,9 @@
   height: 100%;
   background: var(--bg); /* no light-grey flash behind loading tiles */
 }
-/* Required Esri attribution — small, corner */
-.satellite .leaflet-control-attribution {
-  font-size: 10px;
-  line-height: 1.3;
-  background: rgba(0, 0, 0, 0.45);
-  color: rgba(255, 255, 255, 0.75);
-  padding: 1px 6px;
-}
-.satellite .leaflet-control-attribution a {
-  color: rgba(255, 255, 255, 0.75);
+/* No attribution control on either map (owner's call); hide any stray one */
+.leaflet-control-attribution {
+  display: none !important;
 }
 /* divIcon wrapper: kill Leaflet's default white box */
 .shop-marker-anchor {
@@ -1633,11 +1626,6 @@
   height: 100%;
   background: var(--surface);
   cursor: pointer;
-}
-.shopmap__canvas .leaflet-control-attribution {
-  font-size: 10px;
-  background: rgba(0, 0, 0, 0.5);
-  color: rgba(255, 255, 255, 0.7);
 }
 .shopmap__label {
   position: absolute;

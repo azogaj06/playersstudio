@@ -134,6 +134,16 @@ const site = {
       thumb: asset('gallery/cut-06-thumb.jpg'),
       alt: 'Side view of a curly top with a low taper fade at Players Studio Oakville',
     },
+    {
+      src: asset('gallery/cut-07.jpg'),
+      thumb: asset('gallery/cut-07-thumb.jpg'),
+      alt: 'Barber blending a skin fade with clippers at Players Studio Oakville',
+    },
+    {
+      src: asset('gallery/cut-08.jpg'),
+      thumb: asset('gallery/cut-08-thumb.jpg'),
+      alt: 'Client laughing in the chair after a fresh taper at Players Studio',
+    },
   ],
 
   // --- Shop photos (About page collage) -------------------------------------

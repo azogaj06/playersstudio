@@ -38,9 +38,13 @@ function Photo({ photo, index, onOpen, eager }) {
  * phone, each tile roughly the height of the screen. `limit` trims it for
  * the home-page preview; the lightbox always steps through the full set.
  */
-export default function GalleryWall({ limit, className = '' }) {
+export default function GalleryWall({ limit, initial = 6, className = '' }) {
   const [lightbox, setLightbox] = useState(null)
-  const photos = limit ? site.gallery.slice(0, limit) : site.gallery
+  const [expanded, setExpanded] = useState(false)
+  const all = limit ? site.gallery.slice(0, limit) : site.gallery
+  // First `initial` photos show straight away; "See more" reveals the rest.
+  const photos = expanded ? all : all.slice(0, initial)
+  const hidden = all.length - photos.length
   const move = (dir) =>
     setLightbox((i) => (i + dir + site.gallery.length) % site.gallery.length)
   return (
@@ -50,6 +54,13 @@ export default function GalleryWall({ limit, className = '' }) {
           <Photo key={photo.src} photo={photo} index={i} onOpen={setLightbox} eager={i < 2} />
         ))}
       </ul>
+      {hidden > 0 && (
+        <div className="wall__more">
+          <button type="button" className="btn btn--secondary btn--big" onClick={() => setExpanded(true)}>
+            See more ({hidden})
+          </button>
+        </div>
+      )}
       {lightbox != null && (
         <Lightbox index={lightbox} onClose={() => setLightbox(null)} onMove={move} />
       )}

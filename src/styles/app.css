@@ -738,10 +738,23 @@
   min-height: var(--tap-min);
   filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.8));
 }
+.topnav__ig {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tap-min);
+  height: var(--tap-min);
+  margin-left: auto; /* phones: sits beside the menu button */
+  color: var(--text);
+  border-radius: 50%;
+  transition: transform var(--dur-fast) ease, color var(--dur-fast) ease;
+}
+.topnav__ig:hover {
+  transform: scale(1.08);
+}
 .topnav__links {
   display: none;
   gap: 2px;
-  margin-left: auto;
 }
 .topnav__links a {
   position: relative;
@@ -776,7 +789,6 @@
   padding-inline: 22px;
 }
 .topnav__menu {
-  margin-left: auto;
   width: var(--tap-min);
   height: var(--tap-min);
   display: grid;
@@ -804,6 +816,10 @@
   transform: rotate(-45deg);
 }
 @media (min-width: 821px) {
+  .topnav__ig {
+    margin-left: auto; /* pushes the icon + links to the right as a group */
+    margin-right: 6px;
+  }
   .topnav__links {
     display: flex;
   }

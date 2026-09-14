@@ -127,12 +127,12 @@ const site = {
     {
       src: asset('gallery/cut-05.jpg'),
       thumb: asset('gallery/cut-05-thumb.jpg'),
-      alt: 'Players Studio barber finishing up a haircut in the Oakville shop',
+      alt: 'Back of a curly-top taper being cleaned up with a trimmer at Players Studio',
     },
     {
       src: asset('gallery/cut-06.jpg'),
       thumb: asset('gallery/cut-06-thumb.jpg'),
-      alt: 'Barber shaping a curly top haircut at Players Studio Oakville',
+      alt: 'Side view of a curly top with a low taper fade at Players Studio Oakville',
     },
   ],
 

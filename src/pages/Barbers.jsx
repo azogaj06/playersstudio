@@ -16,8 +16,8 @@ export default function Barbers() {
       />
       <Reveal as="section" className="band band--team">
         <ul className="barber-grid barber-grid--page">
-          {site.barbers.map((b, i) => (
-            <BarberCard key={b.id} barber={b} index={i} />
+          {site.barbers.map((b) => (
+            <BarberCard key={b.id} barber={b} />
           ))}
         </ul>
       </Reveal>

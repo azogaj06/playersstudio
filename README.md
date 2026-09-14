@@ -112,7 +112,7 @@ One line per barber in `config.barbers`, plus their photo in
 `public/assets/barbers/`:
 
 ```js
-{ id: 'newguy', name: 'New Guy', specialty: 'Specialty coming soon', img: '/assets/barbers/newguy.jpg' },
+{ id: 'newguy', name: 'New Guy', img: asset('assets/barbers/newguy.jpg') },
 ```
 
 ### Retint the accent colour

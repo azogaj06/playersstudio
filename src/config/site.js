@@ -92,10 +92,10 @@ const site = {
   // Square portraits (1200x1200) in /public/assets/barbers/; originals in
   // raw-assets/barbers/. img: null shows the initial until a photo exists.
   barbers: [
-    { id: 'rafael', name: 'Rafael', specialty: 'Specialty coming soon', img: asset('assets/barbers/rafael.jpg') },
-    { id: 'edward', name: 'Edward', specialty: 'Specialty coming soon', img: asset('assets/barbers/edward.jpg') },
-    { id: 'hamza', name: 'Hamza', specialty: 'Specialty coming soon', img: asset('assets/barbers/hamza.jpg') },
-    { id: 'ahmed', name: 'Ahmed', specialty: 'Specialty coming soon', img: null },
+    { id: 'rafael', name: 'Rafael', img: asset('assets/barbers/rafael.jpg') },
+    { id: 'edward', name: 'Edward', img: asset('assets/barbers/edward.jpg') },
+    { id: 'hamza', name: 'Hamza', img: asset('assets/barbers/hamza.jpg') },
+    { id: 'ahmed', name: 'Ahmed', img: null },
   ],
 
   // --- Gallery -------------------------------------------------------------------

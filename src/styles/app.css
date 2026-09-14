@@ -1242,7 +1242,7 @@
   width: min(var(--measure), 100%);
   margin: 0 auto;
   padding: 0 var(--gutter);
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 10;
 }
 .stack__item {
   position: absolute;
@@ -1259,26 +1259,27 @@
   height: 100%;
   object-fit: cover;
 }
+/* Cascade: top-left to bottom-right, each print lying over the last */
 .stack__item--1 {
   left: 6%;
-  top: 12%;
-  width: 32%;
-  transform: rotate(-6deg);
+  top: 0;
+  width: 34%;
+  transform: rotate(-3deg);
   z-index: 1;
 }
 .stack__item--2 {
   left: 33%;
-  top: 0;
+  top: 13%;
   width: 34%;
-  transform: rotate(1.5deg);
-  z-index: 3;
+  transform: rotate(0deg);
+  z-index: 2;
 }
 .stack__item--3 {
   right: 6%;
-  top: 14%;
-  width: 32%;
-  transform: rotate(6deg);
-  z-index: 2;
+  top: 26%;
+  width: 34%;
+  transform: rotate(3deg);
+  z-index: 3;
 }
 .stack__item:hover {
   transform: rotate(0deg) scale(1.04);
@@ -1287,7 +1288,7 @@
 }
 @media (max-width: 820px) {
   .band--work .stack {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 4 / 3.4;
     padding: 0 6px;
   }
   .stack__item {
@@ -1295,20 +1296,18 @@
   }
   .stack__item--1 {
     left: 4%;
-    top: 10%;
-    width: 42%;
-    transform: rotate(-4deg);
+    top: 0;
+    width: 46%;
   }
   .stack__item--2 {
-    left: 28%;
-    top: 0;
-    width: 44%;
+    left: 27%;
+    top: 14%;
+    width: 46%;
   }
   .stack__item--3 {
     right: 4%;
-    top: 12%;
-    width: 42%;
-    transform: rotate(4deg);
+    top: 28%;
+    width: 46%;
   }
 }
 

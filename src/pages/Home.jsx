@@ -5,7 +5,7 @@ import Hero from '../components/Hero.jsx'
 import Reveal from '../components/Reveal.jsx'
 import BookLink from '../components/BookLink.jsx'
 import Stars from '../components/Stars.jsx'
-import GalleryWall from '../components/GalleryWall.jsx'
+import PreviewStack from '../components/PreviewStack.jsx'
 
 export default function Home({ animateIn, settleDelay }) {
   usePageMeta('', site.seo.description)
@@ -78,7 +78,7 @@ export default function Home({ animateIn, settleDelay }) {
             See the whole gallery
           </Link>
         </Reveal>
-        <GalleryWall limit={3} className="wall--preview" />
+        <PreviewStack />
       </section>
 
       {/* Barbers: one row pointing at the Barbers page (cards live there) */}

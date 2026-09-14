@@ -1339,7 +1339,7 @@
 }
 .barber__photo {
   position: relative;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   background: #0b0b0c;
 }

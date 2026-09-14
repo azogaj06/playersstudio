@@ -12,7 +12,7 @@ export default function BarberCard({ barber, index }) {
         {hasPhoto ? (
           <img
             src={barber.img}
-            width="900"
+            width="1200"
             height="1200"
             alt={`${barber.name}, barber at ${site.name}`}
             loading="lazy"

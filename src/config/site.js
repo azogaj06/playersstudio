@@ -89,10 +89,12 @@ const site = {
   // /public/assets/barbers/.
   // img: null renders the initial-avatar and requests nothing. When a photo
   // is dropped into /public/assets/barbers/, set img to its path.
+  // Square portraits (1200x1200) in /public/assets/barbers/; originals in
+  // raw-assets/barbers/. img: null shows the initial until a photo exists.
   barbers: [
-    { id: 'rafael', name: 'Rafael', specialty: 'Specialty coming soon', img: null },
-    { id: 'edward', name: 'Edward', specialty: 'Specialty coming soon', img: null },
-    { id: 'hamza', name: 'Hamza', specialty: 'Specialty coming soon', img: null },
+    { id: 'rafael', name: 'Rafael', specialty: 'Specialty coming soon', img: asset('assets/barbers/rafael.jpg') },
+    { id: 'edward', name: 'Edward', specialty: 'Specialty coming soon', img: asset('assets/barbers/edward.jpg') },
+    { id: 'hamza', name: 'Hamza', specialty: 'Specialty coming soon', img: asset('assets/barbers/hamza.jpg') },
     { id: 'ahmed', name: 'Ahmed', specialty: 'Specialty coming soon', img: null },
   ],
 

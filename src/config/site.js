@@ -131,6 +131,16 @@ const site = {
     },
   ],
 
+  // --- Shop photos (About page collage) -------------------------------------
+  // First photo is the big one on the left, the rest stack on the right.
+  // To add outside shots: drop them in /public/assets/shop/ (e.g.
+  // front.jpg) and add a line here — the collage grows to fit.
+  shopPhotos: [
+    { src: asset('assets/interior.jpg'), alt: 'Inside Players Studio on Lakeshore Road East, Oakville', wide: true },
+    { src: asset('gallery/cut-05.jpg'), alt: 'A barber at work in the Players Studio chairs' },
+    { src: asset('gallery/cut-06.jpg'), alt: 'Cutting a curly top at Players Studio Oakville' },
+  ],
+
   // --- Reviews (from the shop's Booksy/Google listings) -------------------------------
   // Rating/count per the owner (5.0, 600+ reviews, Sept 2026). `rating` is
   // the number search engines read; `ratingLabel` is what's printed. The quotes below are lightly paraphrased from review

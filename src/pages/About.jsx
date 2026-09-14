@@ -10,18 +10,17 @@ export default function About() {
   const c = site.copy
   return (
     <>
-      <PageHead kicker="About" title="The shop" lead={c.aboutLead} />
+      <PageHead kicker="About" title="The shop" lead={c.aboutLead} compact />
 
-      <Reveal className="bleed">
-        <img
-          src={site.assets.interior}
-          srcSet={`${site.assets.interiorSmall} ${site.assets.interiorSmallWidth}w, ${site.assets.interior} ${site.assets.interiorFullWidth}w`}
-          sizes="100vw"
-          width={site.assets.interiorFullWidth}
-          height={site.assets.interiorHeight}
-          alt={`Inside ${site.name} on Lakeshore Road East, Oakville`}
-          decoding="async"
-        />
+      {/* Collage: first photo big on the left, the rest stacked on the right */}
+      <Reveal as="section" className="band band--collage">
+        <ul className="collage">
+          {site.shopPhotos.map((ph, i) => (
+            <li key={ph.src} className={`collage__item${i === 0 ? ' collage__item--lead' : ''}`}>
+              <img src={ph.src} alt={ph.alt} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+            </li>
+          ))}
+        </ul>
       </Reveal>
 
       <Reveal as="section" className="band band--prose">

@@ -1077,6 +1077,7 @@
   display: block;
   aspect-ratio: 4 / 5;
   overflow: hidden;
+  border-radius: 20px;
   background: var(--surface);
 }
 .statement__photo img {

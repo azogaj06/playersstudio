@@ -240,7 +240,7 @@ const site = {
   copy: {
     // Home
     homeStatement:
-      'A barbershop on Lakeshore. Fades, tapers, scissor work, beards and kids cuts — book a chair on Booksy or walk in and take a seat.',
+      'A barbershop on Lakeshore. Fades, tapers, beards, kids cuts. Book on Booksy or just walk in.',
     // About page
     aboutLead:
       'Players Studio is a barbershop on the north side of Lakeshore Road East, a few doors from Trafalgar, in the middle of downtown Oakville.',

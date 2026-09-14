@@ -1334,6 +1334,8 @@
 .barber {
   background: var(--surface);
   border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
@@ -1361,14 +1363,6 @@
   font-size: clamp(120px, 28vw, 240px);
   line-height: 1;
   color: rgba(255, 255, 255, 0.9);
-}
-.barber__num {
-  position: absolute;
-  left: 16px;
-  top: 12px;
-  font-size: 15px;
-  letter-spacing: 0.12em;
-  color: var(--text-dim);
 }
 .barber__body {
   padding: 20px 18px 22px;

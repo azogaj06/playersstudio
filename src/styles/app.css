@@ -1708,3 +1708,8 @@
 .footer__bottom p {
   margin: 0;
 }
+.footer__credit sup {
+  font-size: 0.7em;
+  line-height: 0;
+  vertical-align: super;
+}

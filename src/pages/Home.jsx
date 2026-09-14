@@ -86,7 +86,7 @@ export default function Home({ animateIn, settleDelay }) {
         <div className="teamrow">
           <div>
             <p className="kicker">The barbers</p>
-            <h2 className="h2 display">Pick your barber</h2>
+            <h2 className="h2 display">Meet your barber</h2>
           </div>
           <Link to="barbers" className="btn btn--secondary btn--big">
             Meet the team

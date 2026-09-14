@@ -58,7 +58,6 @@ export default function Footer() {
       </div>
       <div className="footer__bottom">
         <p>© {new Date().getFullYear()} {site.name}. Barbershop, downtown Oakville.</p>
-        <p>Walk-ins welcome · Open 7 days</p>
       </div>
     </footer>
   )

@@ -10,8 +10,8 @@ export default function Hiring() {
     <>
       <PageHead kicker="Join the team" title="We're hiring" lead={c.hiringLead} />
 
-      <Reveal as="section" className="band band--prose">
-        <div className="prose">
+      <Reveal as="section" className="band band--prose band--tight">
+        <div className="prose prose--even">
           {c.hiringBody.map((p) => (
             <p key={p}>{p}</p>
           ))}

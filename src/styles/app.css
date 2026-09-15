@@ -1552,6 +1552,15 @@
   font-size: clamp(20px, 2.4vw, 26px);
   line-height: 1.45;
 }
+/* Same size for every paragraph (pages that already have a lead line) */
+.prose--even p:first-child {
+  font-size: clamp(17px, 1.9vw, 20px);
+  line-height: 1.6;
+}
+/* Less air above a band that follows a masthead with its own lead */
+.band--tight {
+  padding-top: clamp(20px, 3vw, 40px);
+}
 .facts dl {
   margin: 0;
   border-top: 1px solid var(--line);

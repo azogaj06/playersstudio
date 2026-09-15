@@ -1655,6 +1655,20 @@
   color: var(--text-dim);
 }
 
+/* --- Hiring page ---------------------------------------------------------------------------- */
+
+.apply__text {
+  margin: 18px 0 0;
+  max-width: 56ch;
+  font-size: clamp(17px, 1.9vw, 20px);
+  line-height: 1.55;
+}
+.apply__meta {
+  margin: 18px 0 0;
+  color: var(--text-dim);
+  font-size: 13.5px;
+}
+
 /* --- Contact page --------------------------------------------------------------------------- */
 
 .contact {

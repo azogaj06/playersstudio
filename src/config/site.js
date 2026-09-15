@@ -75,6 +75,8 @@ const site = {
         'Recent fades, tapers, beard work and designs from the chairs at Players Studio, Oakville.',
       contact:
         'Players Studio hours, address and directions. 295 Lakeshore Rd E, Oakville, ON. Open 7 days. Call 905-844-4443.',
+      hiring:
+        'Players Studio in downtown Oakville is hiring barbers. Busy chair on Lakeshore Rd E, open 7 days. Message us on Instagram or call 905-844-4443.',
     },
   },
 
@@ -272,6 +274,22 @@ const site = {
       'Running late? Give us a call and we\'ll do our best to hold the chair.',
       'Kids pricing is for 10 and under. Same barbers, same chairs.',
     ],
+    // Hiring page
+    hiringLead:
+      'Players Studio is looking for barbers. If you take your craft seriously and want a busy chair in downtown Oakville, we want to hear from you.',
+    hiringBody: [
+      'The shop has been on Lakeshore since 2023. Seven days a week, steady walk-in traffic, and a client base that keeps coming back: 600+ reviews and a 5.0 rating on Booksy.',
+      'We\'re after barbers who are clean on fades and tapers, comfortable with scissor work and beards, and easy to be around. Licensed or apprenticing, tell us where you\'re at.',
+    ],
+    hiringWant: [
+      'Clean fades, tapers and lineups',
+      'Confident with scissor cuts and beard work',
+      'Good with people, kids included',
+      'Reliable and on time',
+      'A portfolio or Instagram that shows your work',
+    ],
+    hiringApply:
+      'Send us a message on Instagram with a few photos of your cuts, or call the shop and ask for the owner. You can also come by in person any day we\'re open.',
     // Contact page
     contactLead:
       'Downtown Oakville, north side of Lakeshore Road East. Street and lot parking nearby; the lake is a two-minute walk.',

@@ -91,7 +91,7 @@ export default function TopNav() {
           {routes.map((p, i) => (
             <li key={p.path} style={{ '--i': i }}>
               <Link to={p.path} className="menu__link display" tabIndex={open ? 0 : -1}>
-                <span className="menu__num">0{i + 1}</span>
+                <span className="menu__num" aria-hidden="true">—</span>
                 {p.label}
               </Link>
             </li>

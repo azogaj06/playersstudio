@@ -14,8 +14,9 @@ import Services from './pages/Services.jsx'
 import Barbers from './pages/Barbers.jsx'
 import Gallery from './pages/Gallery.jsx'
 import Contact from './pages/Contact.jsx'
+import Hiring from './pages/Hiring.jsx'
 
-const PAGES = { '': Home, about: About, services: Services, barbers: Barbers, gallery: Gallery, contact: Contact }
+const PAGES = { '': Home, about: About, services: Services, barbers: Barbers, gallery: Gallery, contact: Contact, hiring: Hiring }
 
 const SEEN_KEY = 'players-studio-intro-seen'
 const PHONE_QUERY = '(max-width: 820px)'

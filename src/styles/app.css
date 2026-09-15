@@ -866,7 +866,7 @@
 }
 .menu__link {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 16px;
   padding: 6px 0;
   color: var(--text);
@@ -878,9 +878,9 @@
   color: var(--text-dim);
 }
 .menu__num {
-  font-size: 14px;
+  font-size: 22px;
+  line-height: 1;
   color: var(--text-dim);
-  letter-spacing: 0.1em;
 }
 .menu__foot {
   display: flex;
@@ -1653,6 +1653,20 @@
   position: absolute;
   left: 0;
   color: var(--text-dim);
+}
+
+/* --- Hiring page ---------------------------------------------------------------------------- */
+
+.apply__text {
+  margin: 18px 0 0;
+  max-width: 56ch;
+  font-size: clamp(17px, 1.9vw, 20px);
+  line-height: 1.55;
+}
+.apply__meta {
+  margin: 18px 0 0;
+  color: var(--text-dim);
+  font-size: 13.5px;
 }
 
 /* --- Contact page --------------------------------------------------------------------------- */

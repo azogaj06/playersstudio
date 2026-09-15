@@ -8,5 +8,5 @@ export const routes = [
   { path: 'barbers', label: 'Barbers', title: 'The Barbers | Players Studio, Oakville' },
   { path: 'gallery', label: 'Gallery', title: 'Gallery | Players Studio, Oakville' },
   { path: 'contact', label: 'Contact', title: 'Hours & Location | Players Studio, Oakville' },
-  { path: 'hiring', label: 'Hiring', title: "We're Hiring | Players Studio, Oakville" },
+  { path: 'hiring', label: 'Join Us!', title: "We're Hiring | Players Studio, Oakville" },
 ]

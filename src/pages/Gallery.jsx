@@ -11,7 +11,7 @@ export default function Gallery() {
       <PageHead
         kicker="Gallery"
         title="The work"
-        lead="Fades, tapers, beards and the odd design, straight from the chairs on Lakeshore. Tap any photo to see it full size."
+        lead="Fades, tapers, beards and custom designs, straight from the chairs on Lakeshore. Tap any photo to see it full size."
       >
         <a className="textlink" href={site.instagram} target="_blank" rel="noopener noreferrer">
           More every week on Instagram

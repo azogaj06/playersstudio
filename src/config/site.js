@@ -276,10 +276,10 @@ const site = {
     ],
     // Hiring page
     hiringLead:
-      'Players Studio is looking for barbers. If you take your craft seriously and want a busy chair in downtown Oakville, we want to hear from you.',
+      'Players Studio is hiring barbers for a busy chair in downtown Oakville.',
     hiringBody: [
-      'The shop has been on Lakeshore since 2023. Seven days a week, steady walk-in traffic, and a client base that keeps coming back: 600+ reviews and a 5.0 rating on Booksy.',
-      'We\'re after barbers who are clean on fades and tapers, comfortable with scissor work and beards, and easy to be around. Licensed or apprenticing, tell us where you\'re at.',
+      'The shop opened on Lakeshore in 2023 and hasn\'t slowed down since: open seven days, steady walk-ins on top of the bookings, and 600+ five-star reviews on Booksy.',
+      'You\'d be joining a small team that takes the work seriously and keeps the room easy. Licensed or still apprenticing, if the cuts are clean we want to see them.',
     ],
     hiringWant: [
       'Clean fades, tapers and lineups',

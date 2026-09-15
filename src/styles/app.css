@@ -866,7 +866,7 @@
 }
 .menu__link {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 16px;
   padding: 6px 0;
   color: var(--text);
@@ -878,9 +878,9 @@
   color: var(--text-dim);
 }
 .menu__num {
-  font-size: 14px;
+  font-size: 22px;
+  line-height: 1;
   color: var(--text-dim);
-  letter-spacing: 0.1em;
 }
 .menu__foot {
   display: flex;

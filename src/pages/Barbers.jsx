@@ -6,7 +6,7 @@ import BarberCard from '../components/BarberCard.jsx'
 import BookLink from '../components/BookLink.jsx'
 
 export default function Barbers() {
-  usePageMeta('barbers', site.seo.pages.barbers)
+  usePageMeta('barbers')
   return (
     <>
       <PageHead

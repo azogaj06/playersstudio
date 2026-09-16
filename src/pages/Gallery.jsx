@@ -5,7 +5,7 @@ import GalleryWall from '../components/GalleryWall.jsx'
 import BookLink from '../components/BookLink.jsx'
 
 export default function Gallery() {
-  usePageMeta('gallery', site.seo.pages.gallery)
+  usePageMeta('gallery')
   return (
     <>
       <PageHead

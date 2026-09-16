@@ -8,7 +8,7 @@ import Stars from '../components/Stars.jsx'
 import PreviewStack from '../components/PreviewStack.jsx'
 
 export default function Home({ animateIn, settleDelay }) {
-  usePageMeta('', site.seo.description)
+  usePageMeta('')
   const r = site.reviews
   return (
     <>

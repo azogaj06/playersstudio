@@ -6,7 +6,7 @@ import Reveal from '../components/Reveal.jsx'
 import BookLink from '../components/BookLink.jsx'
 
 export default function About() {
-  usePageMeta('about', site.seo.pages.about)
+  usePageMeta('about')
   const c = site.copy
   return (
     <>

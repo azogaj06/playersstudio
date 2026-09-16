@@ -6,7 +6,7 @@ import BookLink from '../components/BookLink.jsx'
 import ShopMap from '../components/ShopMap.jsx'
 
 export default function Contact() {
-  usePageMeta('contact', site.seo.pages.contact)
+  usePageMeta('contact')
   const [street, city] = site.address.split(',').map((s) => s.trim())
   return (
     <>

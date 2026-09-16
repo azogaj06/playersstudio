@@ -13,9 +13,10 @@ function setMeta(attr, key, content) {
 }
 
 /** Per-page <title>, description and canonical/og:url. */
-export default function usePageMeta(route, description) {
+export default function usePageMeta(route, descriptionOverride) {
   useEffect(() => {
     const r = routes.find((x) => x.path === route) || routes[0]
+    const description = descriptionOverride || r.description
     const url = window.location.origin + hrefFor(route)
     document.title = r.title
     setMeta('name', 'description', description)
@@ -25,5 +26,5 @@ export default function usePageMeta(route, description) {
     setMeta('name', 'twitter:title', r.title)
     setMeta('name', 'twitter:description', description)
     document.querySelector('link[rel="canonical"]')?.setAttribute('href', url)
-  }, [route, description])
+  }, [route, descriptionOverride])
 }

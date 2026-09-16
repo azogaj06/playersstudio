@@ -63,21 +63,6 @@ const site = {
     description:
       'Barbershop at 295 Lakeshore Rd E in downtown Oakville. Haircuts, fades, beard trims & kids cuts. Rated 5.0 from 600+ reviews. Book online or walk in.',
     priceRange: '$24–$50',
-    // meta descriptions for the inner pages
-    pages: {
-      about:
-        'Players Studio is a barbershop on Lakeshore Rd E in downtown Oakville. Fades, tapers, beards and kids cuts, walk-ins welcome, booking on Booksy.',
-      services:
-        'Haircuts and fades from $40, beard trims $24, kids cuts $30 at Players Studio, 295 Lakeshore Rd E, Oakville. Book on Booksy or walk in.',
-      barbers:
-        'Meet the barbers at Players Studio in downtown Oakville and book directly with the one you want.',
-      gallery:
-        'Recent fades, tapers, beard work and designs from the chairs at Players Studio, Oakville.',
-      contact:
-        'Players Studio hours, address and directions. 295 Lakeshore Rd E, Oakville, ON. Open 7 days. Call 905-844-4443.',
-      hiring:
-        'Players Studio in downtown Oakville is hiring barbers. Busy chair on Lakeshore Rd E, open 7 days. Message us on Instagram or call 905-844-4443.',
-    },
   },
 
   // --- Copy ----------------------------------------------------------------------

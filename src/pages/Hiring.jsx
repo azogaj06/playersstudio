@@ -4,7 +4,7 @@ import PageHead from '../components/PageHead.jsx'
 import Reveal from '../components/Reveal.jsx'
 
 export default function Hiring() {
-  usePageMeta('hiring', site.seo.pages.hiring)
+  usePageMeta('hiring')
   const c = site.copy
   return (
     <>

@@ -5,7 +5,7 @@ import Reveal from '../components/Reveal.jsx'
 import BookLink from '../components/BookLink.jsx'
 
 export default function Services() {
-  usePageMeta('services', site.seo.pages.services)
+  usePageMeta('services')
   return (
     <>
       <PageHead kicker="Services" title="Cuts & prices" lead={site.copy.servicesLead} />

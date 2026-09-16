@@ -16,19 +16,48 @@ if ((process.env.DEPLOY_BASE || '').includes('/preview/')) {
   writeFileSync(join(dist, 'index.html'), html)
 }
 
-for (const r of routes) {
-  if (!r.path) continue
-  const dir = join(dist, r.path)
-  mkdirSync(dir, { recursive: true })
-  writeFileSync(join(dir, 'index.html'), html)
-}
-cpSync(join(dist, 'index.html'), join(dist, '404.html'))
-
-// sitemap.xml + robots.txt for wherever this build is going to live.
-// SITE_URL is the public origin (no trailing slash); DEPLOY_BASE the path.
+// Where this build will live. SITE_URL is the public origin (no trailing
+// slash); DEPLOY_BASE the path.
 const base = process.env.DEPLOY_BASE || '/'
 const origin = (process.env.SITE_URL || 'https://azogaj06.github.io').replace(/\/$/, '')
 const siteUrl = origin + base
+const esc = (t) => t.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
+
+// Bake each page's real title, description, canonical URL and link-preview
+// tags into its static index.html. The app re-sets the same tags at runtime
+// (it updates existing ones, so nothing duplicates) — this is for crawlers
+// and chat-app link previews, which don't run JavaScript.
+function pageHtml(r) {
+  const url = siteUrl + (r.path ? r.path + '/' : '')
+  const image = siteUrl + 'assets/interior.jpg'
+  const head = [
+    `<title>${esc(r.title)}</title>`,
+    `<meta name="description" content="${esc(r.description)}" />`,
+    `<link rel="canonical" href="${url}" />`,
+    `<meta property="og:type" content="business.business" />`,
+    `<meta property="og:site_name" content="Players Studio" />`,
+    `<meta property="og:title" content="${esc(r.title)}" />`,
+    `<meta property="og:description" content="${esc(r.description)}" />`,
+    `<meta property="og:url" content="${url}" />`,
+    `<meta property="og:image" content="${image}" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`,
+    `<meta name="twitter:title" content="${esc(r.title)}" />`,
+    `<meta name="twitter:description" content="${esc(r.description)}" />`,
+    `<meta name="twitter:image" content="${image}" />`,
+  ].join('\n    ')
+  return html
+    .replace(/<title>[^<]*<\/title>/, '')
+    .replace(/<meta name="description"[^>]*>/, '')
+    .replace('</head>', `    ${head}\n  </head>`)
+}
+
+for (const r of routes) {
+  const dir = r.path ? join(dist, r.path) : dist
+  mkdirSync(dir, { recursive: true })
+  writeFileSync(join(dir, 'index.html'), pageHtml(r))
+}
+cpSync(join(dist, 'index.html'), join(dist, '404.html'))
+
 const urls = routes
   .map((r) => {
     const loc = siteUrl + (r.path ? r.path + '/' : '')

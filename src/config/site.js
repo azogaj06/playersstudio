@@ -52,7 +52,7 @@ const site = {
     interiorFullWidth: 1535, // current photo's real pixel width
     interiorHeight: 1024, // full photo's pixel height (for layout stability)
     // Footer credit logo (Nexora). Text fallback shows until the file exists.
-    creditLogo: asset('assets/nexora.svg'),
+    creditLogo: asset('assets/nexora.png'),
   },
 
   // --- SEO -------------------------------------------------------------------------

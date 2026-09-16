@@ -67,8 +67,8 @@ export default function Footer() {
               <img
                 src={site.assets.creditLogo}
                 alt="Nexora"
-                width="420"
-                height="100"
+                width="314"
+                height="200"
                 loading="lazy"
                 decoding="async"
                 onError={() => setLogoMissing(true)}

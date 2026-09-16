@@ -66,9 +66,9 @@ export default function Footer() {
               <span>Made by</span>
               <img
                 src={site.assets.creditLogo}
-                alt="A² Digital"
-                width="218"
-                height="160"
+                alt="Nexora"
+                width="400"
+                height="200"
                 loading="lazy"
                 decoding="async"
                 onError={() => setLogoMissing(true)}
@@ -76,9 +76,7 @@ export default function Footer() {
               <span>©</span>
             </>
           ) : (
-            <>
-              Made by A<sup>2</sup> Digital ©
-            </>
+            <>Made by Nexora ©</>
           )}
         </p>
       </div>

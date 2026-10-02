@@ -27,7 +27,7 @@ export default function BarberCard({ barber }) {
       </div>
       <div className="barber__body">
         <h3 className="barber__name display">{barber.name}</h3>
-        <BookLink className="btn btn--primary barber__book">Book with {barber.name}</BookLink>
+        <BookLink className="btn btn--primary barber__book" href={barber.bookingUrl}>Book with {barber.name}</BookLink>
       </div>
     </li>
   )

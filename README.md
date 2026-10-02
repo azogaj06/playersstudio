@@ -80,8 +80,9 @@ freely.
 `bookingUrl` in `src/config/site.js` is set to the shop's live Booksy page
 (found via the public listing — name, address and phone all match):
 `https://booksy.com/en-ca/9047_players-fade-studio_barbershop_773207_oakville`.
-Every Book button across the site (booking panel, per-barber buttons, bottom
-nav → panel) reads it. If it's ever cleared, Book buttons stay enabled with a
+Every Book button across the site (booking panel, bottom nav → panel) reads
+it; a per-barber button uses that barber's own `bookingUrl` when one is set
+(see *Add a barber*). If it's ever cleared, Book buttons stay enabled with a
 "Booksy link coming soon" note. Standard Booksy web links hand off to the
 Booksy app automatically when installed, so they open as plain links in a new
 tab.
@@ -112,8 +113,12 @@ One line per barber in `config.barbers`, plus their photo in
 `public/assets/barbers/`:
 
 ```js
-{ id: 'newguy', name: 'New Guy', img: asset('assets/barbers/newguy.jpg') },
+{ id: 'newguy', name: 'New Guy', img: asset('assets/barbers/newguy.jpg'), bookingUrl: null },
 ```
+
+`bookingUrl` is the barber's own Booksy link (Booksy app → Profile → Share
+Profile → copy link). With it set, "Book with New Guy" on the Barbers page
+opens straight to them; left `null`, it opens the shop's Booksy page.
 
 ### Retint the accent colour
 

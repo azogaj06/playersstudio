@@ -78,11 +78,15 @@ const site = {
   // is dropped into /public/assets/barbers/, set img to its path.
   // Square portraits (1200x1200) in /public/assets/barbers/; originals in
   // raw-assets/barbers/. img: null shows the initial until a photo exists.
+  // bookingUrl: the barber's own Booksy link, so "Book with <name>" lands on
+  // them instead of the whole shop. In the Booksy app, the barber opens
+  // Profile → Share Profile → copy link, and pastes it here. null falls back
+  // to the shop's bookingUrl above.
   barbers: [
-    { id: 'rafael', name: 'Rafael', img: asset('assets/barbers/rafael.jpg') },
-    { id: 'edward', name: 'Edward', img: asset('assets/barbers/edward.jpg') },
-    { id: 'hamza', name: 'Hamza', img: asset('assets/barbers/hamza.jpg') },
-    { id: 'ahmed', name: 'Ahmed', img: null },
+    { id: 'rafael', name: 'Rafael', img: asset('assets/barbers/rafael.jpg'), bookingUrl: null },
+    { id: 'edward', name: 'Edward', img: asset('assets/barbers/edward.jpg'), bookingUrl: null },
+    { id: 'hamza', name: 'Hamza', img: asset('assets/barbers/hamza.jpg'), bookingUrl: null },
+    { id: 'ahmed', name: 'Ahmed', img: null, bookingUrl: null },
   ],
 
   // --- Gallery -------------------------------------------------------------------

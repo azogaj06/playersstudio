@@ -51,8 +51,8 @@ const site = {
     interiorSmallWidth: 1100, // real pixel width of the phone copy
     interiorFullWidth: 1535, // current photo's real pixel width
     interiorHeight: 1024, // full photo's pixel height (for layout stability)
-    // Footer credit logo (Nexora). Text fallback shows until the file exists.
-    creditLogo: asset('assets/nexora.png'),
+    // Footer credit logo. Text fallback shows if the file is missing.
+    creditLogo: asset('assets/credit-logo.png'),
   },
 
   // --- SEO -------------------------------------------------------------------------

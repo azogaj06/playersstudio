@@ -66,8 +66,8 @@ export default function Footer() {
               <span>Made by</span>
               <img
                 src={site.assets.creditLogo}
-                alt="Nexora"
-                width="314"
+                alt="Logo of the studio that built this site"
+                width="176"
                 height="200"
                 loading="lazy"
                 decoding="async"
